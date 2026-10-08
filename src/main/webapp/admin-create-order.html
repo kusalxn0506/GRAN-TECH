@@ -1,214 +1,813 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create Order | GRAN & TECH Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Order Entry | GRAN & TECH Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #f1f5f9; color: #0f172a; display: flex; height: 100vh; overflow: hidden; }
+        body { background: #f8fafc; color: #0f172a; display: flex; height: 100vh; overflow: hidden; }
 
         /* Dark Admin Sidebar */
-        .admin-sidebar { width: 280px; background: #0a1128; color: white; display: flex; flex-direction: column; flex-shrink: 0; }
-        .admin-logo { padding: 30px; font-size: 20px; font-weight: 900; letter-spacing: -1px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .admin-nav { padding: 30px 20px; flex: 1; }
-        .admin-nav a { display: flex; align-items: center; gap: 15px; color: #94a3b8; text-decoration: none; padding: 15px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; margin-bottom: 5px; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
-        .admin-nav a.active, .admin-nav a:hover { background: rgba(255,255,255,0.1); color: white; }
-        .admin-nav i { font-size: 16px; width: 20px; text-align: center; }
+        .admin-sidebar {
+            width: 280px;
+            background: #0a1128;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            z-index: 20;
+        }
+        .admin-logo-box {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .admin-logo {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .admin-pill {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: rgba(255, 62, 62, 0.15);
+            color: #ff4d4d;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 62, 62, 0.3);
+        }
+        .admin-nav {
+            padding: 25px 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .nav-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 10px 15px 5px;
+        }
+        .admin-nav a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.3px;
+        }
+        .admin-nav a.active, .admin-nav a:hover {
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+        }
+        .admin-nav a.active {
+            border-left: 3px solid #ff4d4d;
+            background: rgba(255,255,255,0.1);
+        }
+        .admin-nav i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .btn-storefront {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.06);
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .btn-storefront:hover {
+            background: #ffffff;
+            color: #0a1128;
+        }
 
         /* Main Workspace */
-        .admin-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .admin-header { background: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 10; }
-        .admin-content { padding: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .admin-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+        .admin-header {
+            background: #fff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .admin-content {
+            padding: 35px 40px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
 
-        .page-title { font-size: 28px; font-weight: 900; letter-spacing: -1px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
-        .back-btn { background: #fff; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 6px; color: #64748b; cursor: pointer; transition: 0.2s; }
-        .back-btn:hover { background: #f8fafc; color: #0f172a; }
+        .page-title {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .back-btn {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: #475569;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-btn:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
 
         /* Two-Column Form Layout */
-        .create-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; align-items: start; }
+        .create-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
 
         /* Admin Cards */
-        .admin-card { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; margin-bottom: 30px; }
-        .card-header { padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #fcfcfd; }
-        .card-title { font-size: 15px; font-weight: 800; color: #0f172a; }
-        .card-body { padding: 25px; }
+        .admin-card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        .card-header {
+            padding: 18px 25px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fcfcfd;
+        }
+        .card-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .card-body {
+            padding: 25px;
+        }
 
-        /* Floating Inputs for Admin */
-        .input-group { position: relative; margin-bottom: 20px; }
-        .input-group input, .input-group select { width: 100%; padding: 20px 15px 10px; font-size: 14px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; transition: 0.2s; background: #fff; font-weight: 500; color: #0f172a; }
-        .input-group input:focus, .input-group select:focus { border-color: #0a1128; box-shadow: 0 0 0 1px #0a1128; }
-        .input-group label { position: absolute; top: 15px; left: 15px; font-size: 14px; color: #64748b; transition: 0.2s ease all; pointer-events: none; }
-        .input-group input:focus ~ label, .input-group input:valid ~ label, .input-group select:focus ~ label, .input-group select:valid ~ label { top: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #0a1128; letter-spacing: 0.5px; }
+        /* Add Item Selector Bar */
+        .add-item-box {
+            display: grid;
+            grid-template-columns: 2fr 1fr 100px auto;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .select-input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #fff;
+            outline: none;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .btn-add-line {
+            background: #0a1128;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .btn-add-line:hover {
+            background: #1e293b;
+        }
 
-        .search-bar { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 15px; background: #f8fafc; transition: 0.2s; margin-bottom: 20px; }
-        .search-bar:focus-within { border-color: #0a1128; background: #fff; box-shadow: 0 0 0 1px #0a1128; }
-        .search-bar i { color: #94a3b8; }
-        .search-bar input { border: none; background: transparent; padding: 15px; width: 100%; outline: none; font-size: 14px; font-weight: 500; }
+        /* Inputs */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            transition: 0.2s;
+            font-weight: 500;
+            color: #0f172a;
+            background: #fff;
+        }
+        .form-control:focus {
+            border-color: #0a1128;
+            box-shadow: 0 0 0 1px #0a1128;
+        }
 
         /* Order Items Table */
-        .order-items { width: 100%; border-collapse: collapse; }
-        .order-items th { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; text-align: left; }
-        .order-items td { padding: 20px 0; border-bottom: 1px solid #e2e8f0; }
-        .order-items tr:last-child td { border-bottom: none; padding-bottom: 0; }
+        .order-items-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-items-table th {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #64748b;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .order-items-table td {
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+        .order-items-table tr:last-child td {
+            border-bottom: none;
+        }
 
-        .item-info { display: flex; align-items: center; gap: 15px; }
-        .item-img { width: 48px; height: 48px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; display: flex; justify-content: center; align-items: center; padding: 5px; }
-        .item-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .item-thumb {
+            width: 44px;
+            height: 44px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+        .item-thumb img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
 
         /* Summary Box */
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; color: #475569; }
-        .summary-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 900; color: #0f172a; border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 10px; }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #475569;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 900;
+            color: #0f172a;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+            margin-top: 12px;
+        }
 
-        .btn-primary { width: 100%; background: #0a1128; color: #fff; border: none; padding: 18px; border-radius: 6px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .btn-secondary { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 10px 15px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-submit-order {
+            width: 100%;
+            background: #0a1128;
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(10,17,40,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-submit-order:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(10,17,40,0.2);
+        }
+
+        .remove-btn {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .remove-btn:hover {
+            color: #b91c1c;
+        }
+
+        @media (max-width: 1024px) {
+            .create-layout { grid-template-columns: 1fr; }
+            body { flex-direction: column; overflow: auto; height: auto; }
+            .admin-sidebar { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
+<!-- Left Navigation Sidebar -->
 <aside class="admin-sidebar">
-    <div class="admin-logo">GRAN & TECH <br><span style="font-size: 11px; color: #ff3e3e; text-transform: uppercase; letter-spacing: 2px;">Admin Portal</span></div>
+    <div class="admin-logo-box">
+        <div>
+            <a href="admin.html" class="admin-logo">GRAN & TECH</a>
+        </div>
+        <span class="admin-pill">Admin</span>
+    </div>
+
     <nav class="admin-nav">
-        <a href="admin.html"><i class="fas fa-chart-pie"></i> Overview</a>
-        <a href="#" class="active"><i class="fas fa-shopping-cart"></i> Orders</a>
-        <a href="#"><i class="fas fa-box-open"></i> Products</a>
-        <a href="#"><i class="fas fa-users"></i> Customers</a>
-        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        <div class="nav-label">Core Console</div>
+        <a href="admin.html"><i class="fas fa-chart-line"></i> Dashboard & Orders</a>
+        <a href="admin.html" onclick="sessionStorage.setItem('adminTab','tickets')"><i class="fas fa-headset"></i> Support Tickets</a>
+        <a href="admin-create-order.html" class="active"><i class="fas fa-plus-circle"></i> Manual Order Entry</a>
+
+        <div class="nav-label" style="margin-top: 15px;">Store Management</div>
+        <a href="search.html" target="_blank"><i class="fas fa-boxes"></i> Hardware Catalog</a>
+        <a href="my-account.html"><i class="fas fa-user-shield"></i> Profile & Security</a>
     </nav>
+
+    <div class="sidebar-footer">
+        <a href="index.html" class="btn-storefront"><i class="fas fa-external-link-alt"></i> View Storefront</a>
+    </div>
 </aside>
 
+<!-- Main Workspace -->
 <main class="admin-main">
     <header class="admin-header">
-        <div style="font-size: 14px; font-weight: 600; color: #64748b;"><i class="fas fa-lock" style="margin-right: 8px;"></i> Secure Admin Session</div>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-size: 14px; font-weight: 700;">System Admin</span>
-            <div style="width: 36px; height: 36px; background: #0a1128; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;">A</div>
+        <div style="font-size: 13px; font-weight: 700; color: #64748b;">
+            <i class="fas fa-lock" style="margin-right: 8px; color: #10b981;"></i> Internal Staff Authorized Entry
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 13px; font-weight: 800; color: #0a1128;">Offline Sales Dispatch</span>
         </div>
     </header>
 
     <div class="admin-content">
         <div class="page-title">
-            <button class="back-btn" onclick="window.history.back()"><i class="fas fa-arrow-left"></i></button>
-            Create New Order
+            <a href="admin.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <span>Generate Offline Order</span>
         </div>
 
-        <div class="create-layout">
+        <form id="createOrderForm" onsubmit="handleCreateOrder(event)">
+            <div class="create-layout">
 
-            <div>
-                <div class="admin-card">
-                    <div class="card-header">
-                        <span class="card-title">Order Items</span>
-                        <button class="btn-secondary">Browse Catalog</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="search-bar">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search products by name or SKU...">
+                <!-- Left Column: Items & Customer Details -->
+                <div>
+                    <!-- Card 1: Add Order Items -->
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <span class="card-title">Order Line Items</span>
+                            <span style="font-size: 12px; color: #64748b; font-weight: 600;" id="itemCountLabel">1 SKU selected</span>
                         </div>
+                        <div class="card-body">
+                            <!-- Product Selector Dropdown -->
+                            <div class="add-item-box">
+                                <div>
+                                    <label class="form-label">Select Hardware</label>
+                                    <select id="productSelect" class="select-input" onchange="onProductSelectChange()">
+                                        <option value="">-- Choose Hardware SKU --</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="form-label">Configuration</label>
+                                    <select id="variantSelect" class="select-input">
+                                        <option value="Standard">Standard Spec</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="form-label">Quantity</label>
+                                    <input type="number" id="itemQuantity" class="select-input" value="1" min="1" max="50">
+                                </div>
+                                <div style="display: flex; align-items: flex-end;">
+                                    <button type="button" class="btn-add-line" onclick="addItemToOrder()">
+                                        <i class="fas fa-plus"></i> Add
+                                    </button>
+                                </div>
+                            </div>
 
-                        <table class="order-items">
-                            <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th style="text-align: center;">Quantity</th>
-                                <th style="text-align: right;">Total</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div class="item-info">
-                                        <div class="item-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100" alt="Laptop"></div>
-                                        <div>
-                                            <div style="font-weight: 700; font-size: 14px; color: #0f172a;">Aether Pro Laptop</div>
-                                            <div style="font-size: 12px; color: #64748b; margin-top: 4px;">SKU: GT-LPT-AP1</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td style="text-align: center;">
-                                    <input type="number" value="1" style="width: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-weight: 600;">
-                                </td>
-                                <td style="text-align: right; font-weight: 800; color: #0f172a;">$1,999.00</td>
-                                <td style="text-align: right;"><i class="fas fa-times" style="color: #ef4444; cursor: pointer;"></i></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="admin-card">
-                    <div class="card-header">
-                        <span class="card-title">Customer Information</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="search-bar" style="margin-bottom: 30px;">
-                            <i class="fas fa-user"></i>
-                            <input type="text" placeholder="Search existing customer...">
-                        </div>
-
-                        <div style="display: flex; gap: 15px;">
-                            <div class="input-group" style="flex: 1;"><input type="text" value="Saha" required><label>First Name</label></div>
-                            <div class="input-group" style="flex: 1;"><input type="text" value="Madushanka" required><label>Last Name</label></div>
-                        </div>
-                        <div class="input-group"><input type="email" value="saha@example.com" required><label>Email Address</label></div>
-                        <div class="input-group"><input type="text" value="+94 77 123 4567" required><label>Phone Number</label></div>
-
-                        <h4 style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #64748b; margin: 20px 0 15px;">Shipping Address</h4>
-                        <div class="input-group"><input type="text" value="123 Tech Lane" required><label>Street Address</label></div>
-                        <div style="display: flex; gap: 15px;">
-                            <div class="input-group" style="flex: 2;"><input type="text" value="Colombo" required><label>City</label></div>
-                            <div class="input-group" style="flex: 1;"><input type="text" value="00100" required><label>Postal Code</label></div>
+                            <!-- Selected Items Table -->
+                            <table class="order-items-table">
+                                <thead>
+                                <tr>
+                                    <th>Hardware Item</th>
+                                    <th style="text-align: center;">Qty</th>
+                                    <th style="text-align: right;">Unit Price</th>
+                                    <th style="text-align: right;">Subtotal</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="orderItemsTableBody">
+                                <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div>
-                <div class="admin-card">
-                    <div class="card-header">
-                        <span class="card-title">Payment & Summary</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <select required>
-                                <option value="" disabled hidden></option>
-                                <option value="pending" selected>Payment Pending (Send Invoice)</option>
-                                <option value="paid_card">Mark as Paid (Credit Card)</option>
-                                <option value="paid_cash">Mark as Paid (Cash/Transfer)</option>
-                            </select>
-                            <label>Payment Status</label>
+                    <!-- Card 2: Customer Information -->
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <span class="card-title">Client & Shipping Information</span>
                         </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" id="custFirstName" class="form-control" value="Saha" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name *</label>
+                                    <input type="text" id="custLastName" class="form-control" value="Madushanka" required>
+                                </div>
+                            </div>
 
-                        <div style="margin-top: 30px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                            <div class="summary-row"><span>Subtotal</span><span style="font-weight: 600; color: #0f172a;">$1,999.00</span></div>
-                            <div class="summary-row"><span>Shipping</span><span style="font-weight: 600; color: #0f172a;">$0.00</span></div>
-                            <div class="summary-row"><span>Taxes</span><span style="font-weight: 600; color: #0f172a;">$0.00</span></div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Email Address *</label>
+                                    <input type="email" id="custEmail" class="form-control" value="saha@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Contact Phone</label>
+                                    <input type="text" id="custPhone" class="form-control" value="+94 77 123 4567">
+                                </div>
+                            </div>
 
-                            <div class="summary-total">
-                                <span>Total</span>
-                                <span>$1,999.00</span>
+                            <div class="form-group">
+                                <label class="form-label">Delivery Street Address *</label>
+                                <input type="text" id="custAddress" class="form-control" value="123 Tech Lane, Cinnamon Gardens" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">City / District *</label>
+                                    <input type="text" id="custCity" class="form-control" value="Colombo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Postal / ZIP Code</label>
+                                    <input type="text" id="custPostal" class="form-control" value="00100">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="admin-card">
-                    <div class="card-body">
-                        <div class="input-group" style="margin-bottom: 0;">
-                            <input type="text" placeholder=" "><label>Order Notes / Internal Tags</label>
+                <!-- Right Column: Payment & Order Summary -->
+                <div>
+                    <div class="admin-card">
+                        <div class="card-header">
+                            <span class="card-title">Payment & Settlement</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Settlement Method</label>
+                                <select id="paymentMethod" class="form-control" required>
+                                    <option value="Credit Card">Credit Card (Authorized Gateway)</option>
+                                    <option value="Direct Bank Transfer">Direct Bank Transfer</option>
+                                    <option value="Cash On Delivery">Cash on Delivery (COD)</option>
+                                    <option value="Invoice">Payment Pending (Send Official Invoice)</option>
+                                </select>
+                            </div>
+
+                            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 20px;">
+                                <div class="summary-row">
+                                    <span>Hardware Subtotal</span>
+                                    <span style="font-weight: 700; color: #0f172a;" id="summarySubtotal">$0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Expedited Courier Freight</span>
+                                    <span style="font-weight: 700; color: #10b981;">FREE (Complimentary)</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Applicable Sales Tax</span>
+                                    <span style="font-weight: 700; color: #0f172a;">$0.00</span>
+                                </div>
+
+                                <div class="summary-total">
+                                    <span>Order Total</span>
+                                    <span id="summaryTotal">$0.00</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="admin-card">
+                        <div class="card-body">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">Internal Order Notes / Staff Reference</label>
+                                <textarea id="orderNotes" class="form-control" rows="3" placeholder="e.g. In-store VIP client consultation, expedited assembly requested."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-order" id="submitOrderBtn">
+                        <i class="fas fa-check-circle"></i> Commit & Dispatch Order
+                    </button>
                 </div>
 
-                <button class="btn-primary" onclick="window.location.href='admin.html'"><i class="fas fa-check" style="margin-right: 8px;"></i> Create Order</button>
             </div>
-
-        </div>
+        </form>
     </div>
 </main>
+
+<script src="assets/js/grantech.js"></script>
+<script>
+    let catalogProducts = [];
+    let selectedOrderItems = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await loadCatalogProducts();
+    });
+
+    async function loadCatalogProducts() {
+        try {
+            const res = await fetch('/api/products');
+            const data = await res.json();
+            if (data.products && Array.isArray(data.products)) {
+                catalogProducts = data.products;
+                const select = document.getElementById('productSelect');
+                catalogProducts.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.name} - ${GT.formatCurrency(p.price)}`;
+                    select.appendChild(opt);
+                });
+
+                // Pre-add the first product as an initial default
+                if (catalogProducts.length > 0) {
+                    const first = catalogProducts[0];
+                    selectedOrderItems.push({
+                        productId: first.id,
+                        name: first.name,
+                        image: first.imageUrl || 'assets/images/default.jpg',
+                        price: first.price,
+                        variant: '16GB RAM | 1TB SSD',
+                        quantity: 1
+                    });
+                    renderOrderItems();
+                }
+            }
+        } catch (e) {
+            console.error('Failed to load products for manual order:', e);
+        }
+    }
+
+    function onProductSelectChange() {
+        const pId = parseInt(document.getElementById('productSelect').value);
+        const variantSelect = document.getElementById('variantSelect');
+        variantSelect.innerHTML = '';
+
+        const product = catalogProducts.find(p => p.id === pId);
+        if (product && product.variants && product.variants.length > 0) {
+            product.variants.forEach(v => {
+                const opt = document.createElement('option');
+                opt.value = `${v.variantName} (+${GT.formatCurrency(v.priceAdjustment)})`;
+                opt.dataset.adj = v.priceAdjustment;
+                opt.textContent = `${v.variantName} (+${GT.formatCurrency(v.priceAdjustment)})`;
+                variantSelect.appendChild(opt);
+            });
+        } else {
+            const opt = document.createElement('option');
+            opt.value = 'Standard Configuration';
+            opt.dataset.adj = 0;
+            opt.textContent = 'Standard Configuration';
+            variantSelect.appendChild(opt);
+        }
+    }
+
+    function addItemToOrder() {
+        const pId = parseInt(document.getElementById('productSelect').value);
+        if (!pId) {
+            GT.showToast('Please select a hardware product first.', 'error');
+            return;
+        }
+
+        const product = catalogProducts.find(p => p.id === pId);
+        if (!product) return;
+
+        const qty = parseInt(document.getElementById('itemQuantity').value) || 1;
+        const variantSelect = document.getElementById('variantSelect');
+        const selectedVariantOpt = variantSelect.selectedOptions[0];
+        const variantName = selectedVariantOpt ? selectedVariantOpt.value : 'Standard Spec';
+        const priceAdj = selectedVariantOpt ? parseFloat(selectedVariantOpt.dataset.adj || 0) : 0;
+        const effectivePrice = product.price + priceAdj;
+
+        // Check if item already exists in list with same variant
+        const existing = selectedOrderItems.find(it => it.productId === pId && it.variant === variantName);
+        if (existing) {
+            existing.quantity += qty;
+        } else {
+            selectedOrderItems.push({
+                productId: product.id,
+                name: product.name,
+                image: product.imageUrl || 'assets/images/default.jpg',
+                price: effectivePrice,
+                variant: variantName,
+                quantity: qty
+            });
+        }
+
+        renderOrderItems();
+        GT.showToast(`Added ${product.name} to order lines.`, 'success');
+    }
+
+    function removeOrderItem(index) {
+        selectedOrderItems.splice(index, 1);
+        renderOrderItems();
+    }
+
+    function renderOrderItems() {
+        const tbody = document.getElementById('orderItemsTableBody');
+        const countLabel = document.getElementById('itemCountLabel');
+        countLabel.textContent = `${selectedOrderItems.length} SKU(s) selected`;
+
+        if (selectedOrderItems.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 30px; color: #64748b;">No hardware items added. Select a product above.</td></tr>`;
+            updateTotals(0);
+            return;
+        }
+
+        let total = 0;
+        tbody.innerHTML = selectedOrderItems.map((item, idx) => {
+            const lineSubtotal = item.price * item.quantity;
+            total += lineSubtotal;
+
+            return `
+                <tr>
+                    <td>
+                        <div class="item-info">
+                            <div class="item-thumb"><img src="${GT.escapeHtml(item.image)}" alt="${GT.escapeHtml(item.name)}"></div>
+                            <div>
+                                <div style="font-weight: 700; color: #0f172a;">${GT.escapeHtml(item.name)}</div>
+                                <div style="font-size: 11px; color: #64748b; margin-top: 2px;">${GT.escapeHtml(item.variant)}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align: center; font-weight: 700;">${item.quantity}</td>
+                    <td style="text-align: right; color: #64748b;">${GT.formatCurrency(item.price)}</td>
+                    <td style="text-align: right; font-weight: 800; color: #0f172a;">${GT.formatCurrency(lineSubtotal)}</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="remove-btn" onclick="removeOrderItem(${idx})" title="Remove Line">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        updateTotals(total);
+    }
+
+    function updateTotals(total) {
+        document.getElementById('summarySubtotal').textContent = GT.formatCurrency(total);
+        document.getElementById('summaryTotal').textContent = GT.formatCurrency(total);
+    }
+
+    async function handleCreateOrder(e) {
+        e.preventDefault();
+
+        if (selectedOrderItems.length === 0) {
+            GT.showToast('Please add at least one hardware item to the order.', 'error');
+            return;
+        }
+
+        const btn = document.getElementById('submitOrderBtn');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Processing ACID Order Commit...`;
+
+        const firstName = document.getElementById('custFirstName').value.trim();
+        const lastName = document.getElementById('custLastName').value.trim();
+        const fullName = `${firstName} ${lastName}`;
+        const email = document.getElementById('custEmail').value.trim();
+        const address = document.getElementById('custAddress').value.trim();
+        const city = document.getElementById('custCity').value.trim();
+        const postal = document.getElementById('custPostal').value.trim();
+        const paymentMethod = document.getElementById('paymentMethod').value;
+
+        const payload = {
+            action: 'createOrder',
+            customerName: fullName,
+            customerEmail: email,
+            shippingAddress: address,
+            city: city,
+            postalCode: postal,
+            paymentMethod: paymentMethod,
+            items: selectedOrderItems.map(it => ({
+                productId: it.productId,
+                quantity: it.quantity,
+                variant: it.variant,
+                price: it.price
+            }))
+        };
+
+        try {
+            const res = await fetch('/api/admin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (data.success && data.order) {
+                GT.showToast(`Order #${data.order.orderNo} created successfully!`, 'success');
+                setTimeout(() => {
+                    window.location.href = `success.html?orderNo=${encodeURIComponent(data.order.orderNo)}`;
+                }, 1200);
+            } else {
+                GT.showToast(data.message || 'Failed to create manual order.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-check-circle"></i> Commit & Dispatch Order`;
+            }
+        } catch (err) {
+            console.error('Order creation error:', err);
+            GT.showToast('Server communication failure. Please verify connection.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fas fa-check-circle"></i> Commit & Dispatch Order`;
+        }
+    }
+</script>
 
 </body>
 </html>

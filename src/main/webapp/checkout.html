@@ -1,162 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Secure Checkout | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | GRAN & TECH</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #fff; color: #0a1128; display: flex; min-height: 100vh; }
+        body { background: #fdfdfd; }
+        .checkout-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+        }
 
-        /* Layout */
-        .checkout-left { flex: 1.2; padding: 60px 8% 60px 12%; background: #fff; border-right: 1px solid #f0f0f0; }
-        .checkout-right { flex: 0.8; padding: 60px 12% 60px 8%; background: #fafafa; }
+        /* Left Side: Forms */
+        .form-side {
+            padding: 60px 8% 80px 5%;
+            border-right: 1px solid var(--slate-200);
+        }
+        .form-section-header {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-section-header a {
+            font-size: 13px;
+            color: var(--navy);
+            text-decoration: underline;
+        }
 
-        .logo { font-size: 28px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; display: block; margin-bottom: 40px; }
+        .input-group-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .input-full {
+            margin-bottom: 16px;
+        }
+        .checkout-input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            color: var(--navy);
+            outline: none;
+            transition: var(--transition);
+            background: var(--white);
+        }
+        .checkout-input:focus {
+            border-color: var(--navy);
+            box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.08);
+        }
 
-        /* Breadcrumbs */
-        .breadcrumbs { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
-        .breadcrumbs span { color: #0a1128; font-weight: 800; }
+        .btn-pay-now {
+            width: 100%;
+            padding: 22px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-pay-now:hover {
+            background: var(--accent);
+            box-shadow: 0 10px 25px rgba(255, 62, 62, 0.3);
+            transform: translateY(-2px);
+        }
 
-        /* Section Titles */
-        .section-title { font-size: 20px; font-weight: 800; margin: 40px 0 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+        /* Right Side: Order Summary */
+        .summary-side {
+            background: var(--slate-50);
+            padding: 60px 5% 80px 8%;
+        }
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+        .summary-item-img {
+            width: 64px;
+            height: 64px;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            padding: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .summary-item-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .summary-item-qty {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--navy);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 800;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .summary-item-text {
+            flex: 1;
+        }
+        .summary-item-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+        .summary-item-variant {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-top: 2px;
+        }
+        .summary-item-price {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--navy);
+        }
 
-        /* Floating Label Inputs */
-        .input-row { display: flex; gap: 15px; }
-        .input-group { position: relative; margin-bottom: 15px; flex: 1; }
-        .input-group input { width: 100%; padding: 22px 15px 10px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: 0.2s; background: transparent; }
-        .input-group input:focus { border-color: #0a1128; box-shadow: 0 0 0 1px #0a1128; }
-        .input-group label { position: absolute; top: 16px; left: 15px; font-size: 14px; color: #888; transition: 0.2s ease all; pointer-events: none; }
-        .input-group input:focus ~ label, .input-group input:valid ~ label { top: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #0a1128; letter-spacing: 0.5px; }
+        .discount-row {
+            display: flex;
+            gap: 12px;
+            margin: 30px 0;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--slate-200);
+        }
+        .discount-row input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            outline: none;
+            font-size: 13px;
+        }
+        .discount-row button {
+            padding: 14px 24px;
+            background: var(--slate-200);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .discount-row button:hover {
+            background: var(--navy);
+            color: var(--white);
+        }
 
-        /* Payment Box (Seamless look) */
-        .payment-box { border: 1px solid #d1d5db; border-radius: 6px; background: #f8f9fa; overflow: hidden; }
-        .payment-box .input-group { margin-bottom: 0; }
-        .payment-box .input-group input { border: none; border-radius: 0; border-bottom: 1px solid #d1d5db; }
-        .payment-box .input-row .input-group input { border-bottom: none; }
-        .payment-box .input-row .input-group:first-child input { border-right: 1px solid #d1d5db; }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            font-size: 14px;
+            color: var(--slate-600);
+        }
+        .summary-total-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--slate-200);
+        }
+        .total-amount-val {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--navy);
+            letter-spacing: -1px;
+        }
 
-        /* Custom Checkbox */
-        .custom-check { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: #555; margin-top: 15px; }
-        .custom-check input { appearance: none; width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 4px; cursor: pointer; position: relative; }
-        .custom-check input:checked { background: #0a1128; border-color: #0a1128; }
-        .custom-check input:checked::after { content: '✔'; position: absolute; color: white; font-size: 10px; left: 4px; top: 1px; }
-
-        /* Pay Button */
-        .btn-pay { display: block; width: 100%; background: #0a1128; color: white; padding: 24px; border: none; border-radius: 6px; font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 40px; cursor: pointer; transition: 0.3s; }
-        .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.15); }
-
-        /* Order Summary Items */
-        .summary-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .item-img-box { position: relative; width: 64px; height: 64px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; display: flex; justify-content: center; align-items: center; padding: 5px; }
-        .item-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .item-badge { position: absolute; top: -8px; right: -8px; background: #888; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
-
-        .totals-row { display: flex; justify-content: space-between; font-size: 14px; color: #555; margin-bottom: 15px; }
-        .totals-main { display: flex; justify-content: space-between; align-items: flex-end; font-size: 24px; font-weight: 900; margin-top: 30px; padding-top: 25px; border-top: 1px solid #e5e7eb; }
+        @media (max-width: 992px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+            .form-side { border-right: none; padding: 40px 5%; }
+            .summary-side { padding: 40px 5%; }
+        }
     </style>
 </head>
 <body>
 
-<div class="checkout-left">
-    <a href="index.html" class="logo">GRAN & TECH</a>
-    <div class="breadcrumbs">
-        <a href="cart.html" style="color:#888; text-decoration:none;">Cart</a> &nbsp; / &nbsp; <span>Information & Payment</span>
-    </div>
+<div class="checkout-layout">
+    <!-- Left Column: Checkout Form -->
+    <div class="form-side">
+        <a href="index.html" class="gt-brand" style="margin-bottom: 40px; display: inline-block;">
+            <span class="gt-logo">GRAN & TECH<span>.</span></span>
+        </a>
 
-    <h2 class="section-title">
-        Contact
-        <a href="sign-in.html" style="font-size:13px; color:#0a1128; font-weight:700; text-decoration:none;">Log in</a>
-    </h2>
-    <div class="input-group">
-        <input type="email" required>
-        <label>Email or mobile phone number</label>
-    </div>
-    <label class="custom-check"><input type="checkbox" checked> Email me with news and exclusive tech offers</label>
-
-    <h2 class="section-title">Shipping Address</h2>
-    <div class="input-group">
-        <input type="text" required>
-        <label>Country / Region</label>
-    </div>
-    <div class="input-row">
-        <div class="input-group"><input type="text" required><label>First name</label></div>
-        <div class="input-group"><input type="text" required><label>Last name</label></div>
-    </div>
-    <div class="input-group">
-        <input type="text" required>
-        <label>Address</label>
-    </div>
-    <div class="input-row">
-        <div class="input-group"><input type="text" required><label>City</label></div>
-        <div class="input-group"><input type="text" required><label>Postal code</label></div>
-    </div>
-
-    <h2 class="section-title">
-        Payment
-        <span style="font-size:12px; color:#888; font-weight:600; text-transform:none;"><i class="fas fa-lock"></i> Secure encrypted</span>
-    </h2>
-
-    <div class="payment-box">
-        <div class="input-group">
-            <input type="text" required>
-            <label>Card number</label>
+        <div style="font-size: 12px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">
+            <a href="cart.html" style="color: var(--slate-400); text-decoration: none;">Cart</a> &nbsp;/&nbsp; 
+            <span style="color: var(--navy);">Information & Payment</span>
         </div>
-        <div class="input-row">
-            <div class="input-group"><input type="text" required><label>Expiration date (MM/YY)</label></div>
-            <div class="input-group"><input type="text" required><label>Security code</label></div>
-        </div>
-    </div>
 
-    <button class="btn-pay">Pay $2,348.00</button>
-</div>
-
-<div class="checkout-right">
-    <div class="summary-item">
-        <div style="display:flex; align-items:center; gap:20px;">
-            <div class="item-img-box">
-                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200" alt="Laptop">
-                <span class="item-badge">1</span>
+        <form id="checkoutForm" onsubmit="handleProceedToGateway(event)">
+            <!-- 1. Customer Contact -->
+            <div style="margin-bottom: 40px;">
+                <div class="form-section-header">
+                    <span>Contact Information</span>
+                    <span id="authPromptLink"><a href="sign-in.html">Already have an account? Sign In</a></span>
+                </div>
+                <div class="input-full">
+                    <input type="email" id="customerEmail" class="checkout-input" placeholder="Email address" required>
+                </div>
+                <div class="input-full">
+                    <input type="text" id="customerPhone" class="checkout-input" placeholder="Phone number (e.g. +94 77 123 4567)" required>
+                </div>
             </div>
+
+            <!-- 2. Shipping Address -->
+            <div style="margin-bottom: 40px;">
+                <div class="form-section-header">
+                    <span>Shipping Address</span>
+                </div>
+                <div class="input-group-grid">
+                    <input type="text" id="firstName" class="checkout-input" placeholder="First name" required>
+                    <input type="text" id="lastName" class="checkout-input" placeholder="Last name" required>
+                </div>
+                <div class="input-full">
+                    <input type="text" id="shippingAddress" class="checkout-input" placeholder="Street address and suite / apt" required>
+                </div>
+                <div class="input-group-grid">
+                    <input type="text" id="shippingCity" class="checkout-input" placeholder="City" value="Colombo" required>
+                    <input type="text" id="shippingPostalCode" class="checkout-input" placeholder="Postal code" value="00300" required>
+                </div>
+            </div>
+
+            <!-- 3. Proceed to Payment Gateway -->
+            <button type="submit" class="btn-pay-now" id="btnSubmitCheckout">
+                <i class="fal fa-lock-alt"></i>
+                <span id="payBtnLabel">Proceed to Secure Payment Gateway</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Right Column: Order Summary -->
+    <div class="summary-side">
+        <h3 style="font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 24px;">Order Summary</h3>
+        <div id="checkoutItemsList">
+            <div style="text-align: center; padding: 40px; color: var(--slate-400);">Loading bag items...</div>
+        </div>
+
+        <div class="discount-row">
+            <input type="text" id="discountCodeInput" placeholder="Discount or promo code">
+            <button type="button" onclick="applyPromo()">Apply</button>
+        </div>
+
+        <div class="summary-line">
+            <span>Subtotal</span>
+            <strong id="chkSubtotal">$0.00</strong>
+        </div>
+        <div class="summary-line">
+            <span>Shipping</span>
+            <span style="color: #10b981; font-weight: 700;">Free Courier Delivery</span>
+        </div>
+        <div class="summary-line">
+            <span>Estimated Taxes</span>
+            <span>$0.00 (Inclusive)</span>
+        </div>
+
+        <div class="summary-total-line">
             <div>
-                <h4 style="font-size:14px; font-weight:800; margin:0;">Aether Pro Laptop</h4>
-                <p style="font-size:12px; color:#888; margin-top:4px;">16GB RAM | 1TB SSD</p>
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--slate-400);">Total Due</span>
+                <div style="font-size: 11px; color: var(--slate-400);">Including VAT & duty fees</div>
             </div>
+            <div class="total-amount-val" id="chkTotal">$0.00</div>
         </div>
-        <span style="font-weight:700; font-size:14px;">$1,999.00</span>
-    </div>
-
-    <div class="summary-item">
-        <div style="display:flex; align-items:center; gap:20px;">
-            <div class="item-img-box">
-                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200" alt="Headphones">
-                <span class="item-badge">1</span>
-            </div>
-            <div>
-                <h4 style="font-size:14px; font-weight:800; margin:0;">Sonic Headphones</h4>
-                <p style="font-size:12px; color:#888; margin-top:4px;">Matte Black</p>
-            </div>
-        </div>
-        <span style="font-weight:700; font-size:14px;">$349.00</span>
-    </div>
-
-    <div style="display:flex; gap:10px; margin:40px 0; padding-bottom:40px; border-bottom:1px solid #e5e7eb;">
-        <div class="input-group" style="margin:0;">
-            <input type="text" required>
-            <label>Discount code</label>
-        </div>
-        <button style="background:#e5e7eb; color:#666; border:none; border-radius:6px; padding:0 25px; font-weight:800; cursor:pointer;">Apply</button>
-    </div>
-
-    <div class="totals-row"><span>Subtotal</span><span style="font-weight:700; color:#0a1128;">$2,348.00</span></div>
-    <div class="totals-row"><span>Shipping</span><span style="font-weight:700; color:#0a1128;">Free</span></div>
-    <div class="totals-row"><span>Estimated taxes</span><span>Calculated next step</span></div>
-
-    <div class="totals-main">
-        <span style="font-size:16px;">Total</span>
-        <span style="font-size:36px;">$2,348.00</span>
     </div>
 </div>
 
+<script src="assets/js/grantech.js"></script>
+<script>
+    let checkoutCart = [];
+    let checkoutSubtotal = 0.0;
+
+    async function initCheckout() {
+        // Check session to autofill customer details
+        try {
+            const authRes = await fetch('/api/auth');
+            const authData = await authRes.json();
+            if (authData.loggedIn && authData.user) {
+                const u = authData.user;
+                document.getElementById('customerEmail').value = u.email || '';
+                document.getElementById('customerPhone').value = u.phone || '';
+                const nameParts = (u.fullName || '').split(' ');
+                document.getElementById('firstName').value = nameParts[0] || '';
+                document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+                document.getElementById('shippingAddress').value = u.address || '';
+                document.getElementById('shippingCity').value = u.city || 'Colombo';
+                document.getElementById('shippingPostalCode').value = u.postalCode || '00300';
+                document.getElementById('authPromptLink').innerHTML = `<span style="color: #10b981; font-weight: 700;">Logged in as ${GT.escapeHtml(u.fullName)}</span>`;
+            }
+        } catch (e) {}
+
+        // Fetch cart
+        try {
+            const cartRes = await fetch('/api/cart');
+            const cartData = await cartRes.json();
+            checkoutCart = cartData.items || [];
+            checkoutSubtotal = cartData.subtotal || 0.0;
+
+            if (checkoutCart.length === 0) {
+                alert('Your shopping bag is empty. Redirecting to storefront.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            renderCheckoutSummary();
+        } catch (e) {
+            console.error('Checkout init error:', e);
+        }
+    }
+
+    function renderCheckoutSummary() {
+        const list = document.getElementById('checkoutItemsList');
+        const subtotalEl = document.getElementById('chkSubtotal');
+        const totalEl = document.getElementById('chkTotal');
+        const payBtn = document.getElementById('payBtnLabel');
+
+        subtotalEl.textContent = `$${checkoutSubtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        totalEl.textContent = `$${checkoutSubtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        payBtn.textContent = `Pay $${checkoutSubtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        list.innerHTML = checkoutCart.map(item => {
+            const p = item.product || {};
+            const unitPrice = item.unitPrice || p.price || 0;
+            const itemSub = (typeof item.subtotal === 'number') ? item.subtotal : (unitPrice * item.quantity);
+
+            return `
+                <div class="summary-item">
+                    <div class="summary-item-img">
+                        <img src="${p.mainImage || 'assets/images/1.jpg'}" alt="${GT.escapeHtml(p.name)}">
+                        <span class="summary-item-qty">${item.quantity}</span>
+                    </div>
+                    <div class="summary-item-text">
+                        <div class="summary-item-title">${GT.escapeHtml(p.name)}</div>
+                        <div class="summary-item-variant">${GT.escapeHtml(item.variantSummary || 'Standard Configuration')}</div>
+                    </div>
+                    <div class="summary-item-price">$${itemSub.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function applyPromo() {
+        const code = document.getElementById('discountCodeInput').value.trim();
+        if (code.toUpperCase() === 'GRAN10') {
+            GT.showToast('10% VIP Discount Code applied!', 'success');
+        } else {
+            GT.showToast('Promo code invalid or expired', 'warning');
+        }
+    }
+
+    function handleProceedToGateway(e) {
+        e.preventDefault();
+
+        // Save delivery details in sessionStorage for gateway.html
+        const orderDraft = {
+            email: document.getElementById('customerEmail').value.trim(),
+            phone: document.getElementById('customerPhone').value.trim(),
+            name: document.getElementById('firstName').value.trim() + ' ' + document.getElementById('lastName').value.trim(),
+            address: document.getElementById('shippingAddress').value.trim(),
+            city: document.getElementById('shippingCity').value.trim(),
+            postalCode: document.getElementById('shippingPostalCode').value.trim(),
+            amount: checkoutSubtotal
+        };
+
+        sessionStorage.setItem('grantech_order_draft', JSON.stringify(orderDraft));
+        window.location.href = 'gateway.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', initCheckout);
+</script>
 </body>
 </html>

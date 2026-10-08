@@ -1,64 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Secure Portal | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Sign In | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { display: flex; height: 100vh; background: #fff; }
+        body { display: flex; height: 100vh; background: #fff; overflow: hidden; }
 
-        /* Cinematic Left Side - Fixed robust image URL */
-        .auth-visual { flex: 1.2; background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat; position: relative; display: flex; align-items: flex-end; padding: 60px; }
-        .glass-panel { background: rgba(10, 17, 40, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px; color: white; width: 100%; max-width: 500px; }
+        /* Cinematic Left Visual */
+        .auth-visual {
+            flex: 1.1;
+            background: linear-gradient(135deg, rgba(10, 17, 40, 0.75) 0%, rgba(10, 17, 40, 0.4) 100%),
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 60px;
+        }
+        .glass-panel {
+            background: rgba(10, 17, 40, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 40px;
+            color: white;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        .glass-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .glass-title {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .glass-desc {
+            font-size: 14px;
+            opacity: 0.85;
+            line-height: 1.7;
+            font-weight: 400;
+        }
 
-        /* Clean Right Side */
-        .auth-form-area { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; background: #fff; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; color: #0a1128; position: absolute; top: 40px; right: 10%; }
+        /* Clean Right Side Form */
+        .auth-form-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            background: #ffffff;
+            position: relative;
+            overflow-y: auto;
+        }
+        .auth-top-bar {
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .auth-logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #0a1128;
+            text-decoration: none;
+        }
+        .auth-store-link {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .auth-store-link:hover {
+            color: #0a1128;
+        }
 
-        /* Animated Floating Labels */
-        .input-group { position: relative; margin-bottom: 30px; }
-        .input-group input { width: 100%; padding: 20px 15px 10px; font-size: 15px; border: none; border-bottom: 2px solid #eee; background: transparent; outline: none; transition: 0.3s; }
-        .input-group input:focus { border-bottom-color: #0a1128; }
-        .input-group label { position: absolute; top: 18px; left: 15px; color: #999; font-size: 15px; pointer-events: none; transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .input-group input:focus ~ label, .input-group input:valid ~ label { top: 0px; font-size: 11px; font-weight: 800; color: #0a1128; text-transform: uppercase; letter-spacing: 1px; }
+        .auth-form-content {
+            max-width: 440px;
+            width: 100%;
+            margin: 60px auto 0;
+        }
+        .auth-heading {
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            margin-bottom: 8px;
+            color: #0a1128;
+        }
+        .auth-subheading {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
 
-        /* Ultimate Button */
-        .btn-auth { width: 100%; background: #0a1128; color: #fff; padding: 20px; border: none; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; margin-top: 20px; }
-        .btn-auth:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.2); }
+        /* Demo Auto-Fill Box */
+        .demo-credentials-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .demo-info {
+            font-size: 11px;
+            color: #475569;
+            font-weight: 600;
+        }
+        .demo-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-demo-pill {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #0a1128;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-demo-pill:hover {
+            background: #0a1128;
+            color: #ffffff;
+            border-color: #0a1128;
+        }
+
+        /* Floating Input Group */
+        .form-input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        .form-input-group input {
+            width: 100%;
+            padding: 20px 14px 10px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #fff;
+            outline: none;
+            transition: 0.2s;
+            font-weight: 500;
+            color: #0a1128;
+        }
+        .form-input-group input:focus {
+            border-color: #0a1128;
+            box-shadow: 0 0 0 1px #0a1128;
+        }
+        .form-input-group label {
+            position: absolute;
+            top: 15px;
+            left: 14px;
+            color: #64748b;
+            font-size: 13px;
+            pointer-events: none;
+            transition: 0.2s ease all;
+        }
+        .form-input-group input:focus ~ label,
+        .form-input-group input:not(:placeholder-shown) ~ label {
+            top: 6px;
+            font-size: 9px;
+            font-weight: 800;
+            color: #0a1128;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        .form-options-row label {
+            cursor: pointer;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-submit-auth {
+            width: 100%;
+            background: #0a1128;
+            color: #ffffff;
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(10, 17, 40, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-submit-auth:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(10, 17, 40, 0.2);
+        }
+
+        .auth-switch-text {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .auth-switch-text a {
+            color: #0a1128;
+            font-weight: 800;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .auth-visual { display: none; }
+            .auth-form-area { padding: 40px 20px; }
+            body { overflow: auto; }
+        }
     </style>
 </head>
 <body>
+
+<!-- Left Cinematic Visual -->
 <div class="auth-visual">
     <div class="glass-panel">
-        <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 10px;">The Future of Tech.</h2>
-        <p style="font-size: 14px; opacity: 0.8; line-height: 1.6;">Experience unparalleled design and performance. Sign in to access your exclusive GRAN & TECH portfolio.</p>
+        <span class="glass-badge">Enterprise Cryptography</span>
+        <h2 class="glass-title">The Standard of Pure Engineering.</h2>
+        <p class="glass-desc">
+            Experience uncompromised precision, modular performance, and hardware luxury. Sign in to review your verified portfolio and order tracking.
+        </p>
     </div>
 </div>
-<div class="auth-form-area">
-    <a href="index.html" style="text-decoration:none;"><div class="logo">GRAN & TECH</div></a>
-    <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; color: #0a1128;">Welcome back.</h1>
-    <p style="color: #666; margin-bottom: 50px;">Please enter your details to proceed.</p>
 
-    <form>
-        <div class="input-group">
-            <input type="email" required>
-            <label>Email Address</label>
+<!-- Right Authentication Form Area -->
+<div class="auth-form-area">
+    <div class="auth-top-bar">
+        <a href="index.html" class="auth-logo">GRAN & TECH</a>
+        <a href="index.html" class="auth-store-link"><i class="fas fa-arrow-left"></i> Storefront</a>
+    </div>
+
+    <div class="auth-form-content">
+        <h1 class="auth-heading">Welcome back.</h1>
+        <p class="auth-subheading">Access your client account and verified order history.</p>
+
+        <!-- Quick 1-Click Demo Credentials Pill -->
+        <div class="demo-credentials-box">
+            <div class="demo-info">
+                <strong>Quick Demo Autofill:</strong>
+            </div>
+            <div class="demo-btns">
+                <button type="button" class="btn-demo-pill" onclick="autofillDemo('admin')">Admin</button>
+                <button type="button" class="btn-demo-pill" onclick="autofillDemo('customer')">Customer</button>
+            </div>
         </div>
-        <div class="input-group">
-            <input type="password" required>
-            <label>Password</label>
-        </div>
-        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 30px;">
-            <label style="cursor: pointer; color: #444; display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" style="accent-color: #0a1128; width: 16px; height: 16px;">Remember me
-            </label>
-            <a href="#" style="color: #0a1128; text-decoration: none;">Forgot Password?</a>
-        </div>
-        <button type="button" class="btn-auth">Sign In to Portal</button>
-    </form>
-    <p style="text-align: center; margin-top: 40px; font-size: 14px; color: #666;">
-        New to the platform? <a href="sign-up.html" style="color: #0a1128; font-weight: 800; text-decoration: underline;">Create an account</a>
-    </p>
+
+        <form id="signInForm" onsubmit="handleLogin(event)">
+            <div class="form-input-group">
+                <input type="email" id="loginEmail" placeholder=" " required autocomplete="email">
+                <label>Email Address</label>
+            </div>
+
+            <div class="form-input-group">
+                <input type="password" id="loginPassword" placeholder=" " required autocomplete="current-password">
+                <label>Password</label>
+            </div>
+
+            <div class="form-options-row">
+                <label>
+                    <input type="checkbox" style="accent-color: #0a1128;"> Keep me signed in
+                </label>
+                <a href="support.html" style="color: #64748b; text-decoration: none;">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-submit-auth" id="signInSubmitBtn">
+                Sign In to Portal
+            </button>
+        </form>
+
+        <p class="auth-switch-text">
+            New to the platform? <a href="sign-up.html">Create an account</a>
+        </p>
+    </div>
 </div>
+
+<script src="assets/js/grantech.js"></script>
+<script>
+    function autofillDemo(type) {
+        if (type === 'admin') {
+            document.getElementById('loginEmail').value = 'admin@grantech.com';
+            document.getElementById('loginPassword').value = 'admin123';
+        } else {
+            document.getElementById('loginEmail').value = 'kusal@grantech.com';
+            document.getElementById('loginPassword').value = 'password123';
+        }
+        GT.showToast(`Autofilled ${type} credentials.`, 'info');
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        const btn = document.getElementById('signInSubmitBtn');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Authenticating...`;
+
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+            const res = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'login', email, password })
+            });
+
+            const data = await res.json();
+            if (data.success && data.user) {
+                GT.showToast(`Welcome back, ${data.user.fullName}!`, 'success');
+
+                const params = new URLSearchParams(window.location.search);
+                const redirect = params.get('redirect');
+
+                setTimeout(() => {
+                    if (redirect) {
+                        window.location.href = redirect;
+                    } else if (data.user.role === 'ADMIN') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'my-account.html';
+                    }
+                }, 800);
+            } else {
+                GT.showToast(data.message || 'Invalid email or password.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = `Sign In to Portal`;
+            }
+        } catch (err) {
+            console.error('Login error:', err);
+            GT.showToast('Authentication network error. Please try again.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = `Sign In to Portal`;
+        }
+    }
+</script>
+
 </body>
 </html>

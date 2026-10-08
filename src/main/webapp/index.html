@@ -1,162 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>GRAN & TECH | Official Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAN & TECH | High-Performance Hardware Ecosystem</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #fff; color: #0a1128; overflow-x: hidden; }
+        /* Specific Storefront Page Styles */
+        .hero-section {
+            position: relative;
+            height: 90vh;
+            min-height: 600px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            background: url('https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(10,17,40,0.92) 0%, rgba(10,17,40,0.6) 50%, rgba(10,17,40,0.1) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            color: var(--white);
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+        .hero-content h1 {
+            font-size: 76px;
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+        }
+        .hero-content p {
+            font-size: 17px;
+            opacity: 0.85;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        .btn-hero-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--white);
+            color: var(--navy);
+            padding: 18px 40px;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+        .btn-hero-primary:hover {
+            transform: translateY(-4px);
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 15px 35px rgba(255, 62, 62, 0.35);
+        }
 
-        /* Glassmorphism Header */
-        header { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 2000; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); transition: 0.3s; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
-        .nav-group { display: flex; gap: 30px; font-size: 13px; font-weight: 800; letter-spacing: 1px; align-items: center; }
-        .nav-group a { color: #0a1128; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
-        .nav-group a:hover { color: #ff3e3e; }
+        /* Category Strip */
+        .category-bar {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            padding: 40px 5%;
+            background: var(--slate-50);
+            border-bottom: 1px solid var(--slate-200);
+            gap: 20px;
+        }
+        .cat-card-link {
+            text-align: center;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 20px 10px;
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        .cat-card-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--navy);
+            box-shadow: var(--shadow-lg);
+            color: var(--accent);
+        }
+        .cat-card-link i {
+            font-size: 28px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .cat-card-link span {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+        }
 
-        /* Cinematic Hero Section */
-        .hero-section { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; padding: 0 5%; background: url('https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(10,17,40,0.9) 0%, rgba(10,17,40,0.2) 100%); z-index: 1; }
-        .hero-content { position: relative; z-index: 2; max-width: 700px; color: white; }
-        .hero-badge { display: inline-block; padding: 8px 16px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
-        .hero-content h1 { font-size: 84px; font-weight: 900; line-height: 0.95; letter-spacing: -3px; margin-bottom: 30px; }
-        .hero-content p { font-size: 18px; opacity: 0.8; line-height: 1.6; margin-bottom: 50px; font-weight: 300; }
+        /* Trending Section */
+        .section-padding {
+            padding: 90px 5%;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+        }
+        .section-title {
+            font-size: 44px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            color: var(--navy);
+        }
+        .section-subtitle {
+            color: var(--slate-600);
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .btn-view-all {
+            color: var(--navy);
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-bottom: 2px solid var(--navy);
+            padding-bottom: 4px;
+            transition: var(--transition);
+        }
+        .btn-view-all:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
 
-        .btn-primary { display: inline-block; background: #fff; color: #0a1128; padding: 22px 45px; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); background: #0a1128; color: #fff; border: 1px solid #fff; }
+        /* Modern Product Matrix */
+        .grid-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .product-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: transparent;
+            box-shadow: var(--shadow-2xl);
+        }
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 4px 10px;
+            color: var(--white);
+            background: var(--navy);
+            border-radius: var(--radius-sm);
+            z-index: 10;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .card-badge.hot { background: var(--accent); }
+        .card-badge.new { background: var(--emerald-800); }
 
-        /* Premium Marquee/Categories */
-        .category-bar { display: flex; justify-content: space-between; padding: 60px 5%; background: #f8f9fa; border-bottom: 1px solid #eee; }
-        .cat-item { text-align: center; color: #0a1128; text-decoration: none; transition: 0.3s; cursor: pointer; }
-        .cat-item:hover { transform: translateY(-5px); color: #ff3e3e; }
-        .cat-item i { font-size: 32px; margin-bottom: 15px; display: block; }
-        .cat-item span { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .card-img-box {
+            height: 240px;
+            background: var(--slate-50);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-img-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .product-card:hover .card-img-box img {
+            transform: scale(1.08);
+        }
 
-        /* The Matrix Grid (Matches Search Page perfectly) */
-        .section-padding { padding: 120px 5%; }
-        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
-        .section-title { font-size: 48px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+        /* Card Floating Actions */
+        .card-action-bar {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .product-card:hover .card-action-bar {
+            bottom: 0;
+        }
+        .btn-card-add {
+            flex: 1;
+            padding: 12px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-card-add:hover {
+            background: var(--accent);
+        }
+        .btn-card-view {
+            padding: 12px 16px;
+            background: var(--slate-100);
+            color: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-card-view:hover {
+            background: var(--slate-200);
+        }
 
-        .grid-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
-        .matrix-item { background: #fff; padding: 30px; position: relative; cursor: pointer; transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); overflow: hidden; border: 1px solid #f0f0f0; border-radius: 8px; }
-        .matrix-item:hover { transform: translateY(-10px); box-shadow: 0 40px 80px rgba(10, 17, 40, 0.08); border-color: transparent; }
-        .img-box { height: 250px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; background: #f8f9fa; border-radius: 4px; overflow: hidden; }
-        .img-box img { max-height: 80%; max-width: 80%; object-fit: contain; mix-blend-mode: multiply; transition: 0.7s ease; }
-        .matrix-item:hover .img-box img { transform: scale(1.1) rotate(-2deg); }
-        .action-bar { position: absolute; bottom: -60px; left: 0; width: 100%; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); transition: 0.4s ease; padding: 10px; gap: 10px; }
-        .matrix-item:hover .action-bar { bottom: 0; }
-        .action-btn { flex: 1; padding: 15px; color: white; background: #0a1128; border: none; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
-        .action-btn:hover { background: #ff3e3e; }
-        .badge { position: absolute; top: 20px; left: 20px; font-size: 10px; font-weight: 900; padding: 4px 10px; color: white; border-radius: 3px; z-index: 10; letter-spacing: 1px; }
+        .card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-category {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate-400);
+            margin-bottom: 6px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--navy);
+            text-decoration: none;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            transition: var(--transition);
+        }
+        .card-title:hover {
+            color: var(--accent);
+        }
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #f59e0b;
+            margin-bottom: 12px;
+        }
+        .card-rating span {
+            color: var(--slate-400);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .card-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .card-price {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--navy);
+        }
+        .card-old-price {
+            font-size: 14px;
+            color: var(--slate-400);
+            text-decoration: line-through;
+        }
 
-        /* Massive Footer */
-        footer { background: #0a1128; color: white; padding: 100px 5% 40px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 80px; }
-        .footer-col h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 15px; }
-        .footer-col ul a { color: white; text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.2s; }
-        .footer-col ul a:hover { color: #ff3e3e; padding-left: 5px; }
-        .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; font-size: 12px; font-weight: 600; opacity: 0.6; }
+        /* Trust Strip */
+        .trust-strip {
+            background: var(--navy);
+            color: var(--white);
+            padding: 60px 5%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .trust-icon {
+            font-size: 36px;
+            color: var(--accent);
+        }
+        .trust-text h4 {
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .trust-text p {
+            font-size: 12px;
+            color: var(--slate-300);
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        footer.gt-footer {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 80px 5% 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            color: var(--slate-400);
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        .footer-col ul a {
+            color: var(--slate-300);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .footer-col ul a:hover {
+            color: var(--accent);
+            padding-left: 4px;
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 30px;
+            font-size: 12px;
+            color: var(--slate-400);
+        }
+
+        @media (max-width: 1024px) {
+            .grid-matrix { grid-template-columns: repeat(2, 1fr); }
+            .category-bar { grid-template-columns: repeat(3, 1fr); }
+            .trust-strip { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .grid-matrix { grid-template-columns: 1fr; }
+            .category-bar { grid-template-columns: repeat(2, 1fr); }
+            .trust-strip { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 48px; }
+            .header-search-container { display: none; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="logo">GRAN & TECH</a>
-    <div class="nav-group">
-        <a href="search.html">Archive</a>
-        <a href="sign-in.html">Sign In</a>
-        <a href="cart.html" style="background: #0a1128; color: white; padding: 10px 20px; border-radius: 50px;">BAG (0)</a>
+<!-- 1. Top Announcement Bar -->
+<div class="top-announcement">
+    <div><i class="fal fa-bolt" style="color: #ff3e3e; margin-right: 6px;"></i> Free Worldwide Courier Shipping on all hardware orders over $200</div>
+    <div style="display: flex; gap: 20px;">
+        <a href="support.html"><i class="fal fa-headset"></i> 24/7 Technical Support</a>
+        <a href="admin.html"><i class="fal fa-shield-alt"></i> Staff Portal</a>
+    </div>
+</div>
+
+<!-- 2. Master Glassmorphism Header -->
+<header class="gt-header">
+    <a href="index.html" class="gt-brand">
+        <span class="gt-logo">GRAN & TECH<span>.</span></span>
+    </a>
+
+    <!-- Live Autocomplete Header Search -->
+    <div class="header-search-container">
+        <div class="header-search-box">
+            <i class="fal fa-search"></i>
+            <input type="text" id="gtHeaderSearchInput" placeholder="Search laptops, phones, audio, drones..." autocomplete="off">
+        </div>
+        <div class="search-dropdown-menu" id="gtHeaderSearchDropdown">
+            <!-- Populated dynamically via grantech.js -->
+        </div>
+    </div>
+
+    <!-- Navigation & User / Bag Actions -->
+    <div class="gt-nav-right">
+        <a href="index.html" class="nav-link-standard">Storefront</a>
+        <a href="search.html" class="nav-link-standard">Archive</a>
+        <a href="support.html" class="nav-link-standard">Support</a>
+
+        <div id="userNavSlot">
+            <!-- Populated with avatar or sign-in link -->
+            <a href="sign-in.html" class="nav-link-auth">SIGN IN</a>
+        </div>
+
+        <button class="btn-header-bag" onclick="GT.openDrawer()">
+            <i class="fal fa-shopping-bag"></i>
+            <span class="bag-count-badge">BAG (0)</span>
+        </button>
     </div>
 </header>
 
+<!-- 3. Cinematic Hero Section -->
 <section class="hero-section">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-        <div class="hero-badge">New Release Collection</div>
+        <div class="hero-badge">
+            <i class="fas fa-fire" style="color: #ff3e3e;"></i> New Release Collection
+        </div>
         <h1>Power.<br>Unleashed.</h1>
         <p>Experience the next generation of high-performance computing and smart technologies. Designed for the elite, engineered for the future.</p>
-        <a href="search.html" class="btn-primary">Shop the Archive</a>
+        <a href="search.html" class="btn-hero-primary">
+            <span>Shop the Archive</span>
+            <i class="fal fa-arrow-right"></i>
+        </a>
     </div>
 </section>
 
+<!-- 4. Interactive Category Bar -->
 <div class="category-bar">
-    <a href="search.html" class="cat-item"><i class="fal fa-laptop"></i><span>Computers</span></a>
-    <a href="search.html" class="cat-item"><i class="fal fa-mobile-android"></i><span>Phones</span></a>
-    <a href="search.html" class="cat-item"><i class="fal fa-watch"></i><span>Wearables</span></a>
-    <a href="search.html" class="cat-item"><i class="fal fa-headphones-alt"></i><span>Audio</span></a>
-    <a href="search.html" class="cat-item"><i class="fal fa-drone"></i><span>Drones</span></a>
-    <a href="search.html" class="cat-item"><i class="fal fa-home-lg-alt"></i><span>Smart Home</span></a>
+    <a href="search.html?categoryId=1" class="cat-card-link">
+        <i class="fal fa-laptop"></i>
+        <span>Computers</span>
+    </a>
+    <a href="search.html?categoryId=2" class="cat-card-link">
+        <i class="fal fa-mobile-android"></i>
+        <span>Phones</span>
+    </a>
+    <a href="search.html?categoryId=3" class="cat-card-link">
+        <i class="fal fa-watch"></i>
+        <span>Wearables</span>
+    </a>
+    <a href="search.html?categoryId=4" class="cat-card-link">
+        <i class="fal fa-headphones-alt"></i>
+        <span>Audio</span>
+    </a>
+    <a href="search.html?categoryId=5" class="cat-card-link">
+        <i class="fal fa-drone"></i>
+        <span>Drones</span>
+    </a>
+    <a href="search.html?categoryId=6" class="cat-card-link">
+        <i class="fal fa-home-lg-alt"></i>
+        <span>Smart Home</span>
+    </a>
 </div>
 
+<!-- 5. Trending Products Matrix (Live from Database) -->
 <section class="section-padding">
     <div class="section-header">
         <div>
             <h2 class="section-title">Trending Now.</h2>
-            <p style="color: #666; font-size: 16px; margin-top: 15px;">The most coveted tech of the season.</p>
+            <p class="section-subtitle">The most coveted computing and precision hardware of the season.</p>
         </div>
-        <a href="search.html" style="color: #0a1128; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border-bottom: 2px solid #0a1128; padding-bottom: 3px;">View All</a>
+        <a href="search.html" class="btn-view-all">View All Hardware &rarr;</a>
     </div>
 
-    <div class="grid-matrix">
-        <div class="matrix-item">
-            <span class="badge" style="background: #4caf50;">NEW</span>
-            <div class="img-box"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500" alt="Laptop"></div>
-            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Aether Pro Laptop</h3>
-            <p style="color: #888; font-size: 13px;">16GB RAM / 1TB SSD</p>
-            <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$1,999.00</p>
-            <div class="action-bar"><button class="action-btn" onclick="window.location.href='cart.html'">Quick Add <i class="fas fa-plus"></i></button></div>
-        </div>
-
-        <div class="matrix-item">
-            <span class="badge" style="background: #ff3e3e;">HOT</span>
-            <div class="img-box"><img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?w=500" alt="Phone"></div>
-            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Pro 15 Mobile</h3>
-            <p style="color: #888; font-size: 13px;">Titanium Black</p>
-            <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$999.00</p>
-            <div class="action-bar"><button class="action-btn" onclick="window.location.href='cart.html'">Quick Add <i class="fas fa-plus"></i></button></div>
-        </div>
-
-        <div class="matrix-item">
-            <div class="img-box"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Watch"></div>
-            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">ARE2 Smart Watch</h3>
-            <p style="color: #888; font-size: 13px;">Elite Obsidian</p>
-            <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$499.00</p>
-            <div class="action-bar"><button class="action-btn" onclick="window.location.href='cart.html'">Quick Add <i class="fas fa-plus"></i></button></div>
-        </div>
-
-        <div class="matrix-item">
-            <div class="img-box"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Headphones"></div>
-            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Sonic Headphones</h3>
-            <p style="color: #888; font-size: 13px;">Noise Cancelling Studio</p>
-            <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$349.00</p>
-            <div class="action-bar"><button class="action-btn" onclick="window.location.href='cart.html'">Quick Add <i class="fas fa-plus"></i></button></div>
+    <div class="grid-matrix" id="trendingGrid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--slate-400);">
+            <i class="fal fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <p>Loading trending hardware catalog...</p>
         </div>
     </div>
 </section>
 
-<footer>
+<!-- 6. Trust & Security Badges Strip -->
+<div class="trust-strip">
+    <div class="trust-item">
+        <i class="fal fa-shield-check trust-icon"></i>
+        <div class="trust-text">
+            <h4>2-Year Official Warranty</h4>
+            <p>Direct manufacturer hardware protection on every device.</p>
+        </div>
+    </div>
+    <div class="trust-item">
+        <i class="fal fa-truck-fast trust-icon"></i>
+        <div class="trust-text">
+            <h4>Express Worldwide Courier</h4>
+            <p>Fast trackable delivery with signature confirmation.</p>
+        </div>
+    </div>
+    <div class="trust-item">
+        <i class="fal fa-lock-alt trust-icon"></i>
+        <div class="trust-text">
+            <h4>256-Bit SSL Encrypted</h4>
+            <p>PCI DSS compliant security for all transactions.</p>
+        </div>
+    </div>
+    <div class="trust-item">
+        <i class="fal fa-sync-alt trust-icon"></i>
+        <div class="trust-text">
+            <h4>30-Day Hassle-Free Returns</h4>
+            <p>Complimentary return label included with your order.</p>
+        </div>
+    </div>
+</div>
+
+<!-- 7. Massive Footer -->
+<footer class="gt-footer">
     <div class="footer-grid">
-        <div>
-            <h2 class="logo" style="color: white; margin-bottom: 20px;">GRAN & TECH</h2>
-            <p style="font-size: 14px; opacity: 0.6; line-height: 1.8; max-width: 300px;">Engineering the future of personal technology. Premium products, seamless interfaces, and uncompromising performance.</p>
+        <div class="footer-col">
+            <span class="gt-logo" style="color: white; margin-bottom: 20px; display: inline-block;">GRAN & TECH<span>.</span></span>
+            <p style="font-size: 13px; line-height: 1.8; color: var(--slate-400); max-width: 320px;">
+                Engineering the future of personal technology. Premium computing systems, high-fidelity acoustics, and smart hardware engineered for uncompromising performance.
+            </p>
         </div>
         <div class="footer-col">
             <h4>Platform</h4>
             <ul>
                 <li><a href="search.html">Archive</a></li>
-                <li><a href="search.html">New Arrivals</a></li>
-                <li><a href="search.html">Bestsellers</a></li>
+                <li><a href="search.html?categoryId=1">Laptops & PCs</a></li>
+                <li><a href="search.html?categoryId=2">Smartphones</a></li>
+                <li><a href="search.html?categoryId=4">Audio & Acoustic</a></li>
             </ul>
         </div>
         <div class="footer-col">
             <h4>Support</h4>
             <ul>
-                <li><a href="#">Help Center</a></li>
-                <li><a href="#">Shipping & Returns</a></li>
-                <li><a href="#">Warranty</a></li>
+                <li><a href="support.html">Help Center & FAQ</a></li>
+                <li><a href="support.html#ticket">Submit Inquiry</a></li>
+                <li><a href="support.html">Warranty Policy</a></li>
+                <li><a href="support.html">Shipping Guidelines</a></li>
             </ul>
         </div>
         <div class="footer-col">
@@ -164,19 +593,82 @@
             <ul>
                 <li><a href="sign-in.html">Sign In</a></li>
                 <li><a href="sign-up.html">Create Account</a></li>
-                <li><a href="cart.html">View Bag</a></li>
+                <li><a href="cart.html">Review Bag</a></li>
+                <li><a href="admin.html">Admin Portal</a></li>
             </ul>
         </div>
     </div>
     <div class="footer-bottom">
-        <span>&copy; 2026 GRAN & TECH. All rights reserved.</span>
-        <div style="font-size: 20px; display: flex; gap: 20px;">
+        <div>&copy; 2026 GRAN & TECH Inc. All rights reserved. Built for Higher Diploma in Software Engineering.</div>
+        <div style="display: flex; gap: 20px; font-size: 18px; color: var(--slate-400);">
             <i class="fab fa-cc-visa"></i>
             <i class="fab fa-cc-mastercard"></i>
-            <i class="fab fa-cc-amex"></i>
             <i class="fab fa-cc-apple-pay"></i>
         </div>
     </div>
 </footer>
+
+<!-- Core Script -->
+<script src="assets/js/grantech.js"></script>
+<script>
+    // Load Trending Products dynamically from /api/products?trending=true
+    async function loadTrendingProducts() {
+        const grid = document.getElementById('trendingGrid');
+        if (!grid) return;
+
+        try {
+            const res = await fetch('/api/products?trending=true');
+            const data = await res.json();
+
+            if (data.success && data.products && data.products.length > 0) {
+                grid.innerHTML = data.products.map(p => {
+                    let badgeClass = 'new';
+                    if (p.badge && p.badge.toUpperCase().includes('HOT')) badgeClass = 'hot';
+
+                    return `
+                        <div class="product-card">
+                            ${p.badge ? `<span class="card-badge ${badgeClass}">${GT.escapeHtml(p.badge)}</span>` : ''}
+                            <div class="card-img-box">
+                                <img src="${p.mainImage}" alt="${GT.escapeHtml(p.name)}">
+                                <div class="card-action-bar">
+                                    <button class="btn-card-add" onclick="GT.addToCart(${p.id}, 1, '', ${p.price})">
+                                        <i class="fal fa-shopping-bag"></i> Add to Bag
+                                    </button>
+                                    <a href="product.html?id=${p.id}" class="btn-card-view" title="Quick View">
+                                        <i class="fal fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <div>
+                                    <div class="card-category">${GT.escapeHtml(p.categoryName || 'Tech')}</div>
+                                    <a href="product.html?id=${p.id}" class="card-title">${GT.escapeHtml(p.name)}</a>
+                                    <div class="card-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>${p.rating.toFixed(1)} (${p.reviewsCount})</span>
+                                    </div>
+                                </div>
+                                <div class="card-price-row">
+                                    <span class="card-price">$${p.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                    ${p.originalPrice > p.price ? `<span class="card-old-price">$${p.originalPrice.toFixed(2)}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--slate-400); padding: 40px;">No trending hardware available.</div>';
+            }
+        } catch (err) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--accent); padding: 40px;">Failed to load trending products from backend.</div>';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadTrendingProducts);
+</script>
 </body>
 </html>

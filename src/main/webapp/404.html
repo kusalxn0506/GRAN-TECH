@@ -1,42 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Page Not Found | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Architecture Not Found | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #0a1128; color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        body { background: #0a1128; color: white; display: flex; flex-direction: column; min-height: 100vh; overflow: hidden; position: relative; }
 
-        header { padding: 30px 5%; display: flex; justify-content: space-between; position: absolute; width: 100%; z-index: 10; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: white; }
+        .error-header {
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        .error-logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-decoration: none;
+            color: white;
+        }
+        .error-nav-links {
+            display: flex;
+            gap: 25px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .error-nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .error-nav-links a:hover {
+            color: #fff;
+        }
 
-        .error-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; padding: 0 5%; }
+        .error-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 0 5%;
+            z-index: 2;
+        }
 
-        /* Massive typography effect */
-        .glitch-text { font-size: 25vw; font-weight: 900; line-height: 0.8; letter-spacing: -10px; color: rgba(255,255,255,0.03); position: absolute; z-index: 1; user-select: none; pointer-events: none; }
+        /* Massive Typography Watermark */
+        .glitch-text {
+            font-size: 26vw;
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -10px;
+            color: rgba(255,255,255,0.03);
+            position: absolute;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+        }
 
-        .content { position: relative; z-index: 2; }
-        .content h1 { font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px; }
-        .content p { font-size: 16px; opacity: 0.7; max-width: 400px; margin: 0 auto 40px; line-height: 1.6; }
+        .error-content-box {
+            position: relative;
+            z-index: 2;
+            max-width: 580px;
+        }
+        .error-badge {
+            display: inline-block;
+            background: rgba(255, 62, 62, 0.15);
+            color: #ff4d4d;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 62, 62, 0.3);
+            margin-bottom: 20px;
+        }
+        .error-heading {
+            font-size: 44px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+        .error-desc {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 35px;
+            line-height: 1.7;
+        }
 
-        .btn-home { display: inline-block; background: white; color: #0a1128; padding: 20px 40px; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: 0.3s; }
-        .btn-home:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(255,255,255,0.1); }
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-home {
+            display: inline-block;
+            background: white;
+            color: #0a1128;
+            padding: 18px 36px;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(255,255,255,0.15);
+        }
+        .btn-catalog {
+            display: inline-block;
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 18px 36px;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .btn-catalog:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: white;
+        }
+
+        .error-footer {
+            padding: 25px 5%;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="logo">GRAN & TECH</a>
+<header class="error-header">
+    <a href="index.html" class="error-logo">GRAN & TECH</a>
+    <div class="error-nav-links">
+        <a href="index.html">Home</a>
+        <a href="search.html">Catalog</a>
+        <a href="support.html">Concierge</a>
+    </div>
 </header>
 
 <div class="error-container">
     <div class="glitch-text">404</div>
-    <div class="content">
-        <h1>Connection Lost.</h1>
-        <p>The page you are looking for has been moved, deleted, or does not exist in our current architecture.</p>
-        <a href="index.html" class="btn-home">Return to System</a>
+    <div class="error-content-box">
+        <span class="error-badge"><i class="fas fa-exclamation-triangle"></i> Signal Loss 404</span>
+        <h1 class="error-heading">Hardware Node Not Found.</h1>
+        <p class="error-desc">
+            The resource you requested has either been decommissioned, relocated, or does not exist within our current enterprise architecture.
+        </p>
+        <div class="error-actions">
+            <a href="index.html" class="btn-home">Return to System</a>
+            <a href="search.html" class="btn-catalog">Explore Catalog</a>
+        </div>
     </div>
 </div>
+
+<footer class="error-footer">
+    &copy; 2026 GRAN & TECH Incorporated. All rights reserved. Precision Engineering.
+</footer>
 
 </body>
 </html>

@@ -1,91 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Order Confirmed | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation | GRAN & TECH</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #f8f9fa; color: #0a1128; display: flex; flex-direction: column; min-height: 100vh; }
+        body { background: #f8fafc; }
+        .receipt-container {
+            max-width: 800px;
+            margin: 60px auto 120px;
+            padding: 0 5%;
+        }
+        .receipt-card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+            box-shadow: var(--shadow-xl);
+            padding: 50px;
+        }
 
-        header { padding: 30px 5%; display: flex; justify-content: center; background: #fff; border-bottom: 1px solid #eee; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
+        .success-banner {
+            text-align: center;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--slate-200);
+            margin-bottom: 40px;
+        }
+        .success-icon-circle {
+            width: 80px;
+            height: 80px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+            animation: pulseSuccess 2s infinite;
+        }
+        .success-banner h1 {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        .success-banner p {
+            color: var(--slate-600);
+            font-size: 15px;
+        }
+        .order-id-badge {
+            display: inline-block;
+            background: var(--slate-100);
+            padding: 8px 18px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
 
-        .success-container { max-width: 800px; margin: 60px auto; width: 100%; padding: 0 5%; flex: 1; }
-        .receipt-card { background: #fff; border-radius: 12px; padding: 60px; box-shadow: 0 20px 40px rgba(10, 17, 40, 0.05); text-align: center; border: 1px solid #f0f0f0; }
+        /* Order Meta Grid */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+            padding: 24px;
+            background: var(--slate-50);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+        }
+        .meta-item strong {
+            display: block;
+            color: var(--slate-400);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .meta-item span {
+            color: var(--navy);
+            font-weight: 700;
+        }
 
-        .check-circle { width: 80px; height: 80px; background: #dcfce7; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 30px; }
+        /* Purchased Items Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .items-table th {
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate-400);
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--slate-200);
+        }
+        .items-table td {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--slate-100);
+            font-size: 14px;
+        }
+        .item-row-name {
+            font-weight: 800;
+            color: var(--navy);
+        }
+        .item-row-sub {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-top: 2px;
+        }
 
-        .receipt-details { text-align: left; margin-top: 50px; border-top: 2px dashed #eee; padding-top: 40px; }
-        .detail-row { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 15px; color: #555; }
-        .detail-row span:last-child { font-weight: 700; color: #0a1128; }
+        /* Totals */
+        .totals-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-bottom: 40px;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            width: 260px;
+            font-size: 14px;
+            color: var(--slate-600);
+            margin-bottom: 8px;
+        }
+        .grand-total-row {
+            display: flex;
+            justify-content: space-between;
+            width: 260px;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--navy);
+            padding-top: 15px;
+            border-top: 2px solid var(--slate-200);
+        }
 
-        .item-row { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee; }
-        .item-img { width: 60px; height: 60px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 5px; }
-        .item-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        /* Actions */
+        .receipt-actions {
+            display: flex;
+            gap: 16px;
+        }
+        .btn-print {
+            flex: 1;
+            padding: 16px;
+            background: var(--white);
+            color: var(--navy);
+            border: 1.5px solid var(--slate-300);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-print:hover {
+            background: var(--slate-100);
+        }
+        .btn-continue {
+            flex: 1;
+            padding: 16px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-continue:hover {
+            background: var(--accent);
+        }
 
-        .btn-continue { display: inline-block; background: #0a1128; color: #fff; padding: 20px 40px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; margin-top: 40px; transition: 0.3s; }
-        .btn-continue:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.15); }
+        @keyframes pulseSuccess {
+            0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        @media print {
+            header, footer, .receipt-actions { display: none !important; }
+            .receipt-container { margin: 0; padding: 0; max-width: 100%; }
+            .receipt-card { box-shadow: none; border: none; padding: 0; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="logo">GRAN & TECH</a>
+<!-- Header -->
+<header class="gt-header">
+    <a href="index.html" class="gt-brand">
+        <span class="gt-logo">GRAN & TECH<span>.</span></span>
+    </a>
+    <div class="gt-nav-right">
+        <a href="index.html" class="nav-link-standard">Storefront</a>
+        <a href="search.html" class="nav-link-standard">Archive</a>
+        <a href="support.html" class="nav-link-standard">Support</a>
+    </div>
 </header>
 
-<div class="success-container">
-    <div class="receipt-card">
-        <div class="check-circle">
-            <i class="fas fa-check"></i>
+<div class="receipt-container">
+    <div class="receipt-card" id="receiptCardContent">
+        <div style="text-align: center; padding: 60px; color: var(--slate-400);">
+            <i class="fal fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 12px;"></i>
+            <p>Retrieving transaction receipt...</p>
         </div>
-        <h1 style="font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px;">Thank you, your order has been placed.</h1>
-        <p style="color: #666; font-size: 16px;">We've sent an email confirmation with your receipt and tracking details.</p>
-
-        <div class="receipt-details">
-            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 30px;">Order Summary</h3>
-
-            <div class="detail-row">
-                <span>Order Number</span>
-                <span>#GT-8492</span>
-            </div>
-            <div class="detail-row">
-                <span>Date</span>
-                <span>February 19, 2026</span>
-            </div>
-            <div class="detail-row">
-                <span>Payment Method</span>
-                <span>Visa ending in •••• 4242</span>
-            </div>
-
-            <div style="margin-top: 30px; border-top: 1px solid #eee;">
-                <div class="item-row">
-                    <div class="item-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100" alt="Laptop"></div>
-                    <div style="flex: 1;">
-                        <h4 style="font-size: 14px; font-weight: 800;">Aether Pro Laptop</h4>
-                        <p style="font-size: 12px; color: #888;">Qty: 1</p>
-                    </div>
-                    <div style="font-weight: 800; font-size: 14px;">$1,999.00</div>
-                </div>
-                <div class="item-row">
-                    <div class="item-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100" alt="Headphones"></div>
-                    <div style="flex: 1;">
-                        <h4 style="font-size: 14px; font-weight: 800;">Sonic Headphones</h4>
-                        <p style="font-size: 12px; color: #888;">Qty: 1</p>
-                    </div>
-                    <div style="font-weight: 800; font-size: 14px;">$349.00</div>
-                </div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; padding-top: 30px; border-top: 1px solid #eee;">
-                <span style="font-size: 16px; font-weight: 600; color: #555;">Total Paid</span>
-                <span style="font-size: 32px; font-weight: 900; color: #0a1128;">$2,348.00</span>
-            </div>
-        </div>
-
-        <a href="index.html" class="btn-continue">Continue Shopping</a>
     </div>
 </div>
 
+<script src="assets/js/grantech.js"></script>
+<script>
+    async function loadReceipt() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderNo = urlParams.get('orderNo') || 'GT-8492';
+        const card = document.getElementById('receiptCardContent');
+
+        try {
+            const res = await fetch(`/api/checkout?orderNo=${encodeURIComponent(orderNo)}`);
+            const data = await res.json();
+
+            if (data.success && data.order) {
+                const o = data.order;
+                const dateStr = new Date(o.createdAt || Date.now()).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+
+                card.innerHTML = `
+                    <div class="success-banner">
+                        <div class="success-icon-circle">
+                            <i class="fal fa-check"></i>
+                        </div>
+                        <h1>Order Confirmed!</h1>
+                        <p>Thank you for your purchase. We have received your payment and dispatched your order for hardware fulfillment.</p>
+                        <div class="order-id-badge">Order ID: #${GT.escapeHtml(o.orderNo)}</div>
+                    </div>
+
+                    <div class="meta-grid">
+                        <div class="meta-item">
+                            <strong>Customer Name</strong>
+                            <span>${GT.escapeHtml(o.customerName)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Email Address</strong>
+                            <span>${GT.escapeHtml(o.customerEmail)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Date of Order</strong>
+                            <span>${dateStr}</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Payment Method</strong>
+                            <span>${GT.escapeHtml(o.paymentMethod || 'Credit Card')} &bull; Status: <span style="color: #166534;">PAID</span></span>
+                        </div>
+                        <div class="meta-item" style="grid-column: 1/-1;">
+                            <strong>Delivery Destination</strong>
+                            <span>${GT.escapeHtml(o.shippingAddress)}, ${GT.escapeHtml(o.shippingCity)} ${GT.escapeHtml(o.shippingPostalCode || '')}</span>
+                        </div>
+                    </div>
+
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>Hardware Item</th>
+                                <th style="text-align: center;">Qty</th>
+                                <th style="text-align: right;">Price</th>
+                                <th style="text-align: right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${(o.items || []).map(item => `
+                                <tr>
+                                    <td>
+                                        <div class="item-row-name">${GT.escapeHtml(item.productName)}</div>
+                                        ${item.variantSummary ? `<div class="item-row-sub">${GT.escapeHtml(item.variantSummary)}</div>` : ''}
+                                    </td>
+                                    <td style="text-align: center; font-weight: 700;">${item.quantity}</td>
+                                    <td style="text-align: right;">$${item.unitPrice.toFixed(2)}</td>
+                                    <td style="text-align: right; font-weight: 800;">$${item.subtotal.toFixed(2)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                    <div class="totals-block">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <strong>$${o.subtotal.toFixed(2)}</strong>
+                        </div>
+                        <div class="total-row">
+                            <span>Courier Shipping:</span>
+                            <span style="color: #166534; font-weight: 700;">Free</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Taxes:</span>
+                            <span>$0.00</span>
+                        </div>
+                        <div class="grand-total-row">
+                            <span>Total Paid:</span>
+                            <span>$${o.totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                    </div>
+
+                    <div class="receipt-actions">
+                        <button class="btn-print" onclick="window.print()">
+                            <i class="fal fa-print" style="margin-right: 6px;"></i> Print Invoice
+                        </button>
+                        <a href="index.html" class="btn-continue">
+                            Continue Shopping &rarr;
+                        </a>
+                    </div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <h2>Order Not Found</h2>
+                        <p style="color: #666; margin: 15px 0 25px;">We could not locate order #${GT.escapeHtml(orderNo)}.</p>
+                        <a href="index.html" class="btn-continue" style="display: inline-block; padding: 12px 30px;">Return Home</a>
+                    </div>
+                `;
+            }
+        } catch (e) {
+            card.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--accent);">Failed to load order receipt.</div>`;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadReceipt);
+</script>
 </body>
 </html>

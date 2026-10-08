@@ -1,197 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #fdfdfd; color: #0a1128; }
+        .shop-container {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 50px 5% 100px;
+            gap: 60px;
+        }
 
-        /* Premium Header */
-        header { background: #0a1128; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: white; }
+        /* Sidebar Filters */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .page-archive-title {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+            color: var(--navy);
+            line-height: 1;
+        }
+        .filter-block {
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--slate-200);
+            padding-bottom: 25px;
+        }
+        .filter-block:last-child {
+            border-bottom: none;
+        }
+        .filter-block h4 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            color: var(--navy);
+            font-weight: 800;
+        }
 
-        .shop-container { display: flex; max-width: 1600px; margin: 0 auto; padding: 60px 5%; gap: 60px; }
+        .filter-radio-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--slate-600);
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+        .filter-radio-item:hover, .filter-radio-item.active {
+            background: var(--slate-100);
+            color: var(--navy);
+            font-weight: 700;
+        }
+        .filter-radio-item.active {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .filter-count {
+            font-size: 11px;
+            opacity: 0.6;
+        }
 
-        /* Ultra-minimal Sidebar */
-        .sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content; }
-        .filter-block { margin-bottom: 40px; }
-        .filter-block h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-bottom: 2px solid #0a1128; padding-bottom: 10px; display: inline-block; }
+        /* Price Range Slider */
+        .price-slider-box {
+            padding: 10px 0;
+        }
+        .price-slider-box input[type="range"] {
+            width: 100%;
+            accent-color: var(--navy);
+            cursor: pointer;
+        }
+        .price-val-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--slate-600);
+            margin-top: 10px;
+        }
 
-        /* Custom Hover Checkboxes */
-        .custom-check { display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #555; margin-bottom: 15px; transition: 0.2s; }
-        .custom-check:hover { color: #0a1128; font-weight: 600; transform: translateX(5px); }
-        .custom-check input { appearance: none; width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 3px; cursor: pointer; position: relative; }
-        .custom-check input:checked { background: #0a1128; border-color: #0a1128; }
-        .custom-check input:checked::after { content: '✔'; position: absolute; color: white; font-size: 10px; left: 4px; top: 1px; }
+        /* Top Controls Bar */
+        .archive-controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--slate-200);
+        }
+        .results-count-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-600);
+        }
+        .sort-select {
+            padding: 8px 16px;
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--navy);
+            outline: none;
+            cursor: pointer;
+            background: var(--white);
+        }
 
-        /* Dynamic Product Grid */
-        .grid-matrix { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .matrix-item { background: #fff; padding: 30px; position: relative; cursor: pointer; transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); overflow: hidden; border: 1px solid #f0f0f0; border-radius: 8px; }
-        .matrix-item:hover { transform: translateY(-10px); box-shadow: 0 40px 80px rgba(10, 17, 40, 0.08); border-color: transparent; }
+        /* Product Matrix Grid */
+        .grid-matrix {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        .product-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: transparent;
+            box-shadow: var(--shadow-2xl);
+        }
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 4px 10px;
+            color: var(--white);
+            background: var(--navy);
+            border-radius: var(--radius-sm);
+            z-index: 10;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .card-badge.hot { background: var(--accent); }
+        .card-badge.new { background: var(--emerald-800); }
 
-        .img-box { height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; background: #f8f9fa; border-radius: 4px; overflow: hidden; }
-        .img-box img { max-height: 80%; max-width: 80%; object-fit: contain; mix-blend-mode: multiply; transition: 0.7s ease; }
-        .matrix-item:hover .img-box img { transform: scale(1.1) rotate(-2deg); }
+        .card-img-box {
+            height: 220px;
+            background: var(--slate-50);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-img-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .product-card:hover .card-img-box img {
+            transform: scale(1.08);
+        }
 
-        /* Hidden Action Bar */
-        .action-bar { position: absolute; bottom: -60px; left: 0; width: 100%; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); transition: 0.4s ease; padding: 10px; gap: 10px; }
-        .matrix-item:hover .action-bar { bottom: 0; }
-        .action-btn { flex: 1; padding: 15px; color: white; background: #0a1128; border: none; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
-        .action-btn:hover { background: #ff3e3e; }
+        .card-action-bar {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .product-card:hover .card-action-bar {
+            bottom: 0;
+        }
+        .btn-card-add {
+            flex: 1;
+            padding: 12px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-card-add:hover {
+            background: var(--accent);
+        }
+        .btn-card-view {
+            padding: 12px 16px;
+            background: var(--slate-100);
+            color: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-card-view:hover {
+            background: var(--slate-200);
+        }
 
-        .badge { position: absolute; top: 20px; left: 20px; font-size: 10px; font-weight: 900; padding: 4px 10px; color: white; border-radius: 3px; z-index: 10; letter-spacing: 1px; }
+        .card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-category {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate-400);
+            margin-bottom: 6px;
+        }
+        .card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--navy);
+            text-decoration: none;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            transition: var(--transition);
+        }
+        .card-title:hover {
+            color: var(--accent);
+        }
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #f59e0b;
+            margin-bottom: 12px;
+        }
+        .card-rating span {
+            color: var(--slate-400);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .card-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .card-price {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--navy);
+        }
+        .card-old-price {
+            font-size: 13px;
+            color: var(--slate-400);
+            text-decoration: line-through;
+        }
+
+        /* Pagination */
+        .pagination-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .page-btn {
+            padding: 10px 18px;
+            border: 1px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            color: var(--navy);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .page-btn:hover, .page-btn.active {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 900px) {
+            .shop-container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
     </style>
 </head>
 <body>
-<header>
-    <a href="index.html" class="logo">GRAN & TECH</a>
-    <div style="font-size: 13px; font-weight: 800; display: flex; gap: 30px; letter-spacing: 1px;">
-        <a href="index.html" style="color: white; text-decoration: none;">HOME</a>
-        <a href="cart.html" style="color: white; text-decoration: none;"><i class="far fa-shopping-bag"></i> BAG (0)</a>
+
+<!-- Header -->
+<header class="gt-header">
+    <a href="index.html" class="gt-brand">
+        <span class="gt-logo">GRAN & TECH<span>.</span></span>
+    </a>
+
+    <div class="header-search-container">
+        <div class="header-search-box">
+            <i class="fal fa-search"></i>
+            <input type="text" id="gtHeaderSearchInput" placeholder="Search laptops, phones, audio, drones..." autocomplete="off">
+        </div>
+        <div class="search-dropdown-menu" id="gtHeaderSearchDropdown"></div>
+    </div>
+
+    <div class="gt-nav-right">
+        <a href="index.html" class="nav-link-standard">Storefront</a>
+        <a href="search.html" class="nav-link-standard" style="color: var(--accent);">Archive</a>
+        <a href="support.html" class="nav-link-standard">Support</a>
+
+        <div id="userNavSlot">
+            <a href="sign-in.html" class="nav-link-auth">SIGN IN</a>
+        </div>
+
+        <button class="btn-header-bag" onclick="GT.openDrawer()">
+            <i class="fal fa-shopping-bag"></i>
+            <span class="bag-count-badge">BAG (0)</span>
+        </button>
     </div>
 </header>
 
+<!-- Main Container -->
 <div class="shop-container">
+    <!-- Sidebar Filters -->
     <aside class="sidebar">
-        <h1 style="font-size: 42px; font-weight: 900; letter-spacing: -2px; margin-bottom: 50px;">Archive.</h1>
+        <h1 class="page-archive-title">Archive.</h1>
 
         <div class="filter-block">
-            <h4>Device Type</h4>
-            <label class="custom-check"><input type="checkbox" checked> All Products</label>
-            <label class="custom-check"><input type="checkbox"> Laptops & PC</label>
-            <label class="custom-check"><input type="checkbox"> Mobile & Wearables</label>
-            <label class="custom-check"><input type="checkbox"> Audio Solutions</label>
-            <label class="custom-check"><input type="checkbox"> Smart Home</label>
-        </div>
-
-        <div class="filter-block">
-            <h4>Availability</h4>
-            <label class="custom-check"><input type="checkbox" checked> In Stock</label>
-            <label class="custom-check"><input type="checkbox"> Pre-Order</label>
-        </div>
-
-        <div class="filter-block">
-            <h4>Price Range</h4>
-            <input type="range" style="width: 100%; accent-color: #0a1128;" min="0" max="5000">
-            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #888; margin-top: 10px;">
-                <span>$0</span><span>$5,000+</span>
+            <h4>Categories</h4>
+            <div id="categoryFilterList">
+                <div class="filter-radio-item active" onclick="setCategoryFilter(0)">
+                    <span>All Products</span>
+                    <span class="filter-count" id="allCountBadge">8</span>
+                </div>
+                <!-- Categories populated from DB -->
             </div>
+        </div>
+
+        <div class="filter-block">
+            <h4>Max Price</h4>
+            <div class="price-slider-box">
+                <input type="range" id="priceRangeInput" min="100" max="2500" step="50" value="2500" oninput="onPriceSliderChange(this.value)">
+                <div class="price-val-labels">
+                    <span>$100</span>
+                    <span id="currentPriceLabel" style="color: var(--navy); font-weight: 800;">Up to $2,500</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-block">
+            <h4>Direct Filter</h4>
+            <button onclick="resetFilters()" style="width: 100%; padding: 12px; background: var(--slate-100); border: 1px solid var(--slate-300); border-radius: var(--radius-sm); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; color: var(--navy);">
+                Reset All Filters
+            </button>
         </div>
     </aside>
 
+    <!-- Main Product Grid & Controls -->
     <main style="flex: 1;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <span style="font-size: 14px; color: #888; font-weight: 600;">Showing 12 results</span>
-            <select style="border: none; background: transparent; font-weight: 800; font-size: 12px; text-transform: uppercase; cursor: pointer; outline: none;">
-                <option>Sort by: Featured</option>
-                <option>Price: Low to High</option>
+        <div class="archive-controls-bar">
+            <div class="results-count-text" id="resultsCountLabel">Loading hardware archive...</div>
+            <select class="sort-select" id="sortBySelect" onchange="onSortChange(this.value)">
+                <option value="default">Sort: Default</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
             </select>
         </div>
 
-        <div class="grid-matrix">
-            <div class="matrix-item">
-                <span class="badge" style="background: #4caf50;">NEW</span>
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500" alt="Laptop"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Aether Pro Laptop</h3>
-                <p style="color: #888; font-size: 13px;">16GB RAM / 1TB SSD</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$1,999.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <span class="badge" style="background: #ff3e3e;">HOT</span>
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?w=500" alt="Phone"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Pro 15 Mobile</h3>
-                <p style="color: #888; font-size: 13px;">Titanium Black</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$999.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Watch"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">ARE2 Smart Watch</h3>
-                <p style="color: #888; font-size: 13px;">Elite Obsidian</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$499.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Headphones"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Sonic Headphones</h3>
-                <p style="color: #888; font-size: 13px;">Noise Cancelling Studio</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$349.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500" alt="Monitor"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Horizon 32" Monitor</h3>
-                <p style="color: #888; font-size: 13px;">4K Ultra HD Display</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$899.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <span class="badge" style="background: #0a1128;">BESTSELLER</span>
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1543512214-318c7553f230?w=500" alt="Speaker"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Echo Smart Speaker</h3>
-                <p style="color: #888; font-size: 13px;">Voice Assistant Hub</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$149.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500" alt="Tablet"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Aether Tablet X</h3>
-                <p style="color: #888; font-size: 13px;">11" Liquid Retina</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$799.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500" alt="Router"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Omni Router WiFi 6E</h3>
-                <p style="color: #888; font-size: 13px;">Gigabit Mesh System</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$299.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500" alt="Soundbar"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Zenith Soundbar</h3>
-                <p style="color: #888; font-size: 13px;">Dolby Atmos Surround</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$599.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500" alt="Gaming Laptop"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Titan Gaming Laptop</h3>
-                <p style="color: #888; font-size: 13px;">RTX 4080 / 240Hz</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$2,499.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" alt="Earbuds"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Quantum Earbuds</h3>
-                <p style="color: #888; font-size: 13px;">True Wireless Audio</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$199.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
-
-            <div class="matrix-item">
-                <span class="badge" style="background: #f9a825;">LIMITED</span>
-                <div class="img-box"><img src="https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=500" alt="Drone"></div>
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Vision 4K Drone</h3>
-                <p style="color: #888; font-size: 13px;">Cinematic Aerial Tech</p>
-                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$1,299.00</p>
-                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
-            </div>
+        <div class="grid-matrix" id="archiveGrid">
+            <!-- Dynamic products -->
         </div>
+
+        <div class="pagination-container" id="paginationSlot"></div>
     </main>
 </div>
+
+<!-- Footer -->
+<footer class="gt-footer">
+    <div style="text-align: center; font-size: 12px; color: var(--slate-400); padding: 40px 0;">
+        &copy; 2026 GRAN & TECH Inc. Precision High-Performance Computing.
+    </div>
+</footer>
+
+<script src="assets/js/grantech.js"></script>
+<script>
+    const filterState = {
+        categoryId: 0,
+        maxPrice: 2500,
+        sortBy: 'default',
+        page: 1,
+        query: ''
+    };
+
+    // Parse initial URL query params
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('categoryId')) filterState.categoryId = parseInt(urlParams.get('categoryId'));
+    if (urlParams.get('query')) filterState.query = urlParams.get('query');
+
+    async function fetchArchiveProducts() {
+        const grid = document.getElementById('archiveGrid');
+        const countLabel = document.getElementById('resultsCountLabel');
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--slate-400);"><i class="fal fa-spinner fa-spin" style="font-size: 24px;"></i></div>';
+
+        let url = `/api/products?page=${filterState.page}&pageSize=12&sortBy=${filterState.sortBy}&maxPrice=${filterState.maxPrice}`;
+        if (filterState.categoryId > 0) url += `&categoryId=${filterState.categoryId}`;
+        if (filterState.query) url += `&query=${encodeURIComponent(filterState.query)}`;
+
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.success) {
+                countLabel.textContent = `Showing ${data.products.length} of ${data.totalCount} products`;
+
+                // Render categories once
+                renderCategorySidebar(data.categories, data.totalCount);
+
+                if (data.products.length === 0) {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: var(--slate-400);">No hardware matching your criteria. Try adjusting your filters.</div>';
+                } else {
+                    grid.innerHTML = data.products.map(p => {
+                        let badgeClass = 'new';
+                        if (p.badge && p.badge.toUpperCase().includes('HOT')) badgeClass = 'hot';
+
+                        return `
+                            <div class="product-card">
+                                ${p.badge ? `<span class="card-badge ${badgeClass}">${GT.escapeHtml(p.badge)}</span>` : ''}
+                                <div class="card-img-box">
+                                    <img src="${p.mainImage}" alt="${GT.escapeHtml(p.name)}">
+                                    <div class="card-action-bar">
+                                        <button class="btn-card-add" onclick="GT.addToCart(${p.id}, 1, '', ${p.price})">
+                                            <i class="fal fa-shopping-bag"></i> Add to Bag
+                                        </button>
+                                        <a href="product.html?id=${p.id}" class="btn-card-view" title="View Details">
+                                            <i class="fal fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <div>
+                                        <div class="card-category">${GT.escapeHtml(p.categoryName || 'Tech')}</div>
+                                        <a href="product.html?id=${p.id}" class="card-title">${GT.escapeHtml(p.name)}</a>
+                                        <div class="card-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <span>${p.rating.toFixed(1)} (${p.reviewsCount})</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-price-row">
+                                        <span class="card-price">$${p.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                        ${p.originalPrice > p.price ? `<span class="card-old-price">$${p.originalPrice.toFixed(2)}</span>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                renderPagination(data.currentPage, data.totalPages);
+            }
+        } catch (e) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--accent); padding: 40px;">Failed to load archive catalog.</div>';
+        }
+    }
+
+    let categoriesRendered = false;
+    function renderCategorySidebar(categories, totalCount) {
+        if (categoriesRendered || !categories) return;
+        categoriesRendered = true;
+
+        const container = document.getElementById('categoryFilterList');
+        let html = `
+            <div class="filter-radio-item ${filterState.categoryId === 0 ? 'active' : ''}" onclick="setCategoryFilter(0)">
+                <span>All Products</span>
+                <span class="filter-count">${totalCount}</span>
+            </div>
+        `;
+
+        html += categories.map(c => `
+            <div class="filter-radio-item ${filterState.categoryId === c.id ? 'active' : ''}" onclick="setCategoryFilter(${c.id})">
+                <span>${GT.escapeHtml(c.name)}</span>
+                <span class="filter-count">${c.productCount}</span>
+            </div>
+        `).join('');
+
+        container.innerHTML = html;
+    }
+
+    function setCategoryFilter(id) {
+        filterState.categoryId = id;
+        filterState.page = 1;
+        categoriesRendered = false;
+        fetchArchiveProducts();
+    }
+
+    function onPriceSliderChange(val) {
+        filterState.maxPrice = parseFloat(val);
+        document.getElementById('currentPriceLabel').textContent = `Up to $${parseFloat(val).toLocaleString()}`;
+        filterState.page = 1;
+        fetchArchiveProducts();
+    }
+
+    function onSortChange(val) {
+        filterState.sortBy = val;
+        filterState.page = 1;
+        fetchArchiveProducts();
+    }
+
+    function resetFilters() {
+        filterState.categoryId = 0;
+        filterState.maxPrice = 2500;
+        filterState.sortBy = 'default';
+        filterState.page = 1;
+        filterState.query = '';
+        document.getElementById('priceRangeInput').value = 2500;
+        document.getElementById('currentPriceLabel').textContent = 'Up to $2,500';
+        document.getElementById('sortBySelect').value = 'default';
+        categoriesRendered = false;
+        fetchArchiveProducts();
+    }
+
+    function renderPagination(current, total) {
+        const slot = document.getElementById('paginationSlot');
+        if (!slot) return;
+        if (total <= 1) {
+            slot.innerHTML = '';
+            return;
+        }
+
+        let html = `<button class="page-btn" ${current === 1 ? 'disabled' : ''} onclick="goToPage(${current - 1})">&larr; Prev</button>`;
+        for (let i = 1; i <= total; i++) {
+            html += `<button class="page-btn ${current === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        }
+        html += `<button class="page-btn" ${current === total ? 'disabled' : ''} onclick="goToPage(${current + 1})">Next &rarr;</button>`;
+        slot.innerHTML = html;
+    }
+
+    function goToPage(p) {
+        filterState.page = p;
+        fetchArchiveProducts();
+        window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchArchiveProducts);
+</script>
 </body>
 </html>

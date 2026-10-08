@@ -1,112 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Your Bag | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Bag | GRAN & TECH</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #fff; color: #0a1128; }
+        .checkout-arena {
+            max-width: 1400px;
+            margin: 60px auto 120px;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 80px;
+        }
 
-        /* Premium Header */
-        header { padding: 30px 5%; display: flex; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
+        .page-headline {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            margin-bottom: 12px;
+            line-height: 1;
+            color: var(--navy);
+        }
+        .page-subhead {
+            color: var(--slate-600);
+            font-size: 15px;
+            margin-bottom: 50px;
+        }
 
-        .checkout-arena { max-width: 1400px; margin: 80px auto; padding: 0 5%; display: grid; grid-template-columns: 1.5fr 1fr; gap: 100px; }
+        /* Cart Items List */
+        .cart-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-item {
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--slate-200);
+            align-items: center;
+        }
+        .cart-img {
+            width: 140px;
+            height: 140px;
+            background: var(--slate-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--slate-200);
+            flex-shrink: 0;
+        }
+        .cart-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+        }
 
-        /* Minimalist Cart Items */
-        .cart-list { display: flex; flex-direction: column; }
-        .cart-item { display: flex; gap: 40px; padding: 40px 0; border-bottom: 1px solid #f0f0f0; }
-        .cart-img { width: 160px; height: 160px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 8px; }
-        .cart-img img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+        .cart-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .cart-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .cart-item-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy);
+            text-decoration: none;
+        }
+        .cart-item-title:hover {
+            color: var(--accent);
+        }
+        .cart-item-price {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--navy);
+        }
+        .cart-item-variant {
+            font-size: 13px;
+            color: var(--slate-400);
+            font-weight: 600;
+        }
 
-        .cart-details { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .qty-pill { display: inline-flex; align-items: center; border: 1px solid #e2e8f0; border-radius: 50px; overflow: hidden; width: fit-content; }
-        .qty-btn { background: #fff; border: none; padding: 10px 15px; cursor: pointer; font-weight: 700; transition: 0.2s; color: #0a1128; }
-        .qty-btn:hover { background: #f1f5f9; }
-        .qty-num { padding: 0 15px; font-weight: 800; font-size: 15px; }
+        .cart-controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .qty-pill {
+            display: inline-flex;
+            align-items: center;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            background: var(--white);
+        }
+        .qty-pill button {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--navy);
+            transition: var(--transition);
+        }
+        .qty-pill button:hover {
+            background: var(--slate-100);
+        }
+        .qty-pill span {
+            padding: 0 12px;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .btn-remove-item {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .btn-remove-item:hover {
+            opacity: 0.7;
+        }
 
         /* Floating Summary Panel */
-        .summary-panel { background: #0a1128; color: white; padding: 50px; border-radius: 16px; position: sticky; top: 50px; height: fit-content; box-shadow: 0 30px 60px rgba(10, 17, 40, 0.15); }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 15px; opacity: 0.8; font-weight: 400; }
-        .summary-total { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 36px; font-weight: 900; letter-spacing: -1px; }
+        .summary-panel {
+            background: var(--navy);
+            color: var(--white);
+            padding: 48px;
+            border-radius: var(--radius-lg);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            box-shadow: var(--shadow-2xl);
+        }
+        .summary-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 30px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+            opacity: 0.85;
+            font-weight: 500;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        .btn-checkout {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: var(--white);
+            color: var(--navy);
+            padding: 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 900;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .btn-checkout:hover {
+            transform: translateY(-3px);
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 10px 25px rgba(255, 62, 62, 0.4);
+        }
 
-        .btn-checkout { display: block; width: 100%; text-align: center; background: #fff; color: #0a1128; padding: 24px; border: none; border-radius: 8px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-top: 50px; cursor: pointer; transition: 0.3s; text-decoration: none; }
-        .btn-checkout:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2); }
+        .empty-cart-view {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .empty-cart-view i {
+            font-size: 64px;
+            opacity: 0.2;
+            margin-bottom: 24px;
+        }
+        .empty-cart-view h2 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 992px) {
+            .checkout-arena { grid-template-columns: 1fr; }
+            .summary-panel { position: static; }
+        }
     </style>
 </head>
 <body>
-<header>
-    <a href="index.html" class="logo">GRAN & TECH</a>
-    <a href="search.html" style="color: #0a1128; font-weight: 800; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Continue Shopping</a>
+
+<!-- Header -->
+<header class="gt-header">
+    <a href="index.html" class="gt-brand">
+        <span class="gt-logo">GRAN & TECH<span>.</span></span>
+    </a>
+
+    <div class="header-search-container">
+        <div class="header-search-box">
+            <i class="fal fa-search"></i>
+            <input type="text" id="gtHeaderSearchInput" placeholder="Search laptops, phones, audio, drones..." autocomplete="off">
+        </div>
+        <div class="search-dropdown-menu" id="gtHeaderSearchDropdown"></div>
+    </div>
+
+    <div class="gt-nav-right">
+        <a href="index.html" class="nav-link-standard">Storefront</a>
+        <a href="search.html" class="nav-link-standard">Archive</a>
+        <a href="support.html" class="nav-link-standard">Support</a>
+
+        <div id="userNavSlot">
+            <a href="sign-in.html" class="nav-link-auth">SIGN IN</a>
+        </div>
+
+        <button class="btn-header-bag" onclick="GT.openDrawer()">
+            <i class="fal fa-shopping-bag"></i>
+            <span class="bag-count-badge">BAG (0)</span>
+        </button>
+    </div>
 </header>
 
+<!-- Main Bag Workspace -->
 <div class="checkout-arena">
     <div>
-        <h1 style="font-size: 72px; font-weight: 900; letter-spacing: -3px; margin-bottom: 20px; line-height: 1;">Review Bag.</h1>
-        <p style="color: #666; font-size: 16px; margin-bottom: 60px;">Free premium shipping and 30-day returns on all tech orders.</p>
+        <h1 class="page-headline">Review Bag.</h1>
+        <p class="page-subhead">Free premium courier shipping and 30-day hassle-free returns on all tech hardware.</p>
 
-        <div class="cart-list">
-            <div class="cart-item">
-                <div class="cart-img">
-                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300" alt="Laptop">
-                </div>
-                <div class="cart-details">
-                    <div>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <h3 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Aether Pro Laptop</h3>
-                            <span style="font-size: 22px; font-weight: 900;">$1,999.00</span>
-                        </div>
-                        <p style="color: #888; font-size: 14px; margin-top: 8px;">Space Gray | 16GB RAM | 1TB SSD</p>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="qty-pill">
-                            <button class="qty-btn">-</button><span class="qty-num">1</span><button class="qty-btn">+</button>
-                        </div>
-                        <a href="#" style="color: #ff3e3e; font-size: 13px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;"><i class="far fa-trash-alt"></i> Remove</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cart-item">
-                <div class="cart-img">
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Headphones">
-                </div>
-                <div class="cart-details">
-                    <div>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <h3 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Sonic Headphones</h3>
-                            <span style="font-size: 22px; font-weight: 900;">$349.00</span>
-                        </div>
-                        <p style="color: #888; font-size: 14px; margin-top: 8px;">Matte Black | Noise Cancelling</p>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="qty-pill">
-                            <button class="qty-btn">-</button><span class="qty-num">1</span><button class="qty-btn">+</button>
-                        </div>
-                        <a href="#" style="color: #ff3e3e; font-size: 13px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;"><i class="far fa-trash-alt"></i> Remove</a>
-                    </div>
-                </div>
+        <div class="cart-list" id="cartPageList">
+            <div style="text-align: center; padding: 60px; color: var(--slate-400);">
+                <i class="fal fa-spinner fa-spin" style="font-size: 24px;"></i>
             </div>
         </div>
     </div>
 
+    <!-- Summary Panel -->
     <aside>
         <div class="summary-panel">
-            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 50px; letter-spacing: -1px;">Summary</h2>
-
-            <div class="summary-row"><span>Subtotal</span><span style="font-weight: 600;">$2,348.00</span></div>
-            <div class="summary-row"><span>Estimated Shipping</span><span style="font-weight: 600;">Free</span></div>
-            <div class="summary-row"><span>Estimated Taxes</span><span>Calculated in checkout</span></div>
-
+            <h3 class="summary-title">Summary</h3>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="cartSummarySubtotal">$0.00</strong>
+            </div>
+            <div class="summary-row">
+                <span>Estimated Shipping</span>
+                <span style="color: #4ade80; font-weight: 700;">Free Worldwide</span>
+            </div>
+            <div class="summary-row">
+                <span>Estimated Taxes</span>
+                <span>Calculated in checkout</span>
+            </div>
             <div class="summary-total">
-                <span style="font-size: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Total</span>
-                <span>$2,348.00</span>
+                <span style="font-size: 16px; font-weight: 700; text-transform: uppercase;">Total</span>
+                <span id="cartSummaryTotal">$0.00</span>
             </div>
 
-            <a href="#" class="btn-checkout">Secure Checkout <i class="fas fa-lock" style="margin-left: 8px;"></i></a>
+            <a href="checkout.html" class="btn-checkout" id="btnProceedCheckout">
+                <i class="fal fa-lock-alt" style="margin-right: 6px;"></i> Secure Checkout
+            </a>
         </div>
     </aside>
 </div>
+
+<!-- Footer -->
+<footer class="gt-footer">
+    <div style="text-align: center; font-size: 12px; color: var(--slate-400); padding: 40px 0;">
+        &copy; 2026 GRAN & TECH Inc. Precision High-Performance Computing.
+    </div>
+</footer>
+
+<script src="assets/js/grantech.js"></script>
+<script>
+    function renderCartPage(data) {
+        const container = document.getElementById('cartPageList');
+        const subtotalEl = document.getElementById('cartSummarySubtotal');
+        const totalEl = document.getElementById('cartSummaryTotal');
+        const checkoutBtn = document.getElementById('btnProceedCheckout');
+
+        const items = data.items || [];
+        const subtotal = data.subtotal || 0.0;
+
+        subtotalEl.textContent = `$${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        totalEl.textContent = `$${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        if (items.length === 0) {
+            container.innerHTML = `
+                <div class="empty-cart-view">
+                    <i class="fal fa-shopping-bag"></i>
+                    <h2>Your Bag is Empty</h2>
+                    <p style="color: var(--slate-400); margin-bottom: 30px;">There are currently no devices in your order review.</p>
+                    <a href="search.html" class="btn-hero-primary" style="display: inline-block;">Browse Archive</a>
+                </div>
+            `;
+            if (checkoutBtn) {
+                checkoutBtn.style.opacity = '0.5';
+                checkoutBtn.style.pointerEvents = 'none';
+            }
+            return;
+        }
+
+        if (checkoutBtn) {
+            checkoutBtn.style.opacity = '1';
+            checkoutBtn.style.pointerEvents = 'auto';
+        }
+
+        container.innerHTML = items.map(item => {
+            const p = item.product || {};
+            const unitPrice = item.unitPrice || p.price || 0;
+            const itemSub = (typeof item.subtotal === 'number') ? item.subtotal : (unitPrice * item.quantity);
+
+            return `
+                <div class="cart-item">
+                    <div class="cart-img">
+                        <img src="${p.mainImage || 'assets/images/1.jpg'}" alt="${GT.escapeHtml(p.name)}">
+                    </div>
+                    <div class="cart-details">
+                        <div class="cart-title-row">
+                            <a href="product.html?id=${p.id}" class="cart-item-title">${GT.escapeHtml(p.name)}</a>
+                            <span class="cart-item-price">$${itemSub.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        </div>
+                        ${item.variantSummary ? `<div class="cart-item-variant">${GT.escapeHtml(item.variantSummary)}</div>` : ''}
+                        <div class="cart-controls-row">
+                            <div class="qty-pill">
+                                <button onclick="GT.updateCartQty(${p.id}, ${item.quantity - 1}, '${GT.escapeHtml(item.variantSummary)}')">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="GT.updateCartQty(${p.id}, ${item.quantity + 1}, '${GT.escapeHtml(item.variantSummary)}')">+</button>
+                            </div>
+                            <button class="btn-remove-item" onclick="GT.removeCartItem(${p.id}, '${GT.escapeHtml(item.variantSummary)}')">
+                                <i class="fal fa-trash-alt"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Trigger initial render once cart is fetched
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            renderCartPage({ items: GT.state.cart, subtotal: GT.state.cartSubtotal });
+        }, 150);
+    });
+</script>
 </body>
 </html>

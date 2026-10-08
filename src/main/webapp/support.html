@@ -1,176 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Support & Contact | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concierge & Client Care | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #fdfdfd; color: #0a1128; line-height: 1.6; }
-
-        /* Premium Header */
-        header { position: sticky; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 2000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
-        .nav-group { display: flex; gap: 30px; font-size: 13px; font-weight: 800; letter-spacing: 1px; align-items: center; }
-        .nav-group a { color: #0a1128; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
-        .nav-group a:hover { color: #ff3e3e; }
+        body { background: #fdfdfd; color: #0a1128; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
 
         /* Support Hero */
-        .support-hero { padding: 100px 5% 60px; text-align: center; max-width: 800px; margin: 0 auto; }
-        .support-hero h1 { font-size: 56px; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px; line-height: 1.1; }
-        .support-hero p { font-size: 18px; color: #666; font-weight: 400; }
+        .support-hero {
+            padding: 80px 5% 50px;
+            text-align: center;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .support-tag {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+        .support-hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 18px;
+            line-height: 1.1;
+            color: #0a1128;
+        }
+        .support-hero p {
+            font-size: 17px;
+            color: #64748b;
+            font-weight: 400;
+            line-height: 1.7;
+        }
 
         /* Contact Options Grid */
-        .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto 100px; padding: 0 5%; }
-        .contact-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 40px 30px; text-align: center; transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
-        .contact-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(10, 17, 40, 0.08); border-color: transparent; }
-        .contact-icon { width: 60px; height: 60px; background: #f8f9fa; color: #0a1128; font-size: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto 20px; transition: 0.3s; }
-        .contact-card:hover .contact-icon { background: #0a1128; color: #fff; }
-        .contact-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
-        .contact-card p { font-size: 14px; color: #888; margin-bottom: 20px; }
-        .contact-card a { font-size: 13px; font-weight: 800; color: #0a1128; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #0a1128; padding-bottom: 2px; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1240px;
+            margin: 0 auto 70px;
+            padding: 0 5%;
+            width: 100%;
+        }
+        .contact-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .contact-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px rgba(10, 17, 40, 0.08);
+            border-color: #cbd5e1;
+        }
+        .contact-icon {
+            width: 56px;
+            height: 56px;
+            background: #f1f5f9;
+            color: #0a1128;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            transition: 0.3s;
+        }
+        .contact-card:hover .contact-icon {
+            background: #0a1128;
+            color: #fff;
+        }
+        .contact-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+        .contact-card p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .contact-link {
+            font-size: 12px;
+            font-weight: 800;
+            color: #0a1128;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #0a1128;
+            padding-bottom: 2px;
+            transition: 0.2s;
+        }
+        .contact-link:hover {
+            color: #ff3e3e;
+            border-color: #ff3e3e;
+        }
 
-        /* Split Layout: FAQ & Form */
-        .support-split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto 100px; padding: 0 5%; }
+        /* Split Section: FAQ & Form */
+        .support-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            max-width: 1240px;
+            margin: 0 auto 90px;
+            padding: 0 5%;
+            width: 100%;
+        }
 
-        /* Interactive FAQ (Pure CSS) */
-        .faq-section h2 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 40px; }
-        details { border-bottom: 1px solid #eee; }
-        summary { padding: 25px 0; font-size: 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-        summary::-webkit-details-marker { display: none; }
-        summary:hover { color: #ff3e3e; }
-        summary::after { content: '\f067'; font-family: 'Font Awesome 5 Pro'; font-weight: 300; font-size: 14px; color: #888; transition: 0.3s; }
-        details[open] summary::after { content: '\f068'; transform: rotate(180deg); }
-        .faq-content { padding-bottom: 25px; font-size: 15px; color: #666; line-height: 1.8; }
+        /* Interactive FAQ */
+        .faq-section h2 {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 25px;
+        }
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .faq-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: #cbd5e1;
+        }
+        .faq-question {
+            padding: 20px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-question i {
+            font-size: 14px;
+            color: #94a3b8;
+            transition: transform 0.3s;
+        }
+        .faq-item.open .faq-question i {
+            transform: rotate(180deg);
+            color: #0a1128;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 24px;
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 250px;
+            padding-bottom: 20px;
+        }
 
-        /* Floating Label Contact Form */
-        .form-section { background: #fff; padding: 50px; border-radius: 16px; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-        .form-section h2 { font-size: 24px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; }
-        .form-section p { font-size: 14px; color: #888; margin-bottom: 30px; }
+        /* Support Request Form */
+        .form-section {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .form-section h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .form-section p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
 
-        .input-row { display: flex; gap: 20px; }
-        .input-group { position: relative; margin-bottom: 25px; flex: 1; }
-        .input-group input, .input-group textarea { width: 100%; padding: 22px 15px 10px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: 0.2s; background: transparent; font-family: 'Inter', sans-serif; resize: none; }
-        .input-group input:focus, .input-group textarea:focus { border-color: #0a1128; box-shadow: 0 0 0 1px #0a1128; }
-        .input-group label { position: absolute; top: 18px; left: 15px; font-size: 14px; color: #888; transition: 0.2s ease all; pointer-events: none; }
-        .input-group input:focus ~ label, .input-group input:valid ~ label, .input-group textarea:focus ~ label, .input-group textarea:valid ~ label { top: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #0a1128; letter-spacing: 0.5px; }
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.2s;
+            font-weight: 500;
+            background: #fff;
+            color: #0a1128;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-control:focus {
+            border-color: #0a1128;
+            box-shadow: 0 0 0 1px #0a1128;
+        }
+        textarea.form-control {
+            resize: vertical;
+        }
 
-        .btn-submit { width: 100%; background: #0a1128; color: white; padding: 20px; border: none; border-radius: 6px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.15); }
+        .btn-submit {
+            width: 100%;
+            background: #0a1128;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(10,17,40,0.15);
+        }
+        .btn-submit:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(10,17,40,0.2);
+        }
+
+        /* Success Card */
+        .ticket-success-card {
+            display: none;
+            text-align: center;
+            padding: 30px 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .ticket-id-badge {
+            display: inline-block;
+            background: #0a1128;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 900;
+            padding: 10px 24px;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .support-split { grid-template-columns: 1fr; gap: 50px; }
+            .support-hero h1 { font-size: 38px; }
+            .input-row { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-<header>
+<!-- Header Navigation Bar -->
+<header class="header-main">
     <a href="index.html" class="logo">GRAN & TECH</a>
-    <div class="nav-group">
-        <a href="search.html">Archive</a>
-        <a href="sign-in.html">Sign In</a>
-        <a href="cart.html" style="background: #0a1128; color: white; padding: 10px 20px; border-radius: 50px;">BAG (1)</a>
+
+    <div class="search-wrap">
+        <input type="text" class="header-search-input" id="gtSearchInput" placeholder="Search laptops, phones, smart displays, audio..." autocomplete="off">
+        <i class="fal fa-search search-icon"></i>
+        <div class="search-results-dropdown" id="gtSearchResults"></div>
+    </div>
+
+    <div class="nav-actions">
+        <a href="search.html" class="nav-link">CATALOG</a>
+        <a href="support.html" class="nav-link active">CONCIERGE</a>
+        <div id="userNavSlot">
+            <a href="sign-in.html" class="nav-link-auth">SIGN IN</a>
+        </div>
+        <button class="cart-trigger-btn" onclick="GT.toggleBagDrawer()" title="View Hardware Bag">
+            <i class="fal fa-shopping-bag"></i>
+            <span class="bag-label">BAG</span>
+            <span class="cart-counter" id="gtCartCount">0</span>
+        </button>
     </div>
 </header>
 
+<!-- Hero -->
 <section class="support-hero">
-    <h1>How can we help?</h1>
-    <p>Whether you need technical support, order tracking, or warranty information, our elite concierge team is ready to assist you.</p>
+    <span class="support-tag">Dedicated Technical Concierge</span>
+    <h1>How may our engineers assist you?</h1>
+    <p>Whether you need enterprise hardware consultation, order fulfillment tracking, or warranty claims, our technical support desk is available around the clock.</p>
 </section>
 
+<!-- 3 Contact Channels -->
 <section class="contact-grid">
     <div class="contact-card">
         <div class="contact-icon"><i class="fal fa-comment-alt-dots"></i></div>
-        <h3>Live Chat</h3>
-        <p>Connect instantly with a tech specialist for immediate troubleshooting and advice.</p>
-        <a href="#">Start Chat</a>
+        <h3>Live Engineering Chat</h3>
+        <p>Connect with a certified hardware specialist for live diagnostic assistance and consultation.</p>
+        <a href="#supportFormSection" class="contact-link" onclick="focusTicketSubject('Technical Troubleshooting')">Start Inquiry &rarr;</a>
     </div>
     <div class="contact-card">
         <div class="contact-icon"><i class="fal fa-envelope"></i></div>
-        <h3>Email Support</h3>
-        <p>Send us a detailed message. We aim to respond to all inquiries within 24 hours.</p>
-        <a href="#">support@grantech.com</a>
+        <h3>Priority Dispatch Email</h3>
+        <p>Send our senior engineers a detailed specification or order inquiry. SLA response within 4 hours.</p>
+        <a href="mailto:concierge@grantech.com" class="contact-link">concierge@grantech.com</a>
     </div>
     <div class="contact-card">
         <div class="contact-icon"><i class="fal fa-phone-office"></i></div>
-        <h3>Call Us</h3>
-        <p>Prefer to speak to someone? Our global support lines are open Monday to Friday.</p>
-        <a href="#">+94 764287934</a>
+        <h3>Direct Support Line</h3>
+        <p>Prefer voice consultation? Our dedicated Colombo support center is active Monday through Saturday.</p>
+        <a href="tel:+94117544801" class="contact-link">+94 11 754 4801</a>
     </div>
 </section>
 
-<section class="support-split">
+<!-- Split: FAQ + Live Ticket Submission -->
+<section class="support-split" id="supportFormSection">
+    <!-- Left: Accordion FAQ -->
     <div class="faq-section">
-        <h2>Frequently Asked Questions</h2>
+        <h2>Frequently Answered Questions</h2>
 
-        <details>
-            <summary>How can I track my order?</summary>
-            <div class="faq-content">
-                Once your order ships, you will receive an email with a secure tracking link. You can also view real-time shipping updates by logging into your <a href="my-account.html" style="color:#0a1128; font-weight:600;">Account Dashboard</a>.
+        <div class="faq-accordion">
+            <div class="faq-item open">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How can I track my hardware shipment?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Every confirmed order generates a unique Order ID (e.g. <code>#GT-8492</code>). You can monitor real-time courier fulfillment directly in your <a href="my-account.html" style="color: #0284c7; font-weight: 700;">Account Portal</a> or enter your order number on the invoice lookup screen.
+                </div>
             </div>
-        </details>
 
-        <details>
-            <summary>What is your return policy?</summary>
-            <div class="faq-content">
-                We offer a 30-day risk-free return policy on all pristine condition hardware. Simply initiate a return from your account portal, and we will provide a prepaid shipping label.
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is the GRAN & TECH hardware warranty?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    All flagship laptops, mobile devices, and displays include a standard 1-Year Comprehensive Manufacturer Hardware Warranty covering logic boards, displays, power supplies, and internal silicon components.
+                </div>
             </div>
-        </details>
 
-        <details>
-            <summary>Do your products come with a warranty?</summary>
-            <div class="faq-content">
-                Yes. All GRAN & TECH devices include a standard 1-Year Limited Hardware Warranty. You can upgrade to our extended TechCare+ protection plan during the checkout process.
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is your return & exchange policy?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    We maintain a 30-day zero-risk return policy for unopened or defect-reported hardware. Returned items undergo automated hardware inspection at our fulfillment laboratory, and refunds are posted within 3-5 business days.
+                </div>
             </div>
-        </details>
 
-        <details>
-            <summary>Do you ship internationally?</summary>
-            <div class="faq-content">
-                Currently, we offer expedited shipping across North America and Europe. We are actively expanding our fulfillment centers to support global distribution by Q4.
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I order custom BTO (Build-to-Order) upgrades?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes. On each product configurator page, you can choose factory RAM and NVMe SSD expansions (such as 32GB RAM and 2TB SSD). All upgrades are factory-benchmarked and thermal-tested before shipment.
+                </div>
             </div>
-        </details>
+        </div>
     </div>
 
+    <!-- Right: Support Ticket Submission Form -->
     <div class="form-section">
-        <h2>Submit a Request</h2>
-        <p>Fill out the form below and a specialist will get back to you.</p>
+        <div id="ticketFormWrap">
+            <h2>Dispatch an Inquiry</h2>
+            <p>Complete the form below to register a ticket in our support queue.</p>
 
-        <form action="#" method="POST">
-            <div class="input-row">
-                <div class="input-group">
-                    <input type="text" required>
-                    <label>First Name</label>
+            <form id="supportTicketForm" onsubmit="handleTicketSubmit(event)">
+                <div class="input-row">
+                    <div>
+                        <label class="form-label">Client Name *</label>
+                        <input type="text" id="ticketName" class="form-control" placeholder="e.g. Kusal Nirmala" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" id="ticketEmail" class="form-control" placeholder="e.g. kusal@example.com" required>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <input type="text" required>
-                    <label>Last Name</label>
+
+                <div class="form-group">
+                    <label class="form-label">Inquiry Category *</label>
+                    <select id="ticketSubject" class="form-control" required>
+                        <option value="Order Tracking & Logistics">Order Tracking & Logistics</option>
+                        <option value="Technical Troubleshooting">Technical Troubleshooting</option>
+                        <option value="Hardware Warranty & RMA">Hardware Warranty & RMA</option>
+                        <option value="Pre-Sales Hardware Consultation">Pre-Sales Hardware Consultation</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                    </select>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <input type="email" required>
-                <label>Email Address</label>
-            </div>
+                <div class="form-group">
+                    <label class="form-label">Related Order ID (Optional)</label>
+                    <input type="text" id="ticketOrderNo" class="form-control" placeholder="e.g. GT-8492">
+                </div>
 
-            <div class="input-group">
-                <input type="text" required>
-                <label>Order Number (Optional)</label>
-            </div>
+                <div class="form-group">
+                    <label class="form-label">Inquiry Message *</label>
+                    <textarea id="ticketMessage" class="form-control" rows="4" placeholder="Please describe your hardware issue or inquiry in detail..." required></textarea>
+                </div>
 
-            <div class="input-group">
-                <textarea rows="4" required></textarea>
-                <label>How can we assist you?</label>
-            </div>
+                <button type="submit" class="btn-submit" id="ticketSubmitBtn">
+                    <i class="fas fa-paper-plane"></i> Submit Support Ticket
+                </button>
+            </form>
+        </div>
 
-            <button type="button" class="btn-submit" onclick="alert('Support ticket submitted successfully. Redirecting to confirmation...');">
-                Send Message <i class="fas fa-paper-plane"></i>
+        <!-- Ticket Generated Success Screen -->
+        <div id="ticketSuccessCard" class="ticket-success-card">
+            <div style="width: 56px; height: 56px; background: #dcfce7; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 22px;">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 style="font-size: 20px; font-weight: 900; color: #0a1128;">Inquiry Registered</h3>
+            <p style="font-size: 13px; color: #64748b; margin-top: 6px;">Your ticket has been dispatched to our support engineering queue:</p>
+            <div class="ticket-id-badge" id="generatedTicketNo">TCK-0000</div>
+            <p style="font-size: 12px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">
+                A confirmation has been logged. Our concierge will review your message and reply via email within standard business hours.
+            </p>
+            <button type="button" class="btn-submit" onclick="resetTicketForm()" style="background: #f1f5f9; color: #0a1128; border: 1px solid #cbd5e1;">
+                Submit Another Request
             </button>
-        </form>
+        </div>
     </div>
 </section>
 
-<footer style="background: #0a1128; color: white; padding: 60px 5%; text-align: center;">
-    <h2 class="logo" style="color: white; margin-bottom: 15px;">GRAN & TECH</h2>
-    <p style="opacity: 0.6; font-size: 14px;">&copy; 2026 GRAN & TECH. Engineered for the future.</p>
-</footer>
+<!-- Shared Footer -->
+<div id="footerSlot"></div>
+
+<script src="assets/js/grantech.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Load shared footer
+        fetch('footer.html').then(r => r.text()).then(html => {
+            document.getElementById('footerSlot').innerHTML = html;
+        }).catch(() => {});
+
+        // Prepopulate user details if logged in
+        try {
+            const res = await fetch('/api/auth');
+            const data = await res.json();
+            if (data.loggedIn && data.user) {
+                document.getElementById('ticketName').value = data.user.fullName || '';
+                document.getElementById('ticketEmail').value = data.user.email || '';
+            }
+        } catch (e) {}
+    });
+
+    function toggleFaq(element) {
+        const item = element.parentElement;
+        item.classList.toggle('open');
+    }
+
+    function focusTicketSubject(subject) {
+        const select = document.getElementById('ticketSubject');
+        select.value = subject;
+        document.getElementById('ticketMessage').focus();
+    }
+
+    async function handleTicketSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById('ticketSubmitBtn');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Registering Ticket...`;
+
+        const name = document.getElementById('ticketName').value.trim();
+        const email = document.getElementById('ticketEmail').value.trim();
+        const subject = document.getElementById('ticketSubject').value;
+        const orderNo = document.getElementById('ticketOrderNo').value.trim();
+        let message = document.getElementById('ticketMessage').value.trim();
+
+        if (orderNo) {
+            message = `[Order Reference: ${orderNo}] ${message}`;
+        }
+
+        try {
+            const res = await fetch('/api/support', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, subject, message })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('generatedTicketNo').textContent = data.ticketNo || 'TCK-CONFIRMED';
+                document.getElementById('ticketFormWrap').style.display = 'none';
+                document.getElementById('ticketSuccessCard').style.display = 'block';
+                GT.showToast(`Support Ticket #${data.ticketNo} submitted!`, 'success');
+            } else {
+                GT.showToast(data.message || 'Could not register support ticket.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Support Ticket`;
+            }
+        } catch (err) {
+            console.error('Support ticket submission error:', err);
+            GT.showToast('Network error while submitting ticket.', 'error');
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Support Ticket`;
+        }
+    }
+
+    function resetTicketForm() {
+        document.getElementById('supportTicketForm').reset();
+        document.getElementById('ticketFormWrap').style.display = 'block';
+        document.getElementById('ticketSuccessCard').style.display = 'none';
+        const btn = document.getElementById('ticketSubmitBtn');
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Support Ticket`;
+    }
+</script>
 
 </body>
 </html>

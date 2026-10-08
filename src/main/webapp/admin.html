@@ -1,140 +1,858 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin Panel | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Admin Console | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #f1f5f9; color: #0a1128; display: flex; height: 100vh; overflow: hidden; }
+        body { background: #f8fafc; color: #0a1128; display: flex; height: 100vh; overflow: hidden; }
 
         /* Dark Admin Sidebar */
-        .admin-sidebar { width: 280px; background: #0a1128; color: white; display: flex; flex-direction: column; }
-        .admin-logo { padding: 30px; font-size: 20px; font-weight: 900; letter-spacing: -1px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .admin-nav { padding: 30px 20px; flex: 1; }
-        .admin-nav a { display: flex; align-items: center; gap: 15px; color: #94a3b8; text-decoration: none; padding: 15px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; margin-bottom: 5px; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
-        .admin-nav a.active, .admin-nav a:hover { background: rgba(255,255,255,0.1); color: white; }
-        .admin-nav i { font-size: 16px; width: 20px; text-align: center; }
+        .admin-sidebar {
+            width: 280px;
+            background: #0a1128;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            z-index: 20;
+        }
+        .admin-logo-box {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .admin-logo {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .admin-pill {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: rgba(255, 62, 62, 0.15);
+            color: #ff4d4d;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 62, 62, 0.3);
+        }
+        .admin-nav {
+            padding: 25px 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .nav-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 10px 15px 5px;
+        }
+        .admin-nav a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.3px;
+            cursor: pointer;
+        }
+        .admin-nav a.active, .admin-nav a:hover {
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
+        }
+        .admin-nav a.active {
+            border-left: 3px solid #ff4d4d;
+            background: rgba(255,255,255,0.1);
+        }
+        .admin-nav i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-storefront {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.06);
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .btn-storefront:hover {
+            background: #ffffff;
+            color: #0a1128;
+        }
 
         /* Main Dashboard Area */
-        .admin-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .admin-header { background: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; }
+        .admin-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+        .admin-header {
+            background: #ffffff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .admin-header-title h2 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #0a1128;
+        }
+        .admin-header-title p {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .admin-user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .admin-avatar {
+            width: 42px;
+            height: 42px;
+            background: #0a1128;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(10,17,40,0.15);
+        }
 
-        .admin-content { padding: 40px; }
+        .admin-content {
+            padding: 35px 40px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
 
-        /* KPI Cards */
-        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 40px; }
-        .kpi-card { background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .kpi-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-        .kpi-value { font-size: 28px; font-weight: 900; color: #0a1128; }
-        .kpi-trend { font-size: 12px; font-weight: 700; color: #10b981; margin-top: 10px; display: flex; align-items: center; gap: 5px; }
+        /* KPI Cards Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+        .kpi-card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+        }
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .kpi-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .kpi-icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #0a1128;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: #0a1128;
+            letter-spacing: -1px;
+        }
+        .kpi-meta {
+            font-size: 12px;
+            font-weight: 600;
+            color: #10b981;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .kpi-meta.neutral {
+            color: #64748b;
+        }
 
-        /* Data Tables */
-        .data-panel { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; }
-        .panel-header { padding: 25px 30px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .admin-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .admin-table th { padding: 15px 30px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #64748b; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
-        .admin-table td { padding: 20px 30px; font-size: 14px; font-weight: 600; border-bottom: 1px solid #e2e8f0; }
+        /* Data Panel & Table */
+        .data-panel {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.03);
+            overflow: hidden;
+            margin-bottom: 35px;
+        }
+        .panel-header {
+            padding: 22px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .panel-header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .panel-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #0a1128;
+            letter-spacing: -0.3px;
+        }
+        .filter-pills {
+            display: flex;
+            gap: 8px;
+        }
+        .filter-pill {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .filter-pill.active, .filter-pill:hover {
+            background: #0a1128;
+            color: #ffffff;
+        }
+        .panel-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-create-order {
+            background: #0a1128;
+            color: #ffffff;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-create-order:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+        .btn-refresh {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #475569;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+        .btn-refresh:hover {
+            background: #e2e8f0;
+            color: #0a1128;
+        }
 
-        .badge { padding: 6px 12px; border-radius: 50px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .badge-pending { background: #fef08a; color: #854d0e; }
-        .badge-success { background: #dcfce7; color: #166534; }
+        /* Table Styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .admin-table th {
+            padding: 16px 25px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .admin-table td {
+            padding: 20px 25px;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+            color: #1e293b;
+        }
+        .admin-table tr:hover td {
+            background: #fcfdfe;
+        }
 
-        .btn-add { background: #0a1128; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        /* Status Select & Badges */
+        .status-select {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s;
+        }
+        .status-select:focus {
+            border-color: #0a1128;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .badge-pending, .badge-processing {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-shipped {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        .badge-delivered, .badge-fulfilled {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .badge-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-link {
+            color: #0284c7;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: 0.2s;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+            color: #0369a1;
+        }
+
+        /* Support Tickets Section */
+        .ticket-message-preview {
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 4px;
+            color: transparent !important;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        @media (max-width: 1024px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            body { flex-direction: column; overflow: auto; height: auto; }
+            .admin-sidebar { width: 100%; }
+        }
+        @media (max-width: 640px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+            .admin-header, .admin-content { padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
+<!-- Left Navigation Sidebar -->
 <aside class="admin-sidebar">
-    <div class="admin-logo">GRAN & TECH <br><span style="font-size: 11px; color: #ff3e3e; text-transform: uppercase; letter-spacing: 2px;">Admin Portal</span></div>
+    <div class="admin-logo-box">
+        <div>
+            <a href="admin.html" class="admin-logo">GRAN & TECH</a>
+        </div>
+        <span class="admin-pill">Admin</span>
+    </div>
+
     <nav class="admin-nav">
-        <a href="#" class="active"><i class="fas fa-chart-pie"></i> Overview</a>
-        <a href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
-        <a href="#"><i class="fas fa-box-open"></i> Products</a>
-        <a href="#"><i class="fas fa-users"></i> Customers</a>
-        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        <div class="nav-label">Core Console</div>
+        <a id="navOrdersTab" class="active" onclick="switchAdminTab('orders')">
+            <i class="fas fa-chart-line"></i> Dashboard & Orders
+        </a>
+        <a id="navTicketsTab" onclick="switchAdminTab('tickets')">
+            <i class="fas fa-headset"></i> Support Tickets
+        </a>
+        <a href="admin-create-order.html">
+            <i class="fas fa-plus-circle"></i> Manual Order Entry
+        </a>
+
+        <div class="nav-label" style="margin-top: 15px;">Store Management</div>
+        <a href="search.html" target="_blank">
+            <i class="fas fa-boxes"></i> Hardware Catalog
+        </a>
+        <a href="my-account.html">
+            <i class="fas fa-user-shield"></i> Profile & Security
+        </a>
     </nav>
+
+    <div class="sidebar-footer">
+        <a href="index.html" class="btn-storefront">
+            <i class="fas fa-external-link-alt"></i> View Storefront
+        </a>
+    </div>
 </aside>
 
+<!-- Main Workspace -->
 <main class="admin-main">
     <header class="admin-header">
-        <h2 style="font-size: 18px; font-weight: 800;">Dashboard</h2>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <span style="font-size: 14px; font-weight: 700;">System Admin</span>
-            <div style="width: 40px; height: 40px; background: #0a1128; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;">A</div>
+        <div class="admin-header-title">
+            <h2>Operations Management Center</h2>
+            <p>GRAN & TECH Platform v1.0 &bull; Enterprise Hardware Governance</p>
+        </div>
+        <div class="admin-user-profile">
+            <div style="text-align: right;">
+                <div style="font-size: 13px; font-weight: 800; color: #0a1128;" id="adminUserName">System Admin</div>
+                <div style="font-size: 11px; color: #64748b; font-weight: 600;" id="adminUserRole">Super Administrator</div>
+            </div>
+            <div class="admin-avatar" id="adminUserInitial">A</div>
         </div>
     </header>
 
     <div class="admin-content">
+
+        <!-- 4 KPI Metrics Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <div class="kpi-title">Total Revenue</div>
-                <div class="kpi-value">$124,500.00</div>
-                <div class="kpi-trend"><i class="fas fa-arrow-up"></i> 12.5% this month</div>
+                <div class="kpi-header">
+                    <span class="kpi-title">Gross Revenue</span>
+                    <div class="kpi-icon-box"><i class="fas fa-dollar-sign"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiRevenue">$0.00</div>
+                <div class="kpi-meta"><i class="fas fa-arrow-trend-up"></i> Live settled sales</div>
             </div>
+
             <div class="kpi-card">
-                <div class="kpi-title">Active Orders</div>
-                <div class="kpi-value">42</div>
-                <div class="kpi-trend"><i class="fas fa-arrow-up"></i> 4 new today</div>
+                <div class="kpi-header">
+                    <span class="kpi-title">Active Orders</span>
+                    <div class="kpi-icon-box"><i class="fas fa-shopping-bag"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiActiveOrders">0</div>
+                <div class="kpi-meta"><i class="fas fa-clock"></i> In fulfillment pipeline</div>
             </div>
+
             <div class="kpi-card">
-                <div class="kpi-title">Total Products</div>
-                <div class="kpi-value">156</div>
-                <div class="kpi-trend" style="color: #64748b;">Updated 2 hrs ago</div>
+                <div class="kpi-header">
+                    <span class="kpi-title">Active Hardware SKUs</span>
+                    <div class="kpi-icon-box"><i class="fas fa-box-open"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiProducts">0</div>
+                <div class="kpi-meta neutral"><i class="fas fa-check-circle"></i> Live in catalog</div>
             </div>
+
             <div class="kpi-card">
-                <div class="kpi-title">Total Customers</div>
-                <div class="kpi-value">8,942</div>
-                <div class="kpi-trend"><i class="fas fa-arrow-up"></i> 18% vs last year</div>
+                <div class="kpi-header">
+                    <span class="kpi-title">Registered Accounts</span>
+                    <div class="kpi-icon-box"><i class="fas fa-users"></i></div>
+                </div>
+                <div class="kpi-value" id="kpiCustomers">0</div>
+                <div class="kpi-meta"><i class="fas fa-user-plus"></i> Verified clientele</div>
             </div>
         </div>
 
-        <div class="data-panel">
+        <!-- Section 1: Orders Management Panel -->
+        <div class="data-panel" id="ordersSection">
             <div class="panel-header">
-                <h3 style="font-size: 16px; font-weight: 800;">Recent Transactions</h3>
-                <button class="btn-add"><i class="fas fa-plus"></i> Create Order</button>
+                <div class="panel-header-left">
+                    <h3 class="panel-title">Transactions & Order Fulfillment</h3>
+                    <div class="filter-pills">
+                        <button class="filter-pill active" onclick="filterOrders('ALL', this)">All</button>
+                        <button class="filter-pill" onclick="filterOrders('PROCESSING', this)">Processing</button>
+                        <button class="filter-pill" onclick="filterOrders('SHIPPED', this)">Shipped</button>
+                        <button class="filter-pill" onclick="filterOrders('DELIVERED', this)">Delivered</button>
+                        <button class="filter-pill" onclick="filterOrders('CANCELLED', this)">Cancelled</button>
+                    </div>
+                </div>
+                <div class="panel-actions">
+                    <button class="btn-refresh" onclick="loadDashboardData()" title="Refresh Transactions">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <a href="admin-create-order.html" class="btn-create-order">
+                        <i class="fas fa-plus"></i> Create Order
+                    </a>
+                </div>
             </div>
-            <table class="admin-table">
-                <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td style="color: #0a1128; font-weight: 900;">#GT-8492</td>
-                    <td>Saha Madushanka</td>
-                    <td>Just now</td>
-                    <td><span class="badge badge-pending">Processing</span></td>
-                    <td>$2,348.00</td>
-                    <td><a href="#" style="color: #0284c7; font-size: 13px; text-decoration: none;">View Details</a></td>
-                </tr>
-                <tr>
-                    <td style="color: #0a1128; font-weight: 900;">#GT-8491</td>
-                    <td>Jane Doe</td>
-                    <td>2 hours ago</td>
-                    <td><span class="badge badge-success">Fulfilled</span></td>
-                    <td>$999.00</td>
-                    <td><a href="#" style="color: #0284c7; font-size: 13px; text-decoration: none;">View Details</a></td>
-                </tr>
-                <tr>
-                    <td style="color: #0a1128; font-weight: 900;">#GT-8490</td>
-                    <td>John Smith</td>
-                    <td>Yesterday</td>
-                    <td><span class="badge badge-success">Fulfilled</span></td>
-                    <td>$349.00</td>
-                    <td><a href="#" style="color: #0284c7; font-size: 13px; text-decoration: none;">View Details</a></td>
-                </tr>
-                </tbody>
-            </table>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date & Time</th>
+                        <th>Payment</th>
+                        <th>Fulfillment Status</th>
+                        <th>Total Amount</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">
+                            <i class="fas fa-circle-notch fa-spin" style="font-size: 20px; margin-bottom: 10px; display: block;"></i>
+                            Synchronizing live transaction ledgers...
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <!-- Section 2: Support Tickets Panel (Switched via Tab) -->
+        <div class="data-panel" id="ticketsSection" style="display: none;">
+            <div class="panel-header">
+                <div class="panel-header-left">
+                    <h3 class="panel-title">Client Support Inquiries & Tickets</h3>
+                </div>
+                <div class="panel-actions">
+                    <button class="btn-refresh" onclick="loadTickets()" title="Refresh Inquiries">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Client Name</th>
+                        <th>Contact Email</th>
+                        <th>Subject</th>
+                        <th>Inquiry Details</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody id="ticketsTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">
+                            <i class="fas fa-circle-notch fa-spin" style="font-size: 20px; margin-bottom: 10px; display: block;"></i>
+                            Loading tickets from support queue...
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </main>
+
+<script src="assets/js/grantech.js"></script>
+<script>
+    let allOrders = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await checkAdminAuth();
+        await loadDashboardData();
+    });
+
+    async function checkAdminAuth() {
+        try {
+            const res = await fetch('/api/auth');
+            const data = await res.json();
+            if (data.loggedIn && data.user) {
+                document.getElementById('adminUserName').textContent = data.user.fullName;
+                document.getElementById('adminUserRole').textContent = data.user.role === 'ADMIN' ? 'Super Administrator' : 'Staff Member';
+                document.getElementById('adminUserInitial').textContent = data.user.fullName.charAt(0).toUpperCase();
+
+                if (data.user.role !== 'ADMIN') {
+                    GT.showToast('Note: Logged in as regular user. Admin controls active.', 'info');
+                }
+            } else {
+                // If not logged in, prompt user or redirect
+                console.warn('Admin portal opened without active session.');
+            }
+        } catch (e) {
+            console.error('Auth verification error:', e);
+        }
+    }
+
+    async function loadDashboardData() {
+        await Promise.all([loadKPIs(), loadOrders()]);
+    }
+
+    async function loadKPIs() {
+        try {
+            const res = await fetch('/api/admin?action=kpi');
+            const data = await res.json();
+            if (data.success && data.kpi) {
+                const k = data.kpi;
+                document.getElementById('kpiRevenue').textContent = GT.formatCurrency(k.totalRevenue || 0);
+                document.getElementById('kpiActiveOrders').textContent = k.activeOrders || 0;
+                document.getElementById('kpiProducts').textContent = k.totalProducts || 0;
+                document.getElementById('kpiCustomers').textContent = k.totalCustomers || 0;
+            }
+        } catch (e) {
+            console.error('KPI fetch failed:', e);
+        }
+    }
+
+    async function loadOrders() {
+        const tbody = document.getElementById('ordersTableBody');
+        try {
+            const res = await fetch('/api/admin?action=orders');
+            const data = await res.json();
+            if (data.success && Array.isArray(data.orders)) {
+                allOrders = data.orders;
+                renderOrders(allOrders);
+            } else {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">No transaction records found.</td></tr>`;
+            }
+        } catch (e) {
+            console.error('Orders fetch failed:', e);
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #ef4444;">Failed to load order records. Please try again.</td></tr>`;
+        }
+    }
+
+    function renderOrders(orders) {
+        const tbody = document.getElementById('ordersTableBody');
+        if (!orders || orders.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">No orders found for this filter.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = orders.map(o => {
+            const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'N/A';
+            const statusClass = getStatusClass(o.orderStatus);
+
+            return `
+                <tr>
+                    <td style="font-weight: 900; color: #0a1128;">
+                        <a href="success.html?orderNo=${encodeURIComponent(o.orderNo)}" target="_blank" style="color: #0a1128; text-decoration: none;">
+                            ${GT.escapeHtml(o.orderNo)}
+                        </a>
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: #0f172a;">${GT.escapeHtml(o.customerName || 'Anonymous Customer')}</div>
+                        <div style="font-size: 11px; color: #64748b;">${GT.escapeHtml(o.customerEmail || '')}</div>
+                    </td>
+                    <td style="color: #64748b; font-size: 12px;">${dateStr}</td>
+                    <td>
+                        <div style="font-weight: 700; font-size: 12px; color: #0a1128;">${GT.escapeHtml(o.paymentMethod || 'Credit Card')}</div>
+                        <span class="badge ${o.paymentStatus === 'PAID' ? 'badge-delivered' : 'badge-pending'}" style="margin-top: 4px;">
+                            ${GT.escapeHtml(o.paymentStatus || 'PAID')}
+                        </span>
+                    </td>
+                    <td>
+                        <select class="status-select ${statusClass}" onchange="updateOrderStatus(${o.id}, this.value)">
+                            <option value="PROCESSING" ${o.orderStatus === 'PROCESSING' ? 'selected' : ''}>Processing</option>
+                            <option value="SHIPPED" ${o.orderStatus === 'SHIPPED' ? 'selected' : ''}>Shipped</option>
+                            <option value="DELIVERED" ${o.orderStatus === 'DELIVERED' ? 'selected' : ''}>Delivered</option>
+                            <option value="CANCELLED" ${o.orderStatus === 'CANCELLED' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                    <td style="font-weight: 900; color: #0a1128; font-size: 14px;">
+                        ${GT.formatCurrency(o.totalAmount || 0)}
+                    </td>
+                    <td style="text-align: right;">
+                        <a href="success.html?orderNo=${encodeURIComponent(o.orderNo)}" target="_blank" class="action-link">
+                            View Receipt <i class="fas fa-arrow-right" style="font-size: 10px; margin-left: 4px;"></i>
+                        </a>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function getStatusClass(status) {
+        if (!status) return 'badge-pending';
+        switch (status.toUpperCase()) {
+            case 'DELIVERED':
+            case 'FULFILLED': return 'badge-delivered';
+            case 'SHIPPED': return 'badge-shipped';
+            case 'PROCESSING': return 'badge-processing';
+            case 'CANCELLED': return 'badge-cancelled';
+            default: return 'badge-pending';
+        }
+    }
+
+    function filterOrders(filter, btn) {
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        if (filter === 'ALL') {
+            renderOrders(allOrders);
+        } else {
+            const filtered = allOrders.filter(o => o.orderStatus && o.orderStatus.toUpperCase() === filter);
+            renderOrders(filtered);
+        }
+    }
+
+    async function updateOrderStatus(orderId, newStatus) {
+        try {
+            const res = await fetch('/api/admin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'updateStatus',
+                    orderId: orderId,
+                    status: newStatus
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                GT.showToast(`Order status updated to ${newStatus}`, 'success');
+                // Refresh local model & KPIs
+                const order = allOrders.find(o => o.id === orderId);
+                if (order) order.orderStatus = newStatus;
+                loadKPIs();
+            } else {
+                GT.showToast(data.message || 'Failed to update order status.', 'error');
+            }
+        } catch (e) {
+            console.error('Update status error:', e);
+            GT.showToast('Network error while updating status.', 'error');
+        }
+    }
+
+    function switchAdminTab(tab) {
+        const ordersTab = document.getElementById('navOrdersTab');
+        const ticketsTab = document.getElementById('navTicketsTab');
+        const ordersSection = document.getElementById('ordersSection');
+        const ticketsSection = document.getElementById('ticketsSection');
+
+        if (tab === 'orders') {
+            ordersTab.classList.add('active');
+            ticketsTab.classList.remove('active');
+            ordersSection.style.display = 'block';
+            ticketsSection.style.display = 'none';
+        } else {
+            ticketsTab.classList.add('active');
+            ordersTab.classList.remove('active');
+            ordersSection.style.display = 'none';
+            ticketsSection.style.display = 'block';
+            loadTickets();
+        }
+    }
+
+    async function loadTickets() {
+        const tbody = document.getElementById('ticketsTableBody');
+        try {
+            const res = await fetch('/api/admin?action=tickets');
+            const data = await res.json();
+            if (data.success && Array.isArray(data.tickets) && data.tickets.length > 0) {
+                tbody.innerHTML = data.tickets.map(t => {
+                    const dateStr = t.createdAt ? new Date(t.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A';
+                    return `
+                        <tr>
+                            <td style="font-weight: 800; color: #0a1128;">${GT.escapeHtml(t.ticketNo)}</td>
+                            <td style="font-weight: 700;">${GT.escapeHtml(t.name)}</td>
+                            <td><a href="mailto:${GT.escapeHtml(t.email)}" style="color: #0284c7; text-decoration: none;">${GT.escapeHtml(t.email)}</a></td>
+                            <td style="font-weight: 700; color: #1e293b;">${GT.escapeHtml(t.subject)}</td>
+                            <td><div class="ticket-message-preview" title="${GT.escapeHtml(t.message)}">${GT.escapeHtml(t.message)}</div></td>
+                            <td style="color: #64748b; font-size: 12px;">${dateStr}</td>
+                            <td><span class="badge ${t.status === 'RESOLVED' ? 'badge-delivered' : 'badge-pending'}">${GT.escapeHtml(t.status || 'OPEN')}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">No customer inquiries currently registered in the queue.</td></tr>`;
+            }
+        } catch (e) {
+            console.error('Ticket load error:', e);
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #ef4444;">Could not load tickets.</td></tr>`;
+        }
+    }
+</script>
 
 </body>
 </html>

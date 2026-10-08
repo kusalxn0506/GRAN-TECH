@@ -1,168 +1,590 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Aether Pro Laptop | GRAN & TECH</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | GRAN & TECH</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: #fff; color: #0a1128; overflow-x: hidden; }
-
-        /* Premium Header */
-        header { position: sticky; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 2000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
-        .nav-group { display: flex; gap: 30px; font-size: 13px; font-weight: 800; letter-spacing: 1px; align-items: center; }
-        .nav-group a { color: #0a1128; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
-        .nav-group a:hover { color: #ff3e3e; }
-
-        /* The Product Arena Layout */
-        .product-arena { max-width: 1600px; margin: 0 auto; padding: 40px 5% 100px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; }
+        .product-arena {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 40px 5% 100px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 80px;
+        }
 
         /* Sticky Left Gallery */
-        .gallery-wrapper { position: sticky; top: 120px; height: calc(100vh - 160px); display: flex; flex-direction: column; gap: 20px; }
-        .main-image { flex: 1; background: #f8f9fa; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 40px; overflow: hidden; border: 1px solid #f0f0f0; }
-        .main-image img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: 0.5s ease; cursor: crosshair; }
-        .main-image:hover img { transform: scale(1.05); }
+        .gallery-wrapper {
+            position: sticky;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .main-image-box {
+            height: 520px;
+            background: var(--slate-50);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .main-image-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            transition: transform 0.4s ease;
+        }
+        .main-image-box:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-badge {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: var(--emerald-800);
+            color: var(--white);
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 900;
+            border-radius: var(--radius-sm);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
-        /* Right Side Details */
-        .product-info { padding-top: 20px; }
-        .breadcrumbs { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 30px; }
-        .breadcrumbs a { color: #888; text-decoration: none; transition: 0.2s; }
-        .breadcrumbs a:hover { color: #0a1128; }
+        .thumbnails-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            height: 100px;
+        }
+        .thumb-item {
+            background: var(--slate-50);
+            border: 2px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .thumb-item:hover, .thumb-item.active {
+            border-color: var(--navy);
+            box-shadow: var(--shadow-md);
+        }
+        .thumb-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+        }
 
-        .product-title { font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 15px; }
-        .product-price { font-size: 28px; font-weight: 800; color: #0a1128; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
-        .product-desc { font-size: 16px; line-height: 1.8; color: #555; margin-bottom: 40px; font-weight: 400; }
+        /* Right Side Product Configuration */
+        .breadcrumbs {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--slate-400);
+            margin-bottom: 24px;
+        }
+        .breadcrumbs a {
+            color: var(--slate-400);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .breadcrumbs a:hover {
+            color: var(--navy);
+        }
+
+        .product-title {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: var(--navy);
+        }
+
+        .rating-strip {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #f59e0b;
+            margin-bottom: 24px;
+        }
+        .rating-strip span {
+            color: var(--slate-400);
+            font-weight: 600;
+        }
+
+        .product-price-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .price-now {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--navy);
+            letter-spacing: -1px;
+        }
+        .stock-pill {
+            background: var(--emerald-100);
+            color: var(--emerald-800);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-description {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--slate-600);
+            margin-bottom: 35px;
+        }
 
         /* Variant Selectors */
-        .variant-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; color: #0a1128; }
-        .variant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
+        .variant-group {
+            margin-bottom: 30px;
+        }
+        .variant-title {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--navy);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .variant-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .variant-btn {
+            border: 2px solid var(--slate-200);
+            background: var(--white);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .variant-btn:hover {
+            border-color: var(--navy);
+        }
+        .variant-btn.active {
+            border-color: var(--navy);
+            background: var(--slate-50);
+            box-shadow: var(--shadow-sm);
+        }
+        .variant-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--navy);
+            display: block;
+        }
+        .variant-delta {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-400);
+            margin-top: 4px;
+            display: block;
+        }
 
-        .v-box input { display: none; }
-        .v-box label { display: block; border: 1px solid #ddd; padding: 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700; font-size: 14px; text-align: center; color: #666; }
-        .v-box label:hover { border-color: #0a1128; }
-        .v-box input:checked + label { border: 2px solid #0a1128; color: #0a1128; background: #fafbfc; box-shadow: 0 4px 10px rgba(10,17,40,0.05); }
+        /* Add to Bag Controls */
+        .add-bag-section {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+        .qty-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            padding: 4px 8px;
+        }
+        .qty-box button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: 800;
+            padding: 10px 16px;
+            cursor: pointer;
+            color: var(--navy);
+        }
+        .qty-box span {
+            font-size: 16px;
+            font-weight: 800;
+            min-width: 32px;
+            text-align: center;
+        }
+        .btn-add-main {
+            flex: 1;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(10, 17, 40, 0.2);
+        }
+        .btn-add-main:hover {
+            background: var(--accent);
+            box-shadow: 0 15px 30px rgba(255, 62, 62, 0.3);
+            transform: translateY(-2px);
+        }
 
-        /* Add to Bag Action */
-        .action-area { display: flex; gap: 15px; margin-bottom: 60px; }
-        .qty-selector { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; padding: 5px 10px; }
-        .qty-selector button { background: none; border: none; font-size: 18px; font-weight: 800; padding: 0 15px; cursor: pointer; color: #0a1128; }
-        .qty-selector input { width: 40px; text-align: center; border: none; font-size: 16px; font-weight: 800; outline: none; }
+        /* Collapsible Accordions */
+        .accordion-wrapper {
+            border-top: 1px solid var(--slate-200);
+        }
+        .accordion-item {
+            border-bottom: 1px solid var(--slate-200);
+        }
+        .accordion-header {
+            padding: 22px 0;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--navy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .accordion-header:hover {
+            color: var(--accent);
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--slate-600);
+        }
+        .accordion-item.active .accordion-body {
+            max-height: 400px;
+            padding-bottom: 24px;
+        }
 
-        .btn-add { flex: 1; background: #0a1128; color: white; border: none; border-radius: 6px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-        .btn-add:hover { background: #ff3e3e; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 62, 62, 0.2); }
-
-        /* Accordion Specs */
-        .spec-accordion { border-top: 1px solid #eee; }
-        .spec-item { border-bottom: 1px solid #eee; }
-        .spec-title { padding: 25px 0; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .spec-title:hover { color: #ff3e3e; }
-        .spec-content { padding-bottom: 25px; font-size: 14px; color: #666; line-height: 1.8; display: none; }
-
-        /* Show content trick without JS for demo */
-        .spec-item:hover .spec-content { display: block; }
+        @media (max-width: 992px) {
+            .product-arena { grid-template-columns: 1fr; }
+            .gallery-wrapper { position: static; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="logo">GRAN & TECH</a>
-    <div class="nav-group">
-        <a href="search.html">Archive</a>
-        <a href="sign-in.html">Sign In</a>
-        <a href="cart.html" style="background: #0a1128; color: white; padding: 10px 20px; border-radius: 50px;">BAG (1)</a>
+<!-- Header -->
+<header class="gt-header">
+    <a href="index.html" class="gt-brand">
+        <span class="gt-logo">GRAN & TECH<span>.</span></span>
+    </a>
+
+    <div class="header-search-container">
+        <div class="header-search-box">
+            <i class="fal fa-search"></i>
+            <input type="text" id="gtHeaderSearchInput" placeholder="Search laptops, phones, audio, drones..." autocomplete="off">
+        </div>
+        <div class="search-dropdown-menu" id="gtHeaderSearchDropdown"></div>
+    </div>
+
+    <div class="gt-nav-right">
+        <a href="index.html" class="nav-link-standard">Storefront</a>
+        <a href="search.html" class="nav-link-standard">Archive</a>
+        <a href="support.html" class="nav-link-standard">Support</a>
+
+        <div id="userNavSlot">
+            <a href="sign-in.html" class="nav-link-auth">SIGN IN</a>
+        </div>
+
+        <button class="btn-header-bag" onclick="GT.openDrawer()">
+            <i class="fal fa-shopping-bag"></i>
+            <span class="bag-count-badge">BAG (0)</span>
+        </button>
     </div>
 </header>
 
-<main class="product-arena">
-    <div class="gallery-wrapper">
-        <div class="main-image">
-            <span style="position: absolute; top: 30px; left: 30px; background: #4caf50; color: white; padding: 6px 12px; font-size: 10px; font-weight: 900; border-radius: 4px; letter-spacing: 1px;">NEW RELEASE</span>
-            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200" alt="Aether Pro Laptop">
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; height: 120px;">
-            <div style="background: #f8f9fa; border-radius: 8px; border: 2px solid #0a1128; cursor: pointer;"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; padding:10px;"></div>
-            <div style="background: #f8f9fa; border-radius: 8px; border: 1px solid #eee; cursor: pointer; opacity: 0.6; transition: 0.2s;"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=200" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; padding:10px;"></div>
-            <div style="background: #f8f9fa; border-radius: 8px; border: 1px solid #eee; cursor: pointer; opacity: 0.6; transition: 0.2s;"><img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; padding:10px;"></div>
-        </div>
-    </div>
-
-    <div class="product-info">
-        <div class="breadcrumbs">
-            <a href="index.html">Home</a> &nbsp; / &nbsp; <a href="search.html">Laptops</a> &nbsp; / &nbsp; <span style="color: #0a1128;">Aether Pro</span>
-        </div>
-
-        <h1 class="product-title">Aether Pro Laptop</h1>
-        <div class="product-price">
-            $1,999.00
-            <span style="font-size: 12px; font-weight: 600; color: #166534; background: #dcfce7; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px;">In Stock</span>
-        </div>
-
-        <p class="product-desc">Engineered for the elite. The Aether Pro delivers desktop-level performance in an impossibly thin aerospace-grade aluminum chassis. Featuring the new M-Series architecture, advanced thermal management, and a stunning 16-inch Retina Liquid display.</p>
-
-        <span class="variant-label">Unified Memory</span>
-        <div class="variant-grid">
-            <div class="v-box">
-                <input type="radio" name="ram" id="ram1" checked>
-                <label for="ram1">16GB RAM</label>
-            </div>
-            <div class="v-box">
-                <input type="radio" name="ram" id="ram2">
-                <label for="ram2">32GB RAM <span style="display:block; font-size:11px; color:#888; margin-top:5px;">+$400.00</span></label>
-            </div>
-        </div>
-
-        <span class="variant-label">Storage Capacity</span>
-        <div class="variant-grid">
-            <div class="v-box">
-                <input type="radio" name="storage" id="ssd1">
-                <label for="ssd1">512GB SSD</label>
-            </div>
-            <div class="v-box">
-                <input type="radio" name="storage" id="ssd2" checked>
-                <label for="ssd2">1TB SSD <span style="display:block; font-size:11px; color:#888; margin-top:5px;">+$200.00</span></label>
-            </div>
-        </div>
-
-        <div class="action-area">
-            <div class="qty-selector">
-                <button>-</button>
-                <input type="text" value="1" readonly>
-                <button>+</button>
-            </div>
-            <a href="cart.html" class="btn-add"><i class="far fa-shopping-bag" style="margin-right: 10px; font-size: 16px;"></i> Add to Bag</a>
-        </div>
-
-        <div class="spec-accordion">
-            <div class="spec-item">
-                <div class="spec-title">Tech Specs <i class="fas fa-plus"></i></div>
-                <div class="spec-content">
-                    <strong>Processor:</strong> 12-Core CPU, 19-Core GPU<br>
-                    <strong>Display:</strong> 16.2-inch Liquid Retina XDR display<br>
-                    <strong>Battery:</strong> Up to 22 hours of video playback<br>
-                    <strong>Ports:</strong> 3x Thunderbolt 4, HDMI, SDXC, MagSafe 3
-                </div>
-            </div>
-            <div class="spec-item">
-                <div class="spec-title">Shipping & Returns <i class="fas fa-plus"></i></div>
-                <div class="spec-content">
-                    Free premium overnight shipping on all laptop orders. If you are not completely satisfied, you have 30 days to return the device in its original packaging for a full refund.
-                </div>
-            </div>
-            <div class="spec-item">
-                <div class="spec-title">Warranty <i class="fas fa-plus"></i></div>
-                <div class="spec-content">
-                    Includes 1-Year Limited Hardware Warranty and 90 days of complimentary technical support. Upgrade to TechCare+ at checkout for 3 years of accidental damage protection.
-                </div>
-            </div>
-        </div>
+<!-- Product Workspace -->
+<main class="product-arena" id="productArena">
+    <div style="grid-column: 1/-1; text-align: center; padding: 120px; color: var(--slate-400);">
+        <i class="fal fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 15px;"></i>
+        <p>Loading precision hardware specifications...</p>
     </div>
 </main>
 
-<footer style="background: #0a1128; color: white; padding: 100px 5% 40px; text-align: center;">
-    <h2 class="logo" style="color: white; margin-bottom: 20px;">GRAN & TECH</h2>
-    <p style="opacity: 0.6; font-size: 14px;">&copy; 2026 GRAN & TECH. All rights reserved.</p>
+<!-- Footer -->
+<footer class="gt-footer">
+    <div style="text-align: center; font-size: 12px; color: var(--slate-400); padding: 40px 0;">
+        &copy; 2026 GRAN & TECH Inc. Precision High-Performance Computing.
+    </div>
 </footer>
 
+<script src="assets/js/grantech.js"></script>
+<script>
+    let currentProduct = null;
+    let selectedQuantity = 1;
+    let selectedVariants = {
+        RAM: { value: '', delta: 0 },
+        STORAGE: { value: '', delta: 0 }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id') || '1'; // Default to 1 (Aether Pro Laptop)
+
+    async function loadProductDetails() {
+        const arena = document.getElementById('productArena');
+
+        try {
+            const res = await fetch(`/api/products?id=${productId}`);
+            const data = await res.json();
+
+            if (data.success && data.product) {
+                currentProduct = data.product;
+                document.title = `${currentProduct.name} | GRAN & TECH`;
+                renderProductPage(currentProduct);
+            } else {
+                arena.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 100px;">
+                        <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 20px;">Hardware Not Found</h2>
+                        <p style="color: #666; margin-bottom: 30px;">The specified device could not be located in our archive.</p>
+                        <a href="search.html" class="btn-hero-primary" style="display: inline-block;">Return to Archive</a>
+                    </div>
+                `;
+            }
+        } catch (e) {
+            arena.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--accent);">Failed to load product details from server.</div>`;
+        }
+    }
+
+    function renderProductPage(p) {
+        const arena = document.getElementById('productArena');
+
+        // Prepare gallery thumbnails
+        const gallery = (p.galleryImages && p.galleryImages.length > 0) ? p.galleryImages : [p.mainImage];
+
+        // Group variants
+        const ramVariants = (p.variants || []).filter(v => v.variantType === 'RAM');
+        const storageVariants = (p.variants || []).filter(v => v.variantType === 'STORAGE');
+
+        // Set defaults
+        if (ramVariants.length > 0) {
+            const defRam = ramVariants.find(v => v.isDefault) || ramVariants[0];
+            selectedVariants.RAM = { value: defRam.variantValue, delta: defRam.priceDelta };
+        }
+        if (storageVariants.length > 0) {
+            const defSto = storageVariants.find(v => v.isDefault) || storageVariants[0];
+            selectedVariants.STORAGE = { value: defSto.variantValue, delta: defSto.priceDelta };
+        }
+
+        const initialPrice = p.price + selectedVariants.RAM.delta + selectedVariants.STORAGE.delta;
+
+        arena.innerHTML = `
+            <!-- Left: Sticky Gallery -->
+            <div class="gallery-wrapper">
+                <div class="main-image-box">
+                    ${p.badge ? `<span class="gallery-badge">${GT.escapeHtml(p.badge)}</span>` : ''}
+                    <img id="mainProductPhoto" src="${gallery[0]}" alt="${GT.escapeHtml(p.name)}">
+                </div>
+                ${gallery.length > 1 ? `
+                    <div class="thumbnails-row">
+                        ${gallery.map((img, idx) => `
+                            <div class="thumb-item ${idx === 0 ? 'active' : ''}" onclick="switchGalleryPhoto('${img}', this)">
+                                <img src="${img}" alt="Thumbnail ${idx + 1}">
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+
+            <!-- Right: Configurator -->
+            <div class="product-info-panel">
+                <div class="breadcrumbs">
+                    <a href="index.html">Home</a> &nbsp;/&nbsp; 
+                    <a href="search.html?categoryId=${p.categoryId}">${GT.escapeHtml(p.categoryName || 'Tech')}</a> &nbsp;/&nbsp; 
+                    <span style="color: var(--navy);">${GT.escapeHtml(p.name)}</span>
+                </div>
+
+                <h1 class="product-title">${GT.escapeHtml(p.name)}</h1>
+
+                <div class="rating-strip">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>${p.rating.toFixed(1)} / 5.0 (${p.reviewsCount} Verified Reviews)</span>
+                </div>
+
+                <div class="product-price-box">
+                    <div class="price-now" id="liveDisplayPrice">$${initialPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div class="stock-pill"><i class="fal fa-check"></i> In Stock (${p.stockQuantity} Units)</div>
+                </div>
+
+                <p class="product-description">${GT.escapeHtml(p.description)}</p>
+
+                <!-- RAM Variant Selector -->
+                ${ramVariants.length > 0 ? `
+                    <div class="variant-group">
+                        <span class="variant-title">Unified Memory Architecture</span>
+                        <div class="variant-options-grid">
+                            ${ramVariants.map(v => `
+                                <div class="variant-btn ${selectedVariants.RAM.value === v.variantValue ? 'active' : ''}" 
+                                     onclick="selectVariant('RAM', '${v.variantValue}', ${v.priceDelta}, this)">
+                                    <span class="variant-name">${GT.escapeHtml(v.variantValue)}</span>
+                                    <span class="variant-delta">${v.priceDelta > 0 ? `+$${v.priceDelta.toFixed(2)}` : 'Standard'}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- Storage Variant Selector -->
+                ${storageVariants.length > 0 ? `
+                    <div class="variant-group">
+                        <span class="variant-title">NVMe PCIe Storage Capacity</span>
+                        <div class="variant-options-grid">
+                            ${storageVariants.map(v => `
+                                <div class="variant-btn ${selectedVariants.STORAGE.value === v.variantValue ? 'active' : ''}" 
+                                     onclick="selectVariant('STORAGE', '${v.variantValue}', ${v.priceDelta}, this)">
+                                    <span class="variant-name">${GT.escapeHtml(v.variantValue)}</span>
+                                    <span class="variant-delta">${v.priceDelta > 0 ? `+$${v.priceDelta.toFixed(2)}` : 'Standard'}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- Add to Bag Action Row -->
+                <div class="add-bag-section">
+                    <div class="qty-box">
+                        <button onclick="changeQty(-1)">-</button>
+                        <span id="selectedQtyDisplay">1</span>
+                        <button onclick="changeQty(1)">+</button>
+                    </div>
+                    <button class="btn-add-main" onclick="onAddToBagClick()">
+                        <i class="fal fa-shopping-bag"></i>
+                        <span>Add to Bag</span>
+                    </button>
+                </div>
+
+                <!-- Collapsible Accordion Specifications -->
+                <div class="accordion-wrapper">
+                    <div class="accordion-item active" onclick="toggleAccordion(this)">
+                        <div class="accordion-header">
+                            <span>Technical Specifications</span>
+                            <i class="fal fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-body">
+                            ${p.techSpecs ? GT.escapeHtml(p.techSpecs).replace(/\|/g, '<br>&bull; ') : 'Flagship precision architecture.'}
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <div class="accordion-header">
+                            <span>Shipping & Priority Dispatch</span>
+                            <i class="fal fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-body">
+                            ${p.shippingInfo || 'Free worldwide courier delivery (2-4 business days) with real-time tracking.'}
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" onclick="toggleAccordion(this)">
+                        <div class="accordion-header">
+                            <span>Manufacturer Warranty & Care</span>
+                            <i class="fal fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-body">
+                            ${p.warrantyInfo || 'Includes 2-year official manufacturer warranty with complimentary replacement guarantee.'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function switchGalleryPhoto(url, element) {
+        document.getElementById('mainProductPhoto').src = url;
+        document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+    }
+
+    function selectVariant(type, value, delta, element) {
+        selectedVariants[type] = { value: value, delta: delta };
+        
+        // Update active class on clicked button
+        element.parentElement.querySelectorAll('.variant-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+
+        // Recalculate price in real-time
+        recalculateLivePrice();
+    }
+
+    function recalculateLivePrice() {
+        if (!currentProduct) return;
+        const total = currentProduct.price + selectedVariants.RAM.delta + selectedVariants.STORAGE.delta;
+        document.getElementById('liveDisplayPrice').textContent = `$${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function changeQty(diff) {
+        selectedQuantity = Math.max(1, selectedQuantity + diff);
+        document.getElementById('selectedQtyDisplay').textContent = selectedQuantity;
+    }
+
+    function onAddToBagClick() {
+        if (!currentProduct) return;
+
+        let variantSummary = '';
+        if (selectedVariants.RAM.value) variantSummary += selectedVariants.RAM.value;
+        if (selectedVariants.STORAGE.value) {
+            variantSummary += (variantSummary ? ' | ' : '') + selectedVariants.STORAGE.value;
+        }
+
+        const calculatedUnitPrice = currentProduct.price + selectedVariants.RAM.delta + selectedVariants.STORAGE.delta;
+
+        GT.addToCart(currentProduct.id, selectedQuantity, variantSummary, calculatedUnitPrice);
+    }
+
+    function toggleAccordion(item) {
+        item.classList.toggle('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProductDetails);
+</script>
 </body>
 </html>
