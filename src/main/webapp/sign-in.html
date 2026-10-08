@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Secure Portal | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { display: flex; height: 100vh; background: #fff; }
+
+        /* Cinematic Left Side - Fixed robust image URL */
+        .auth-visual { flex: 1.2; background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat; position: relative; display: flex; align-items: flex-end; padding: 60px; }
+        .glass-panel { background: rgba(10, 17, 40, 0.4); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px; color: white; width: 100%; max-width: 500px; }
+
+        /* Clean Right Side */
+        .auth-form-area { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; background: #fff; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; color: #0a1128; position: absolute; top: 40px; right: 10%; }
+
+        /* Animated Floating Labels */
+        .input-group { position: relative; margin-bottom: 30px; }
+        .input-group input { width: 100%; padding: 20px 15px 10px; font-size: 15px; border: none; border-bottom: 2px solid #eee; background: transparent; outline: none; transition: 0.3s; }
+        .input-group input:focus { border-bottom-color: #0a1128; }
+        .input-group label { position: absolute; top: 18px; left: 15px; color: #999; font-size: 15px; pointer-events: none; transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .input-group input:focus ~ label, .input-group input:valid ~ label { top: 0px; font-size: 11px; font-weight: 800; color: #0a1128; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Ultimate Button */
+        .btn-auth { width: 100%; background: #0a1128; color: #fff; padding: 20px; border: none; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; margin-top: 20px; }
+        .btn-auth:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.2); }
+    </style>
+</head>
+<body>
+<div class="auth-visual">
+    <div class="glass-panel">
+        <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 10px;">The Future of Tech.</h2>
+        <p style="font-size: 14px; opacity: 0.8; line-height: 1.6;">Experience unparalleled design and performance. Sign in to access your exclusive GRAN & TECH portfolio.</p>
+    </div>
+</div>
+<div class="auth-form-area">
+    <a href="index.html" style="text-decoration:none;"><div class="logo">GRAN & TECH</div></a>
+    <h1 style="font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 10px; color: #0a1128;">Welcome back.</h1>
+    <p style="color: #666; margin-bottom: 50px;">Please enter your details to proceed.</p>
+
+    <form>
+        <div class="input-group">
+            <input type="email" required>
+            <label>Email Address</label>
+        </div>
+        <div class="input-group">
+            <input type="password" required>
+            <label>Password</label>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 30px;">
+            <label style="cursor: pointer; color: #444; display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" style="accent-color: #0a1128; width: 16px; height: 16px;">Remember me
+            </label>
+            <a href="#" style="color: #0a1128; text-decoration: none;">Forgot Password?</a>
+        </div>
+        <button type="button" class="btn-auth">Sign In to Portal</button>
+    </form>
+    <p style="text-align: center; margin-top: 40px; font-size: 14px; color: #666;">
+        New to the platform? <a href="sign-up.html" style="color: #0a1128; font-weight: 800; text-decoration: underline;">Create an account</a>
+    </p>
+</div>
+</body>
+</html>

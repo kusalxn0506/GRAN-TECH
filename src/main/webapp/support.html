@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Support & Contact | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #fdfdfd; color: #0a1128; line-height: 1.6; }
+
+        /* Premium Header */
+        header { position: sticky; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 2000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
+        .nav-group { display: flex; gap: 30px; font-size: 13px; font-weight: 800; letter-spacing: 1px; align-items: center; }
+        .nav-group a { color: #0a1128; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
+        .nav-group a:hover { color: #ff3e3e; }
+
+        /* Support Hero */
+        .support-hero { padding: 100px 5% 60px; text-align: center; max-width: 800px; margin: 0 auto; }
+        .support-hero h1 { font-size: 56px; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px; line-height: 1.1; }
+        .support-hero p { font-size: 18px; color: #666; font-weight: 400; }
+
+        /* Contact Options Grid */
+        .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto 100px; padding: 0 5%; }
+        .contact-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 40px 30px; text-align: center; transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: pointer; }
+        .contact-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(10, 17, 40, 0.08); border-color: transparent; }
+        .contact-icon { width: 60px; height: 60px; background: #f8f9fa; color: #0a1128; font-size: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto 20px; transition: 0.3s; }
+        .contact-card:hover .contact-icon { background: #0a1128; color: #fff; }
+        .contact-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+        .contact-card p { font-size: 14px; color: #888; margin-bottom: 20px; }
+        .contact-card a { font-size: 13px; font-weight: 800; color: #0a1128; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #0a1128; padding-bottom: 2px; }
+
+        /* Split Layout: FAQ & Form */
+        .support-split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto 100px; padding: 0 5%; }
+
+        /* Interactive FAQ (Pure CSS) */
+        .faq-section h2 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 40px; }
+        details { border-bottom: 1px solid #eee; }
+        summary { padding: 25px 0; font-size: 16px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        summary::-webkit-details-marker { display: none; }
+        summary:hover { color: #ff3e3e; }
+        summary::after { content: '\f067'; font-family: 'Font Awesome 5 Pro'; font-weight: 300; font-size: 14px; color: #888; transition: 0.3s; }
+        details[open] summary::after { content: '\f068'; transform: rotate(180deg); }
+        .faq-content { padding-bottom: 25px; font-size: 15px; color: #666; line-height: 1.8; }
+
+        /* Floating Label Contact Form */
+        .form-section { background: #fff; padding: 50px; border-radius: 16px; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+        .form-section h2 { font-size: 24px; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .form-section p { font-size: 14px; color: #888; margin-bottom: 30px; }
+
+        .input-row { display: flex; gap: 20px; }
+        .input-group { position: relative; margin-bottom: 25px; flex: 1; }
+        .input-group input, .input-group textarea { width: 100%; padding: 22px 15px 10px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: 0.2s; background: transparent; font-family: 'Inter', sans-serif; resize: none; }
+        .input-group input:focus, .input-group textarea:focus { border-color: #0a1128; box-shadow: 0 0 0 1px #0a1128; }
+        .input-group label { position: absolute; top: 18px; left: 15px; font-size: 14px; color: #888; transition: 0.2s ease all; pointer-events: none; }
+        .input-group input:focus ~ label, .input-group input:valid ~ label, .input-group textarea:focus ~ label, .input-group textarea:valid ~ label { top: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #0a1128; letter-spacing: 0.5px; }
+
+        .btn-submit { width: 100%; background: #0a1128; color: white; padding: 20px; border: none; border-radius: 6px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.15); }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">GRAN & TECH</a>
+    <div class="nav-group">
+        <a href="search.html">Archive</a>
+        <a href="sign-in.html">Sign In</a>
+        <a href="cart.html" style="background: #0a1128; color: white; padding: 10px 20px; border-radius: 50px;">BAG (1)</a>
+    </div>
+</header>
+
+<section class="support-hero">
+    <h1>How can we help?</h1>
+    <p>Whether you need technical support, order tracking, or warranty information, our elite concierge team is ready to assist you.</p>
+</section>
+
+<section class="contact-grid">
+    <div class="contact-card">
+        <div class="contact-icon"><i class="fal fa-comment-alt-dots"></i></div>
+        <h3>Live Chat</h3>
+        <p>Connect instantly with a tech specialist for immediate troubleshooting and advice.</p>
+        <a href="#">Start Chat</a>
+    </div>
+    <div class="contact-card">
+        <div class="contact-icon"><i class="fal fa-envelope"></i></div>
+        <h3>Email Support</h3>
+        <p>Send us a detailed message. We aim to respond to all inquiries within 24 hours.</p>
+        <a href="#">support@grantech.com</a>
+    </div>
+    <div class="contact-card">
+        <div class="contact-icon"><i class="fal fa-phone-office"></i></div>
+        <h3>Call Us</h3>
+        <p>Prefer to speak to someone? Our global support lines are open Monday to Friday.</p>
+        <a href="#">+94 764287934</a>
+    </div>
+</section>
+
+<section class="support-split">
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <details>
+            <summary>How can I track my order?</summary>
+            <div class="faq-content">
+                Once your order ships, you will receive an email with a secure tracking link. You can also view real-time shipping updates by logging into your <a href="my-account.html" style="color:#0a1128; font-weight:600;">Account Dashboard</a>.
+            </div>
+        </details>
+
+        <details>
+            <summary>What is your return policy?</summary>
+            <div class="faq-content">
+                We offer a 30-day risk-free return policy on all pristine condition hardware. Simply initiate a return from your account portal, and we will provide a prepaid shipping label.
+            </div>
+        </details>
+
+        <details>
+            <summary>Do your products come with a warranty?</summary>
+            <div class="faq-content">
+                Yes. All GRAN & TECH devices include a standard 1-Year Limited Hardware Warranty. You can upgrade to our extended TechCare+ protection plan during the checkout process.
+            </div>
+        </details>
+
+        <details>
+            <summary>Do you ship internationally?</summary>
+            <div class="faq-content">
+                Currently, we offer expedited shipping across North America and Europe. We are actively expanding our fulfillment centers to support global distribution by Q4.
+            </div>
+        </details>
+    </div>
+
+    <div class="form-section">
+        <h2>Submit a Request</h2>
+        <p>Fill out the form below and a specialist will get back to you.</p>
+
+        <form action="#" method="POST">
+            <div class="input-row">
+                <div class="input-group">
+                    <input type="text" required>
+                    <label>First Name</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" required>
+                    <label>Last Name</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="email" required>
+                <label>Email Address</label>
+            </div>
+
+            <div class="input-group">
+                <input type="text" required>
+                <label>Order Number (Optional)</label>
+            </div>
+
+            <div class="input-group">
+                <textarea rows="4" required></textarea>
+                <label>How can we assist you?</label>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="alert('Support ticket submitted successfully. Redirecting to confirmation...');">
+                Send Message <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+</section>
+
+<footer style="background: #0a1128; color: white; padding: 60px 5%; text-align: center;">
+    <h2 class="logo" style="color: white; margin-bottom: 15px;">GRAN & TECH</h2>
+    <p style="opacity: 0.6; font-size: 14px;">&copy; 2026 GRAN & TECH. Engineered for the future.</p>
+</footer>
+
+</body>
+</html>

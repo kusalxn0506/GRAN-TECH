@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Order | GRAN & TECH Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #f1f5f9; color: #0f172a; display: flex; height: 100vh; overflow: hidden; }
+
+        /* Dark Admin Sidebar */
+        .admin-sidebar { width: 280px; background: #0a1128; color: white; display: flex; flex-direction: column; flex-shrink: 0; }
+        .admin-logo { padding: 30px; font-size: 20px; font-weight: 900; letter-spacing: -1px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .admin-nav { padding: 30px 20px; flex: 1; }
+        .admin-nav a { display: flex; align-items: center; gap: 15px; color: #94a3b8; text-decoration: none; padding: 15px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; margin-bottom: 5px; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        .admin-nav a.active, .admin-nav a:hover { background: rgba(255,255,255,0.1); color: white; }
+        .admin-nav i { font-size: 16px; width: 20px; text-align: center; }
+
+        /* Main Workspace */
+        .admin-main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .admin-header { background: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 10; }
+        .admin-content { padding: 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
+
+        .page-title { font-size: 28px; font-weight: 900; letter-spacing: -1px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+        .back-btn { background: #fff; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 6px; color: #64748b; cursor: pointer; transition: 0.2s; }
+        .back-btn:hover { background: #f8fafc; color: #0f172a; }
+
+        /* Two-Column Form Layout */
+        .create-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; align-items: start; }
+
+        /* Admin Cards */
+        .admin-card { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.02); overflow: hidden; margin-bottom: 30px; }
+        .card-header { padding: 20px 25px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #fcfcfd; }
+        .card-title { font-size: 15px; font-weight: 800; color: #0f172a; }
+        .card-body { padding: 25px; }
+
+        /* Floating Inputs for Admin */
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group input, .input-group select { width: 100%; padding: 20px 15px 10px; font-size: 14px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; transition: 0.2s; background: #fff; font-weight: 500; color: #0f172a; }
+        .input-group input:focus, .input-group select:focus { border-color: #0a1128; box-shadow: 0 0 0 1px #0a1128; }
+        .input-group label { position: absolute; top: 15px; left: 15px; font-size: 14px; color: #64748b; transition: 0.2s ease all; pointer-events: none; }
+        .input-group input:focus ~ label, .input-group input:valid ~ label, .input-group select:focus ~ label, .input-group select:valid ~ label { top: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #0a1128; letter-spacing: 0.5px; }
+
+        .search-bar { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 15px; background: #f8fafc; transition: 0.2s; margin-bottom: 20px; }
+        .search-bar:focus-within { border-color: #0a1128; background: #fff; box-shadow: 0 0 0 1px #0a1128; }
+        .search-bar i { color: #94a3b8; }
+        .search-bar input { border: none; background: transparent; padding: 15px; width: 100%; outline: none; font-size: 14px; font-weight: 500; }
+
+        /* Order Items Table */
+        .order-items { width: 100%; border-collapse: collapse; }
+        .order-items th { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; padding-bottom: 15px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+        .order-items td { padding: 20px 0; border-bottom: 1px solid #e2e8f0; }
+        .order-items tr:last-child td { border-bottom: none; padding-bottom: 0; }
+
+        .item-info { display: flex; align-items: center; gap: 15px; }
+        .item-img { width: 48px; height: 48px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; display: flex; justify-content: center; align-items: center; padding: 5px; }
+        .item-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        /* Summary Box */
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; color: #475569; }
+        .summary-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 900; color: #0f172a; border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 10px; }
+
+        .btn-primary { width: 100%; background: #0a1128; color: #fff; border: none; padding: 18px; border-radius: 6px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .btn-secondary { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; padding: 10px 15px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-secondary:hover { background: #e2e8f0; }
+    </style>
+</head>
+<body>
+
+<aside class="admin-sidebar">
+    <div class="admin-logo">GRAN & TECH <br><span style="font-size: 11px; color: #ff3e3e; text-transform: uppercase; letter-spacing: 2px;">Admin Portal</span></div>
+    <nav class="admin-nav">
+        <a href="admin.html"><i class="fas fa-chart-pie"></i> Overview</a>
+        <a href="#" class="active"><i class="fas fa-shopping-cart"></i> Orders</a>
+        <a href="#"><i class="fas fa-box-open"></i> Products</a>
+        <a href="#"><i class="fas fa-users"></i> Customers</a>
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    </nav>
+</aside>
+
+<main class="admin-main">
+    <header class="admin-header">
+        <div style="font-size: 14px; font-weight: 600; color: #64748b;"><i class="fas fa-lock" style="margin-right: 8px;"></i> Secure Admin Session</div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="font-size: 14px; font-weight: 700;">System Admin</span>
+            <div style="width: 36px; height: 36px; background: #0a1128; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;">A</div>
+        </div>
+    </header>
+
+    <div class="admin-content">
+        <div class="page-title">
+            <button class="back-btn" onclick="window.history.back()"><i class="fas fa-arrow-left"></i></button>
+            Create New Order
+        </div>
+
+        <div class="create-layout">
+
+            <div>
+                <div class="admin-card">
+                    <div class="card-header">
+                        <span class="card-title">Order Items</span>
+                        <button class="btn-secondary">Browse Catalog</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search products by name or SKU...">
+                        </div>
+
+                        <table class="order-items">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th style="text-align: center;">Quantity</th>
+                                <th style="text-align: right;">Total</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="item-info">
+                                        <div class="item-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100" alt="Laptop"></div>
+                                        <div>
+                                            <div style="font-weight: 700; font-size: 14px; color: #0f172a;">Aether Pro Laptop</div>
+                                            <div style="font-size: 12px; color: #64748b; margin-top: 4px;">SKU: GT-LPT-AP1</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <input type="number" value="1" style="width: 60px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-weight: 600;">
+                                </td>
+                                <td style="text-align: right; font-weight: 800; color: #0f172a;">$1,999.00</td>
+                                <td style="text-align: right;"><i class="fas fa-times" style="color: #ef4444; cursor: pointer;"></i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-header">
+                        <span class="card-title">Customer Information</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-bar" style="margin-bottom: 30px;">
+                            <i class="fas fa-user"></i>
+                            <input type="text" placeholder="Search existing customer...">
+                        </div>
+
+                        <div style="display: flex; gap: 15px;">
+                            <div class="input-group" style="flex: 1;"><input type="text" value="Saha" required><label>First Name</label></div>
+                            <div class="input-group" style="flex: 1;"><input type="text" value="Madushanka" required><label>Last Name</label></div>
+                        </div>
+                        <div class="input-group"><input type="email" value="saha@example.com" required><label>Email Address</label></div>
+                        <div class="input-group"><input type="text" value="+94 77 123 4567" required><label>Phone Number</label></div>
+
+                        <h4 style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #64748b; margin: 20px 0 15px;">Shipping Address</h4>
+                        <div class="input-group"><input type="text" value="123 Tech Lane" required><label>Street Address</label></div>
+                        <div style="display: flex; gap: 15px;">
+                            <div class="input-group" style="flex: 2;"><input type="text" value="Colombo" required><label>City</label></div>
+                            <div class="input-group" style="flex: 1;"><input type="text" value="00100" required><label>Postal Code</label></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="admin-card">
+                    <div class="card-header">
+                        <span class="card-title">Payment & Summary</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <select required>
+                                <option value="" disabled hidden></option>
+                                <option value="pending" selected>Payment Pending (Send Invoice)</option>
+                                <option value="paid_card">Mark as Paid (Credit Card)</option>
+                                <option value="paid_cash">Mark as Paid (Cash/Transfer)</option>
+                            </select>
+                            <label>Payment Status</label>
+                        </div>
+
+                        <div style="margin-top: 30px; background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <div class="summary-row"><span>Subtotal</span><span style="font-weight: 600; color: #0f172a;">$1,999.00</span></div>
+                            <div class="summary-row"><span>Shipping</span><span style="font-weight: 600; color: #0f172a;">$0.00</span></div>
+                            <div class="summary-row"><span>Taxes</span><span style="font-weight: 600; color: #0f172a;">$0.00</span></div>
+
+                            <div class="summary-total">
+                                <span>Total</span>
+                                <span>$1,999.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-body">
+                        <div class="input-group" style="margin-bottom: 0;">
+                            <input type="text" placeholder=" "><label>Order Notes / Internal Tags</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="window.location.href='admin.html'"><i class="fas fa-check" style="margin-right: 8px;"></i> Create Order</button>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

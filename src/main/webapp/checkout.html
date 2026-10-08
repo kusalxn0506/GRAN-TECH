@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Secure Checkout | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #fff; color: #0a1128; display: flex; min-height: 100vh; }
+
+        /* Layout */
+        .checkout-left { flex: 1.2; padding: 60px 8% 60px 12%; background: #fff; border-right: 1px solid #f0f0f0; }
+        .checkout-right { flex: 0.8; padding: 60px 12% 60px 8%; background: #fafafa; }
+
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; display: block; margin-bottom: 40px; }
+
+        /* Breadcrumbs */
+        .breadcrumbs { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px; }
+        .breadcrumbs span { color: #0a1128; font-weight: 800; }
+
+        /* Section Titles */
+        .section-title { font-size: 20px; font-weight: 800; margin: 40px 0 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+
+        /* Floating Label Inputs */
+        .input-row { display: flex; gap: 15px; }
+        .input-group { position: relative; margin-bottom: 15px; flex: 1; }
+        .input-group input { width: 100%; padding: 22px 15px 10px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: 0.2s; background: transparent; }
+        .input-group input:focus { border-color: #0a1128; box-shadow: 0 0 0 1px #0a1128; }
+        .input-group label { position: absolute; top: 16px; left: 15px; font-size: 14px; color: #888; transition: 0.2s ease all; pointer-events: none; }
+        .input-group input:focus ~ label, .input-group input:valid ~ label { top: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #0a1128; letter-spacing: 0.5px; }
+
+        /* Payment Box (Seamless look) */
+        .payment-box { border: 1px solid #d1d5db; border-radius: 6px; background: #f8f9fa; overflow: hidden; }
+        .payment-box .input-group { margin-bottom: 0; }
+        .payment-box .input-group input { border: none; border-radius: 0; border-bottom: 1px solid #d1d5db; }
+        .payment-box .input-row .input-group input { border-bottom: none; }
+        .payment-box .input-row .input-group:first-child input { border-right: 1px solid #d1d5db; }
+
+        /* Custom Checkbox */
+        .custom-check { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: #555; margin-top: 15px; }
+        .custom-check input { appearance: none; width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 4px; cursor: pointer; position: relative; }
+        .custom-check input:checked { background: #0a1128; border-color: #0a1128; }
+        .custom-check input:checked::after { content: '✔'; position: absolute; color: white; font-size: 10px; left: 4px; top: 1px; }
+
+        /* Pay Button */
+        .btn-pay { display: block; width: 100%; background: #0a1128; color: white; padding: 24px; border: none; border-radius: 6px; font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin-top: 40px; cursor: pointer; transition: 0.3s; }
+        .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.15); }
+
+        /* Order Summary Items */
+        .summary-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .item-img-box { position: relative; width: 64px; height: 64px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; display: flex; justify-content: center; align-items: center; padding: 5px; }
+        .item-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .item-badge { position: absolute; top: -8px; right: -8px; background: #888; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+
+        .totals-row { display: flex; justify-content: space-between; font-size: 14px; color: #555; margin-bottom: 15px; }
+        .totals-main { display: flex; justify-content: space-between; align-items: flex-end; font-size: 24px; font-weight: 900; margin-top: 30px; padding-top: 25px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+
+<div class="checkout-left">
+    <a href="index.html" class="logo">GRAN & TECH</a>
+    <div class="breadcrumbs">
+        <a href="cart.html" style="color:#888; text-decoration:none;">Cart</a> &nbsp; / &nbsp; <span>Information & Payment</span>
+    </div>
+
+    <h2 class="section-title">
+        Contact
+        <a href="sign-in.html" style="font-size:13px; color:#0a1128; font-weight:700; text-decoration:none;">Log in</a>
+    </h2>
+    <div class="input-group">
+        <input type="email" required>
+        <label>Email or mobile phone number</label>
+    </div>
+    <label class="custom-check"><input type="checkbox" checked> Email me with news and exclusive tech offers</label>
+
+    <h2 class="section-title">Shipping Address</h2>
+    <div class="input-group">
+        <input type="text" required>
+        <label>Country / Region</label>
+    </div>
+    <div class="input-row">
+        <div class="input-group"><input type="text" required><label>First name</label></div>
+        <div class="input-group"><input type="text" required><label>Last name</label></div>
+    </div>
+    <div class="input-group">
+        <input type="text" required>
+        <label>Address</label>
+    </div>
+    <div class="input-row">
+        <div class="input-group"><input type="text" required><label>City</label></div>
+        <div class="input-group"><input type="text" required><label>Postal code</label></div>
+    </div>
+
+    <h2 class="section-title">
+        Payment
+        <span style="font-size:12px; color:#888; font-weight:600; text-transform:none;"><i class="fas fa-lock"></i> Secure encrypted</span>
+    </h2>
+
+    <div class="payment-box">
+        <div class="input-group">
+            <input type="text" required>
+            <label>Card number</label>
+        </div>
+        <div class="input-row">
+            <div class="input-group"><input type="text" required><label>Expiration date (MM/YY)</label></div>
+            <div class="input-group"><input type="text" required><label>Security code</label></div>
+        </div>
+    </div>
+
+    <button class="btn-pay">Pay $2,348.00</button>
+</div>
+
+<div class="checkout-right">
+    <div class="summary-item">
+        <div style="display:flex; align-items:center; gap:20px;">
+            <div class="item-img-box">
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200" alt="Laptop">
+                <span class="item-badge">1</span>
+            </div>
+            <div>
+                <h4 style="font-size:14px; font-weight:800; margin:0;">Aether Pro Laptop</h4>
+                <p style="font-size:12px; color:#888; margin-top:4px;">16GB RAM | 1TB SSD</p>
+            </div>
+        </div>
+        <span style="font-weight:700; font-size:14px;">$1,999.00</span>
+    </div>
+
+    <div class="summary-item">
+        <div style="display:flex; align-items:center; gap:20px;">
+            <div class="item-img-box">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200" alt="Headphones">
+                <span class="item-badge">1</span>
+            </div>
+            <div>
+                <h4 style="font-size:14px; font-weight:800; margin:0;">Sonic Headphones</h4>
+                <p style="font-size:12px; color:#888; margin-top:4px;">Matte Black</p>
+            </div>
+        </div>
+        <span style="font-weight:700; font-size:14px;">$349.00</span>
+    </div>
+
+    <div style="display:flex; gap:10px; margin:40px 0; padding-bottom:40px; border-bottom:1px solid #e5e7eb;">
+        <div class="input-group" style="margin:0;">
+            <input type="text" required>
+            <label>Discount code</label>
+        </div>
+        <button style="background:#e5e7eb; color:#666; border:none; border-radius:6px; padding:0 25px; font-weight:800; cursor:pointer;">Apply</button>
+    </div>
+
+    <div class="totals-row"><span>Subtotal</span><span style="font-weight:700; color:#0a1128;">$2,348.00</span></div>
+    <div class="totals-row"><span>Shipping</span><span style="font-weight:700; color:#0a1128;">Free</span></div>
+    <div class="totals-row"><span>Estimated taxes</span><span>Calculated next step</span></div>
+
+    <div class="totals-main">
+        <span style="font-size:16px;">Total</span>
+        <span style="font-size:36px;">$2,348.00</span>
+    </div>
+</div>
+
+</body>
+</html>

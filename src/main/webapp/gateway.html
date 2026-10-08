@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Secure Payment Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        /* Darkened background to simulate a secure redirect or modal */
+        body { background: #e2e8f0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; color: #1e293b; }
+
+        .gateway-card { background: #fff; width: 100%; max-width: 480px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; }
+
+        /* Merchant Header */
+        .gateway-header { background: #0a1128; color: #fff; padding: 30px; text-align: center; position: relative; }
+        .merchant-name { font-size: 14px; font-weight: 600; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .payment-amount { font-size: 42px; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .payment-amount span { font-size: 20px; opacity: 0.7; font-weight: 500; }
+
+        /* Payment Form */
+        .gateway-body { padding: 30px; }
+
+        /* Payment Method Tabs */
+        .payment-methods { display: flex; gap: 10px; margin-bottom: 30px; }
+        .method-tab { flex: 1; border: 2px solid #e2e8f0; border-radius: 8px; padding: 15px 0; text-align: center; cursor: pointer; transition: 0.2s; font-weight: 600; font-size: 14px; color: #64748b; }
+        .method-tab.active { border-color: #0a1128; color: #0a1128; background: #f8fafc; }
+        .method-tab i { font-size: 20px; margin-bottom: 5px; display: block; }
+
+        .input-group { margin-bottom: 20px; }
+        .input-label { display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 8px; }
+
+        /* Seamless Card Input */
+        .card-input-wrapper { border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; background: #fff; transition: 0.2s; }
+        .card-input-wrapper:focus-within { border-color: #0a1128; box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.1); }
+
+        .card-row { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .card-row:last-child { border-bottom: none; }
+        .card-row i { color: #94a3b8; margin-right: 15px; font-size: 18px; }
+        .card-input { border: none; outline: none; flex: 1; font-size: 15px; color: #1e293b; font-weight: 500; background: transparent; }
+        .card-input::placeholder { color: #94a3b8; }
+
+        .split-row { display: flex; border-top: 1px solid #e2e8f0; }
+        .split-col { flex: 1; display: flex; align-items: center; padding: 15px; }
+        .split-col:first-child { border-right: 1px solid #e2e8f0; }
+
+        /* Save Card Checkbox */
+        .save-card { display: flex; align-items: center; gap: 10px; margin: 25px 0; font-size: 13px; color: #64748b; font-weight: 500; cursor: pointer; }
+        .save-card input { width: 16px; height: 16px; accent-color: #0a1128; cursor: pointer; }
+
+        /* Pay Button */
+        .btn-process { width: 100%; background: #0a1128; color: #fff; border: none; padding: 20px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .btn-process:hover { background: #1e293b; transform: translateY(-1px); }
+        .btn-process i { font-size: 14px; }
+
+        /* Footer Security Badges */
+        .gateway-footer { background: #f8fafc; padding: 20px; text-align: center; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; display: flex; justify-content: center; align-items: center; gap: 15px; }
+        .security-badge { display: flex; align-items: center; gap: 5px; font-weight: 600; }
+        .security-badge i { color: #10b981; } /* Green check/lock */
+    </style>
+</head>
+<body>
+
+<div class="gateway-card">
+    <div class="gateway-header">
+        <div class="merchant-name">Gran & Tech  Order #GT-8492</div>
+        <div class="payment-amount"><span>USD</span> $2,348.00</div>
+    </div>
+
+    <div class="gateway-body">
+        <div class="payment-methods">
+            <div class="method-tab active">
+                <i class="far fa-credit-card"></i> Card
+            </div>
+            <div class="method-tab">
+                <i class="fab fa-paypal"></i> PayPal
+            </div>
+            <div class="method-tab">
+                <i class="fab fa-apple"></i> Pay
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Payment Details</label>
+            <div class="card-input-wrapper">
+                <div class="card-row">
+                    <i class="far fa-credit-card"></i>
+                    <input type="text" class="card-input" placeholder="Card number" value="4242 4242 4242 4242">
+                    <i class="fab fa-cc-visa" style="color: #1a1f71; margin-right: 0; margin-left: 10px; font-size: 24px;"></i>
+                </div>
+                <div class="split-row">
+                    <div class="split-col">
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="text" class="card-input" placeholder="MM / YY" value="12 / 28">
+                    </div>
+                    <div class="split-col">
+                        <i class="fas fa-lock"></i>
+                        <input type="text" class="card-input" placeholder="" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Cardholder Name</label>
+            <div class="card-input-wrapper" style="padding: 15px;">
+                <input type="text" class="card-input" placeholder="Name on card" value="Saha Madushanka" style="width: 100%;">
+            </div>
+        </div>
+
+        <label class="save-card">
+            <input type="checkbox" checked> Securely save my information for 1-click checkout
+        </label>
+
+        <button class="btn-process" onclick="window.location.href='success.html'">
+            <i class="fas fa-lock"></i> Pay $2,348.00
+        </button>
+    </div>
+
+    <div class="gateway-footer">
+        <div class="security-badge"><i class="fas fa-shield-check"></i> PCI DSS Compliant</div>
+        <div class="security-badge"><i class="fas fa-lock"></i> 256-bit Encryption</div>
+    </div>
+</div>
+
+</body>
+</html>

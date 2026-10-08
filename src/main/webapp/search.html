@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Archive | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #fdfdfd; color: #0a1128; }
+
+        /* Premium Header */
+        header { background: #0a1128; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: white; }
+
+        .shop-container { display: flex; max-width: 1600px; margin: 0 auto; padding: 60px 5%; gap: 60px; }
+
+        /* Ultra-minimal Sidebar */
+        .sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content; }
+        .filter-block { margin-bottom: 40px; }
+        .filter-block h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-bottom: 2px solid #0a1128; padding-bottom: 10px; display: inline-block; }
+
+        /* Custom Hover Checkboxes */
+        .custom-check { display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px; color: #555; margin-bottom: 15px; transition: 0.2s; }
+        .custom-check:hover { color: #0a1128; font-weight: 600; transform: translateX(5px); }
+        .custom-check input { appearance: none; width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 3px; cursor: pointer; position: relative; }
+        .custom-check input:checked { background: #0a1128; border-color: #0a1128; }
+        .custom-check input:checked::after { content: '✔'; position: absolute; color: white; font-size: 10px; left: 4px; top: 1px; }
+
+        /* Dynamic Product Grid */
+        .grid-matrix { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .matrix-item { background: #fff; padding: 30px; position: relative; cursor: pointer; transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); overflow: hidden; border: 1px solid #f0f0f0; border-radius: 8px; }
+        .matrix-item:hover { transform: translateY(-10px); box-shadow: 0 40px 80px rgba(10, 17, 40, 0.08); border-color: transparent; }
+
+        .img-box { height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; background: #f8f9fa; border-radius: 4px; overflow: hidden; }
+        .img-box img { max-height: 80%; max-width: 80%; object-fit: contain; mix-blend-mode: multiply; transition: 0.7s ease; }
+        .matrix-item:hover .img-box img { transform: scale(1.1) rotate(-2deg); }
+
+        /* Hidden Action Bar */
+        .action-bar { position: absolute; bottom: -60px; left: 0; width: 100%; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); transition: 0.4s ease; padding: 10px; gap: 10px; }
+        .matrix-item:hover .action-bar { bottom: 0; }
+        .action-btn { flex: 1; padding: 15px; color: white; background: #0a1128; border: none; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .action-btn:hover { background: #ff3e3e; }
+
+        .badge { position: absolute; top: 20px; left: 20px; font-size: 10px; font-weight: 900; padding: 4px 10px; color: white; border-radius: 3px; z-index: 10; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+<header>
+    <a href="index.html" class="logo">GRAN & TECH</a>
+    <div style="font-size: 13px; font-weight: 800; display: flex; gap: 30px; letter-spacing: 1px;">
+        <a href="index.html" style="color: white; text-decoration: none;">HOME</a>
+        <a href="cart.html" style="color: white; text-decoration: none;"><i class="far fa-shopping-bag"></i> BAG (0)</a>
+    </div>
+</header>
+
+<div class="shop-container">
+    <aside class="sidebar">
+        <h1 style="font-size: 42px; font-weight: 900; letter-spacing: -2px; margin-bottom: 50px;">Archive.</h1>
+
+        <div class="filter-block">
+            <h4>Device Type</h4>
+            <label class="custom-check"><input type="checkbox" checked> All Products</label>
+            <label class="custom-check"><input type="checkbox"> Laptops & PC</label>
+            <label class="custom-check"><input type="checkbox"> Mobile & Wearables</label>
+            <label class="custom-check"><input type="checkbox"> Audio Solutions</label>
+            <label class="custom-check"><input type="checkbox"> Smart Home</label>
+        </div>
+
+        <div class="filter-block">
+            <h4>Availability</h4>
+            <label class="custom-check"><input type="checkbox" checked> In Stock</label>
+            <label class="custom-check"><input type="checkbox"> Pre-Order</label>
+        </div>
+
+        <div class="filter-block">
+            <h4>Price Range</h4>
+            <input type="range" style="width: 100%; accent-color: #0a1128;" min="0" max="5000">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: #888; margin-top: 10px;">
+                <span>$0</span><span>$5,000+</span>
+            </div>
+        </div>
+    </aside>
+
+    <main style="flex: 1;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <span style="font-size: 14px; color: #888; font-weight: 600;">Showing 12 results</span>
+            <select style="border: none; background: transparent; font-weight: 800; font-size: 12px; text-transform: uppercase; cursor: pointer; outline: none;">
+                <option>Sort by: Featured</option>
+                <option>Price: Low to High</option>
+            </select>
+        </div>
+
+        <div class="grid-matrix">
+            <div class="matrix-item">
+                <span class="badge" style="background: #4caf50;">NEW</span>
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500" alt="Laptop"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Aether Pro Laptop</h3>
+                <p style="color: #888; font-size: 13px;">16GB RAM / 1TB SSD</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$1,999.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <span class="badge" style="background: #ff3e3e;">HOT</span>
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?w=500" alt="Phone"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Pro 15 Mobile</h3>
+                <p style="color: #888; font-size: 13px;">Titanium Black</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$999.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Watch"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">ARE2 Smart Watch</h3>
+                <p style="color: #888; font-size: 13px;">Elite Obsidian</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$499.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Headphones"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Sonic Headphones</h3>
+                <p style="color: #888; font-size: 13px;">Noise Cancelling Studio</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$349.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500" alt="Monitor"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Horizon 32" Monitor</h3>
+                <p style="color: #888; font-size: 13px;">4K Ultra HD Display</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$899.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <span class="badge" style="background: #0a1128;">BESTSELLER</span>
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1543512214-318c7553f230?w=500" alt="Speaker"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Echo Smart Speaker</h3>
+                <p style="color: #888; font-size: 13px;">Voice Assistant Hub</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$149.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500" alt="Tablet"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Aether Tablet X</h3>
+                <p style="color: #888; font-size: 13px;">11" Liquid Retina</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$799.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500" alt="Router"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Omni Router WiFi 6E</h3>
+                <p style="color: #888; font-size: 13px;">Gigabit Mesh System</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$299.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500" alt="Soundbar"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Zenith Soundbar</h3>
+                <p style="color: #888; font-size: 13px;">Dolby Atmos Surround</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$599.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=500" alt="Gaming Laptop"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Titan Gaming Laptop</h3>
+                <p style="color: #888; font-size: 13px;">RTX 4080 / 240Hz</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$2,499.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" alt="Earbuds"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Quantum Earbuds</h3>
+                <p style="color: #888; font-size: 13px;">True Wireless Audio</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$199.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+
+            <div class="matrix-item">
+                <span class="badge" style="background: #f9a825;">LIMITED</span>
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=500" alt="Drone"></div>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 5px;">Vision 4K Drone</h3>
+                <p style="color: #888; font-size: 13px;">Cinematic Aerial Tech</p>
+                <p style="font-weight: 900; font-size: 20px; margin-top: 15px; color: #0a1128;">$1,299.00</p>
+                <div class="action-bar"><button class="action-btn">Quick Add <i class="fas fa-plus"></i></button></div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

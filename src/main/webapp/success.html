@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Order Confirmed | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #f8f9fa; color: #0a1128; display: flex; flex-direction: column; min-height: 100vh; }
+
+        header { padding: 30px 5%; display: flex; justify-content: center; background: #fff; border-bottom: 1px solid #eee; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
+
+        .success-container { max-width: 800px; margin: 60px auto; width: 100%; padding: 0 5%; flex: 1; }
+        .receipt-card { background: #fff; border-radius: 12px; padding: 60px; box-shadow: 0 20px 40px rgba(10, 17, 40, 0.05); text-align: center; border: 1px solid #f0f0f0; }
+
+        .check-circle { width: 80px; height: 80px; background: #dcfce7; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 30px; }
+
+        .receipt-details { text-align: left; margin-top: 50px; border-top: 2px dashed #eee; padding-top: 40px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 15px; color: #555; }
+        .detail-row span:last-child { font-weight: 700; color: #0a1128; }
+
+        .item-row { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee; }
+        .item-img { width: 60px; height: 60px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 5px; }
+        .item-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .btn-continue { display: inline-block; background: #0a1128; color: #fff; padding: 20px 40px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; margin-top: 40px; transition: 0.3s; }
+        .btn-continue:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(10, 17, 40, 0.15); }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">GRAN & TECH</a>
+</header>
+
+<div class="success-container">
+    <div class="receipt-card">
+        <div class="check-circle">
+            <i class="fas fa-check"></i>
+        </div>
+        <h1 style="font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px;">Thank you, your order has been placed.</h1>
+        <p style="color: #666; font-size: 16px;">We've sent an email confirmation with your receipt and tracking details.</p>
+
+        <div class="receipt-details">
+            <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 30px;">Order Summary</h3>
+
+            <div class="detail-row">
+                <span>Order Number</span>
+                <span>#GT-8492</span>
+            </div>
+            <div class="detail-row">
+                <span>Date</span>
+                <span>February 19, 2026</span>
+            </div>
+            <div class="detail-row">
+                <span>Payment Method</span>
+                <span>Visa ending in •••• 4242</span>
+            </div>
+
+            <div style="margin-top: 30px; border-top: 1px solid #eee;">
+                <div class="item-row">
+                    <div class="item-img"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=100" alt="Laptop"></div>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 14px; font-weight: 800;">Aether Pro Laptop</h4>
+                        <p style="font-size: 12px; color: #888;">Qty: 1</p>
+                    </div>
+                    <div style="font-weight: 800; font-size: 14px;">$1,999.00</div>
+                </div>
+                <div class="item-row">
+                    <div class="item-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100" alt="Headphones"></div>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 14px; font-weight: 800;">Sonic Headphones</h4>
+                        <p style="font-size: 12px; color: #888;">Qty: 1</p>
+                    </div>
+                    <div style="font-weight: 800; font-size: 14px;">$349.00</div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; padding-top: 30px; border-top: 1px solid #eee;">
+                <span style="font-size: 16px; font-weight: 600; color: #555;">Total Paid</span>
+                <span style="font-size: 32px; font-weight: 900; color: #0a1128;">$2,348.00</span>
+            </div>
+        </div>
+
+        <a href="index.html" class="btn-continue">Continue Shopping</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Account | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #fdfdfd; color: #0a1128; }
+
+        /* Premium Header */
+        header { background: #0a1128; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: white; }
+
+        .dashboard-layout { max-width: 1400px; margin: 0 auto; padding: 80px 5%; display: grid; grid-template-columns: 280px 1fr; gap: 80px; }
+
+        /* Sidebar Navigation */
+        .sidebar { position: sticky; top: 120px; height: fit-content; }
+        .sidebar-nav { list-style: none; padding: 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; line-height: 2.5; }
+        .sidebar-nav a { text-decoration: none; color: #888; transition: 0.2s; display: block; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .sidebar-nav a.active { color: #0a1128; border-bottom: 2px solid #0a1128; }
+        .sidebar-nav a:hover:not(.active) { color: #0a1128; padding-left: 5px; }
+
+        /* Welcome Banner */
+        .welcome-banner { background: #0a1128; color: white; padding: 50px; border-radius: 12px; margin-bottom: 60px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 20px 40px rgba(10, 17, 40, 0.1); }
+        .welcome-text h1 { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+        .welcome-text p { font-size: 14px; opacity: 0.8; font-weight: 400; }
+
+        /* Premium Data Tables */
+        .section-title { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 30px; }
+        .order-table { width: 100%; border-collapse: collapse; text-align: left; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #f0f0f0; }
+        .order-table th { background: #f8f9fa; padding: 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #888; font-weight: 800; border-bottom: 1px solid #f0f0f0; }
+        .order-table td { padding: 25px 20px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; }
+        .order-table tr:last-child td { border-bottom: none; }
+        .order-table tr:hover { background: #fafafa; }
+
+        /* Status Badges */
+        .status { padding: 6px 12px; border-radius: 50px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .status.paid { background: #dcfce7; color: #166534; }
+        .status.shipped { background: #dbeafe; color: #1e40af; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">GRAN & TECH</a>
+    <div style="font-size: 13px; font-weight: 800; display: flex; gap: 30px; letter-spacing: 1px;">
+        <a href="index.html" style="color: white; text-decoration: none;">HOME</a>
+        <a href="search.html" style="color: white; text-decoration: none;">SHOP</a>
+        <a href="cart.html" style="color: white; text-decoration: none;"><i class="far fa-shopping-bag"></i> (1)</a>
+    </div>
+</header>
+
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <h2 style="font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 40px;">Account.</h2>
+        <ul class="sidebar-nav">
+            <li><a href="#" class="active">Dashboard Overview</a></li>
+            <li><a href="#">Order History</a></li>
+            <li><a href="#">Saved Addresses</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li style="margin-top: 40px;"><a href="sign-in.html" style="color: #ff3e3e; border-color: transparent;">Sign Out</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h1>Welcome back, Elite Member.</h1>
+                <p>Manage your orders, track shipments, and update your secure profile.</p>
+            </div>
+            <a href="search.html" style="background: white; color: #0a1128; padding: 15px 30px; border-radius: 6px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; text-decoration: none;">New Arrivals</a>
+        </div>
+
+        <h3 class="section-title">Recent Orders</h3>
+        <table class="order-table">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Payment</th>
+                <th>Fulfillment</th>
+                <th style="text-align: right;">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="color: #0a1128; font-weight: 900;">#GT-8492</td>
+                <td style="color: #666;">Feb 19, 2026</td>
+                <td><span class="status paid">Paid</span></td>
+                <td><span class="status shipped">Shipped</span></td>
+                <td style="text-align: right; font-weight: 900;">$2,348.00</td>
+            </tr>
+            <tr>
+                <td style="color: #0a1128; font-weight: 900;">#GT-7104</td>
+                <td style="color: #666;">Nov 04, 2025</td>
+                <td><span class="status paid">Paid</span></td>
+                <td><span class="status shipped">Delivered</span></td>
+                <td style="text-align: right; font-weight: 900;">$999.00</td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+</body>
+</html>

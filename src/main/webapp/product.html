@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Aether Pro Laptop | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #fff; color: #0a1128; overflow-x: hidden; }
+
+        /* Premium Header */
+        header { position: sticky; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 2000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
+        .nav-group { display: flex; gap: 30px; font-size: 13px; font-weight: 800; letter-spacing: 1px; align-items: center; }
+        .nav-group a { color: #0a1128; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
+        .nav-group a:hover { color: #ff3e3e; }
+
+        /* The Product Arena Layout */
+        .product-arena { max-width: 1600px; margin: 0 auto; padding: 40px 5% 100px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; }
+
+        /* Sticky Left Gallery */
+        .gallery-wrapper { position: sticky; top: 120px; height: calc(100vh - 160px); display: flex; flex-direction: column; gap: 20px; }
+        .main-image { flex: 1; background: #f8f9fa; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 40px; overflow: hidden; border: 1px solid #f0f0f0; }
+        .main-image img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; transition: 0.5s ease; cursor: crosshair; }
+        .main-image:hover img { transform: scale(1.05); }
+
+        /* Right Side Details */
+        .product-info { padding-top: 20px; }
+        .breadcrumbs { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 30px; }
+        .breadcrumbs a { color: #888; text-decoration: none; transition: 0.2s; }
+        .breadcrumbs a:hover { color: #0a1128; }
+
+        .product-title { font-size: 56px; font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 15px; }
+        .product-price { font-size: 28px; font-weight: 800; color: #0a1128; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+        .product-desc { font-size: 16px; line-height: 1.8; color: #555; margin-bottom: 40px; font-weight: 400; }
+
+        /* Variant Selectors */
+        .variant-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; color: #0a1128; }
+        .variant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
+
+        .v-box input { display: none; }
+        .v-box label { display: block; border: 1px solid #ddd; padding: 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 700; font-size: 14px; text-align: center; color: #666; }
+        .v-box label:hover { border-color: #0a1128; }
+        .v-box input:checked + label { border: 2px solid #0a1128; color: #0a1128; background: #fafbfc; box-shadow: 0 4px 10px rgba(10,17,40,0.05); }
+
+        /* Add to Bag Action */
+        .action-area { display: flex; gap: 15px; margin-bottom: 60px; }
+        .qty-selector { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; padding: 5px 10px; }
+        .qty-selector button { background: none; border: none; font-size: 18px; font-weight: 800; padding: 0 15px; cursor: pointer; color: #0a1128; }
+        .qty-selector input { width: 40px; text-align: center; border: none; font-size: 16px; font-weight: 800; outline: none; }
+
+        .btn-add { flex: 1; background: #0a1128; color: white; border: none; border-radius: 6px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        .btn-add:hover { background: #ff3e3e; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 62, 62, 0.2); }
+
+        /* Accordion Specs */
+        .spec-accordion { border-top: 1px solid #eee; }
+        .spec-item { border-bottom: 1px solid #eee; }
+        .spec-title { padding: 25px 0; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .spec-title:hover { color: #ff3e3e; }
+        .spec-content { padding-bottom: 25px; font-size: 14px; color: #666; line-height: 1.8; display: none; }
+
+        /* Show content trick without JS for demo */
+        .spec-item:hover .spec-content { display: block; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">GRAN & TECH</a>
+    <div class="nav-group">
+        <a href="search.html">Archive</a>
+        <a href="sign-in.html">Sign In</a>
+        <a href="cart.html" style="background: #0a1128; color: white; padding: 10px 20px; border-radius: 50px;">BAG (1)</a>
+    </div>
+</header>
+
+<main class="product-arena">
+    <div class="gallery-wrapper">
+        <div class="main-image">
+            <span style="position: absolute; top: 30px; left: 30px; background: #4caf50; color: white; padding: 6px 12px; font-size: 10px; font-weight: 900; border-radius: 4px; letter-spacing: 1px;">NEW RELEASE</span>
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200" alt="Aether Pro Laptop">
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; height: 120px;">
+            <div style="background: #f8f9fa; border-radius: 8px; border: 2px solid #0a1128; cursor: pointer;"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; padding:10px;"></div>
+            <div style="background: #f8f9fa; border-radius: 8px; border: 1px solid #eee; cursor: pointer; opacity: 0.6; transition: 0.2s;"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=200" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; padding:10px;"></div>
+            <div style="background: #f8f9fa; border-radius: 8px; border: 1px solid #eee; cursor: pointer; opacity: 0.6; transition: 0.2s;"><img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; padding:10px;"></div>
+        </div>
+    </div>
+
+    <div class="product-info">
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> &nbsp; / &nbsp; <a href="search.html">Laptops</a> &nbsp; / &nbsp; <span style="color: #0a1128;">Aether Pro</span>
+        </div>
+
+        <h1 class="product-title">Aether Pro Laptop</h1>
+        <div class="product-price">
+            $1,999.00
+            <span style="font-size: 12px; font-weight: 600; color: #166534; background: #dcfce7; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px;">In Stock</span>
+        </div>
+
+        <p class="product-desc">Engineered for the elite. The Aether Pro delivers desktop-level performance in an impossibly thin aerospace-grade aluminum chassis. Featuring the new M-Series architecture, advanced thermal management, and a stunning 16-inch Retina Liquid display.</p>
+
+        <span class="variant-label">Unified Memory</span>
+        <div class="variant-grid">
+            <div class="v-box">
+                <input type="radio" name="ram" id="ram1" checked>
+                <label for="ram1">16GB RAM</label>
+            </div>
+            <div class="v-box">
+                <input type="radio" name="ram" id="ram2">
+                <label for="ram2">32GB RAM <span style="display:block; font-size:11px; color:#888; margin-top:5px;">+$400.00</span></label>
+            </div>
+        </div>
+
+        <span class="variant-label">Storage Capacity</span>
+        <div class="variant-grid">
+            <div class="v-box">
+                <input type="radio" name="storage" id="ssd1">
+                <label for="ssd1">512GB SSD</label>
+            </div>
+            <div class="v-box">
+                <input type="radio" name="storage" id="ssd2" checked>
+                <label for="ssd2">1TB SSD <span style="display:block; font-size:11px; color:#888; margin-top:5px;">+$200.00</span></label>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <div class="qty-selector">
+                <button>-</button>
+                <input type="text" value="1" readonly>
+                <button>+</button>
+            </div>
+            <a href="cart.html" class="btn-add"><i class="far fa-shopping-bag" style="margin-right: 10px; font-size: 16px;"></i> Add to Bag</a>
+        </div>
+
+        <div class="spec-accordion">
+            <div class="spec-item">
+                <div class="spec-title">Tech Specs <i class="fas fa-plus"></i></div>
+                <div class="spec-content">
+                    <strong>Processor:</strong> 12-Core CPU, 19-Core GPU<br>
+                    <strong>Display:</strong> 16.2-inch Liquid Retina XDR display<br>
+                    <strong>Battery:</strong> Up to 22 hours of video playback<br>
+                    <strong>Ports:</strong> 3x Thunderbolt 4, HDMI, SDXC, MagSafe 3
+                </div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-title">Shipping & Returns <i class="fas fa-plus"></i></div>
+                <div class="spec-content">
+                    Free premium overnight shipping on all laptop orders. If you are not completely satisfied, you have 30 days to return the device in its original packaging for a full refund.
+                </div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-title">Warranty <i class="fas fa-plus"></i></div>
+                <div class="spec-content">
+                    Includes 1-Year Limited Hardware Warranty and 90 days of complimentary technical support. Upgrade to TechCare+ at checkout for 3 years of accidental damage protection.
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer style="background: #0a1128; color: white; padding: 100px 5% 40px; text-align: center;">
+    <h2 class="logo" style="color: white; margin-bottom: 20px;">GRAN & TECH</h2>
+    <p style="opacity: 0.6; font-size: 14px;">&copy; 2026 GRAN & TECH. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Your Bag | GRAN & TECH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <style>
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: #fff; color: #0a1128; }
+
+        /* Premium Header */
+        header { padding: 30px 5%; display: flex; justify-content: space-between; border-bottom: 1px solid #f0f0f0; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: #0a1128; }
+
+        .checkout-arena { max-width: 1400px; margin: 80px auto; padding: 0 5%; display: grid; grid-template-columns: 1.5fr 1fr; gap: 100px; }
+
+        /* Minimalist Cart Items */
+        .cart-list { display: flex; flex-direction: column; }
+        .cart-item { display: flex; gap: 40px; padding: 40px 0; border-bottom: 1px solid #f0f0f0; }
+        .cart-img { width: 160px; height: 160px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 8px; }
+        .cart-img img { max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+
+        .cart-details { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .qty-pill { display: inline-flex; align-items: center; border: 1px solid #e2e8f0; border-radius: 50px; overflow: hidden; width: fit-content; }
+        .qty-btn { background: #fff; border: none; padding: 10px 15px; cursor: pointer; font-weight: 700; transition: 0.2s; color: #0a1128; }
+        .qty-btn:hover { background: #f1f5f9; }
+        .qty-num { padding: 0 15px; font-weight: 800; font-size: 15px; }
+
+        /* Floating Summary Panel */
+        .summary-panel { background: #0a1128; color: white; padding: 50px; border-radius: 16px; position: sticky; top: 50px; height: fit-content; box-shadow: 0 30px 60px rgba(10, 17, 40, 0.15); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 15px; opacity: 0.8; font-weight: 400; }
+        .summary-total { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 36px; font-weight: 900; letter-spacing: -1px; }
+
+        .btn-checkout { display: block; width: 100%; text-align: center; background: #fff; color: #0a1128; padding: 24px; border: none; border-radius: 8px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-top: 50px; cursor: pointer; transition: 0.3s; text-decoration: none; }
+        .btn-checkout:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body>
+<header>
+    <a href="index.html" class="logo">GRAN & TECH</a>
+    <a href="search.html" style="color: #0a1128; font-weight: 800; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Continue Shopping</a>
+</header>
+
+<div class="checkout-arena">
+    <div>
+        <h1 style="font-size: 72px; font-weight: 900; letter-spacing: -3px; margin-bottom: 20px; line-height: 1;">Review Bag.</h1>
+        <p style="color: #666; font-size: 16px; margin-bottom: 60px;">Free premium shipping and 30-day returns on all tech orders.</p>
+
+        <div class="cart-list">
+            <div class="cart-item">
+                <div class="cart-img">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300" alt="Laptop">
+                </div>
+                <div class="cart-details">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <h3 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Aether Pro Laptop</h3>
+                            <span style="font-size: 22px; font-weight: 900;">$1,999.00</span>
+                        </div>
+                        <p style="color: #888; font-size: 14px; margin-top: 8px;">Space Gray | 16GB RAM | 1TB SSD</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="qty-pill">
+                            <button class="qty-btn">-</button><span class="qty-num">1</span><button class="qty-btn">+</button>
+                        </div>
+                        <a href="#" style="color: #ff3e3e; font-size: 13px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;"><i class="far fa-trash-alt"></i> Remove</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <div class="cart-img">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Headphones">
+                </div>
+                <div class="cart-details">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <h3 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Sonic Headphones</h3>
+                            <span style="font-size: 22px; font-weight: 900;">$349.00</span>
+                        </div>
+                        <p style="color: #888; font-size: 14px; margin-top: 8px;">Matte Black | Noise Cancelling</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="qty-pill">
+                            <button class="qty-btn">-</button><span class="qty-num">1</span><button class="qty-btn">+</button>
+                        </div>
+                        <a href="#" style="color: #ff3e3e; font-size: 13px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;"><i class="far fa-trash-alt"></i> Remove</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <aside>
+        <div class="summary-panel">
+            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 50px; letter-spacing: -1px;">Summary</h2>
+
+            <div class="summary-row"><span>Subtotal</span><span style="font-weight: 600;">$2,348.00</span></div>
+            <div class="summary-row"><span>Estimated Shipping</span><span style="font-weight: 600;">Free</span></div>
+            <div class="summary-row"><span>Estimated Taxes</span><span>Calculated in checkout</span></div>
+
+            <div class="summary-total">
+                <span style="font-size: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Total</span>
+                <span>$2,348.00</span>
+            </div>
+
+            <a href="#" class="btn-checkout">Secure Checkout <i class="fas fa-lock" style="margin-left: 8px;"></i></a>
+        </div>
+    </aside>
+</div>
+</body>
+</html>
