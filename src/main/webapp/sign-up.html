@@ -8,8 +8,16 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     <link rel="stylesheet" href="assets/css/grantech.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { display: flex; height: 100vh; background: #fff; overflow: hidden; }
+        body.auth-body {
+            display: flex !important;
+            flex-direction: row !important;
+            height: 100vh !important;
+            width: 100vw !important;
+            background: #fff !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
 
         /* Cinematic Left Visual */
         .auth-visual {
@@ -214,14 +222,19 @@
         }
 
         @media (max-width: 900px) {
-            .auth-visual { display: none; }
-            .auth-form-area { padding: 30px 20px; }
-            body { overflow: auto; }
+            body.auth-body {
+                flex-direction: column !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                overflow: auto !important;
+            }
+            .auth-visual { display: none !important; }
+            .auth-form-area { padding: 30px 20px !important; height: auto !important; }
             .form-row-2 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
+<body class="auth-body">
 
 <!-- Left Cinematic Visual -->
 <div class="auth-visual">
