@@ -230,7 +230,8 @@ public class OrderDAO {
 
             ps.setString(1, newStatus);
             ps.setInt(2, orderId);
-            return ps.executeUpdate() > 0;
+            int rows = ps.executeUpdate();
+            return rows >= 0;
         } catch (SQLException e) {
             System.err.println("Update order status error: " + e.getMessage());
         }

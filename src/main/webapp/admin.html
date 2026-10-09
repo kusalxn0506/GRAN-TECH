@@ -6,7 +6,7 @@
     <title>Executive Admin Console | GRAN & TECH</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <link rel="stylesheet" href="assets/css/grantech.css">
+    <link rel="stylesheet" href="assets/css/grantech.css?v=1.2">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         body.admin-body {
@@ -650,9 +650,26 @@
     </div>
 </main>
 
-<script src="assets/js/grantech.js"></script>
+<script src="assets/js/grantech.js?v=1.2"></script>
 <script>
     let allOrders = [];
+
+    function formatMoney(amount) {
+        if (window.GT && typeof window.GT.formatCurrency === 'function') {
+            return window.GT.formatCurrency(amount);
+        }
+        const val = parseFloat(amount) || 0.0;
+        return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function getApi(endpoint) {
+        if (window.GT && typeof window.GT.apiUrl === 'function') {
+            return window.GT.apiUrl(endpoint);
+        }
+        const isGranTech = window.location.pathname.startsWith('/GRAN-TECH');
+        const clean = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+        return (isGranTech ? '/GRAN-TECH' : '') + clean;
+    }
 
     document.addEventListener('DOMContentLoaded', async () => {
         await checkAdminAuth();
@@ -661,7 +678,7 @@
 
     async function checkAdminAuth() {
         try {
-            const res = await fetch('/api/auth');
+            const res = await fetch(getApi('/api/auth'));
             const data = await res.json();
             if (data.loggedIn && data.user) {
                 document.getElementById('adminUserName').textContent = data.user.fullName;
@@ -669,10 +686,9 @@
                 document.getElementById('adminUserInitial').textContent = data.user.fullName.charAt(0).toUpperCase();
 
                 if (data.user.role !== 'ADMIN') {
-                    GT.showToast('Note: Logged in as regular user. Admin controls active.', 'info');
+                    if (window.GT && GT.showToast) GT.showToast('Note: Logged in as regular user. Admin controls active.', 'info');
                 }
             } else {
-                // If not logged in, prompt user or redirect
                 console.warn('Admin portal opened without active session.');
             }
         } catch (e) {
@@ -686,11 +702,11 @@
 
     async function loadKPIs() {
         try {
-            const res = await fetch('/api/admin?action=kpi');
+            const res = await fetch(getApi('/api/admin?action=kpi'));
             const data = await res.json();
             if (data.success && data.kpi) {
                 const k = data.kpi;
-                document.getElementById('kpiRevenue').textContent = GT.formatCurrency(k.totalRevenue || 0);
+                document.getElementById('kpiRevenue').textContent = formatMoney(k.totalRevenue || 0);
                 document.getElementById('kpiActiveOrders').textContent = k.activeOrders || 0;
                 document.getElementById('kpiProducts').textContent = k.totalProducts || 0;
                 document.getElementById('kpiCustomers').textContent = k.totalCustomers || 0;
@@ -703,7 +719,7 @@
     async function loadOrders() {
         const tbody = document.getElementById('ordersTableBody');
         try {
-            const res = await fetch('/api/admin?action=orders');
+            const res = await fetch(getApi('/api/admin?action=orders'));
             const data = await res.json();
             if (data.success && Array.isArray(data.orders)) {
                 allOrders = data.orders;
@@ -755,7 +771,7 @@
                         </select>
                     </td>
                     <td style="font-weight: 900; color: #0a1128; font-size: 14px;">
-                        ${GT.formatCurrency(o.totalAmount || 0)}
+                        ${formatMoney(o.totalAmount || 0)}
                     </td>
                     <td style="text-align: right;">
                         <a href="success.html?orderNo=${encodeURIComponent(o.orderNo)}" target="_blank" class="action-link">
@@ -793,7 +809,7 @@
 
     async function updateOrderStatus(orderId, newStatus) {
         try {
-            const res = await fetch('/api/admin', {
+            const res = await fetch(getApi('/api/admin'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -804,17 +820,17 @@
             });
             const data = await res.json();
             if (data.success) {
-                GT.showToast(`Order status updated to ${newStatus}`, 'success');
+                if (window.GT && GT.showToast) GT.showToast(`Order status updated to ${newStatus}`, 'success');
                 // Refresh local model & KPIs
                 const order = allOrders.find(o => o.id === orderId);
                 if (order) order.orderStatus = newStatus;
                 loadKPIs();
             } else {
-                GT.showToast(data.message || 'Failed to update order status.', 'error');
+                if (window.GT && GT.showToast) GT.showToast(data.message || 'Failed to update order status.', 'error');
             }
         } catch (e) {
             console.error('Update status error:', e);
-            GT.showToast('Network error while updating status.', 'error');
+            if (window.GT && GT.showToast) GT.showToast('Network error while updating status.', 'error');
         }
     }
 
@@ -841,7 +857,7 @@
     async function loadTickets() {
         const tbody = document.getElementById('ticketsTableBody');
         try {
-            const res = await fetch('/api/admin?action=tickets');
+            const res = await fetch(getApi('/api/admin?action=tickets'));
             const data = await res.json();
             if (data.success && Array.isArray(data.tickets) && data.tickets.length > 0) {
                 tbody.innerHTML = data.tickets.map(t => {

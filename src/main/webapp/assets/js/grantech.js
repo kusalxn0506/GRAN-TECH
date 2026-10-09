@@ -18,10 +18,17 @@ const GT = {
         this.renderDrawer();
     },
 
+    // --- DYNAMIC CONTEXT-AWARE API ROUTING ---
+    apiUrl: function(endpoint) {
+        const isGranTech = window.location.pathname.startsWith('/GRAN-TECH');
+        const clean = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+        return (isGranTech ? '/GRAN-TECH' : '') + clean;
+    },
+
     // --- SESSION AUTHENTICATION ---
     checkSession: async function() {
         try {
-            const res = await fetch('/api/auth');
+            const res = await fetch(this.apiUrl('/api/auth'));
             const data = await res.json();
             if (data.loggedIn && data.user) {
                 this.state.user = data.user;
@@ -76,7 +83,7 @@ const GT = {
 
     logout: async function() {
         try {
-            await fetch('/api/auth', {
+            await fetch(this.apiUrl('/api/auth'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'logout' })
@@ -91,7 +98,7 @@ const GT = {
     // --- CART STATE MANAGEMENT ---
     fetchCart: async function() {
         try {
-            const res = await fetch('/api/cart');
+            const res = await fetch(this.apiUrl('/api/cart'));
             const data = await res.json();
             if (data.success) {
                 this.updateCartUI(data);
@@ -103,7 +110,7 @@ const GT = {
 
     addToCart: async function(productId, quantity = 1, variantSummary = '', unitPrice = 0) {
         try {
-            const res = await fetch('/api/cart', {
+            const res = await fetch(this.apiUrl('/api/cart'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -129,7 +136,7 @@ const GT = {
 
     updateCartQty: async function(productId, quantity, variantSummary = '') {
         try {
-            const res = await fetch('/api/cart', {
+            const res = await fetch(this.apiUrl('/api/cart'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -150,7 +157,7 @@ const GT = {
 
     removeCartItem: async function(productId, variantSummary = '') {
         try {
-            const res = await fetch('/api/cart', {
+            const res = await fetch(this.apiUrl('/api/cart'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -317,7 +324,7 @@ const GT = {
 
             debounceTimeout = setTimeout(async () => {
                 try {
-                    const res = await fetch(`/api/products?query=${encodeURIComponent(query)}&pageSize=5`);
+                    const res = await fetch(this.apiUrl(`/api/products?query=${encodeURIComponent(query)}&pageSize=5`));
                     const data = await res.json();
                     if (data.success && data.products && data.products.length > 0) {
                         dropdown.innerHTML = data.products.map(p => `

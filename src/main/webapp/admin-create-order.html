@@ -6,7 +6,7 @@
     <title>Manual Order Entry | GRAN & TECH Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <link rel="stylesheet" href="assets/css/grantech.css">
+    <link rel="stylesheet" href="assets/css/grantech.css?v=1.2">
     <style>
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         body.admin-body {
@@ -606,10 +606,27 @@
     </div>
 </main>
 
-<script src="assets/js/grantech.js"></script>
+<script src="assets/js/grantech.js?v=1.2"></script>
 <script>
     let catalogProducts = [];
     let selectedOrderItems = [];
+
+    function formatMoney(amount) {
+        if (window.GT && typeof window.GT.formatCurrency === 'function') {
+            return window.GT.formatCurrency(amount);
+        }
+        const val = parseFloat(amount) || 0.0;
+        return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function getApi(endpoint) {
+        if (window.GT && typeof window.GT.apiUrl === 'function') {
+            return window.GT.apiUrl(endpoint);
+        }
+        const isGranTech = window.location.pathname.startsWith('/GRAN-TECH');
+        const clean = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+        return (isGranTech ? '/GRAN-TECH' : '') + clean;
+    }
 
     document.addEventListener('DOMContentLoaded', async () => {
         await loadCatalogProducts();
@@ -617,7 +634,7 @@
 
     async function loadCatalogProducts() {
         try {
-            const res = await fetch('/api/products');
+            const res = await fetch(getApi('/api/products'));
             const data = await res.json();
             if (data.products && Array.isArray(data.products)) {
                 catalogProducts = data.products;
@@ -625,7 +642,7 @@
                 catalogProducts.forEach(p => {
                     const opt = document.createElement('option');
                     opt.value = p.id;
-                    opt.textContent = `${p.name} - ${GT.formatCurrency(p.price)}`;
+                    opt.textContent = `${p.name} - ${formatMoney(p.price)}`;
                     select.appendChild(opt);
                 });
 
@@ -740,8 +757,8 @@
                         </div>
                     </td>
                     <td style="text-align: center; font-weight: 700;">${item.quantity}</td>
-                    <td style="text-align: right; color: #64748b;">${GT.formatCurrency(item.price)}</td>
-                    <td style="text-align: right; font-weight: 800; color: #0f172a;">${GT.formatCurrency(lineSubtotal)}</td>
+                    <td style="text-align: right; color: #64748b;">${formatMoney(item.price)}</td>
+                    <td style="text-align: right; font-weight: 800; color: #0f172a;">${formatMoney(lineSubtotal)}</td>
                     <td style="text-align: center;">
                         <button type="button" class="remove-btn" onclick="removeOrderItem(${idx})" title="Remove Line">
                             <i class="fas fa-trash-alt"></i>
@@ -755,8 +772,8 @@
     }
 
     function updateTotals(total) {
-        document.getElementById('summarySubtotal').textContent = GT.formatCurrency(total);
-        document.getElementById('summaryTotal').textContent = GT.formatCurrency(total);
+        document.getElementById('summarySubtotal').textContent = formatMoney(total);
+        document.getElementById('summaryTotal').textContent = formatMoney(total);
     }
 
     async function handleCreateOrder(e) {
@@ -797,7 +814,7 @@
         };
 
         try {
-            const res = await fetch('/api/admin', {
+            const res = await fetch(getApi('/api/admin'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
