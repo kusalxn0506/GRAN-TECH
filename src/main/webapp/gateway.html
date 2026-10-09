@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure 256-Bit SSL Payment Gateway | GRAN & TECH</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <link rel="stylesheet" href="assets/css/grantech.css">
+    <link rel="stylesheet" href="assets/css/grantech.css?v=2.2">
     <style>
         body {
             background: #e2e8f0;
@@ -247,7 +247,7 @@
     </div>
 </div>
 
-<script src="assets/js/grantech.js"></script>
+<script src="assets/js/grantech.js?v=2.2"></script>
 <script>
     let draft = null;
     let selectedPaymentMethod = 'CREDIT_CARD';
@@ -262,7 +262,8 @@
 
         if (!draft || !draft.amount) {
             // Fetch live from cart if sessionStorage was refreshed
-            fetch('/api/cart').then(r => r.json()).then(data => {
+            const cartUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/cart') : '/api/cart';
+            fetch(cartUrl).then(r => r.json()).then(data => {
                 const amt = data.subtotal || 1999.00;
                 document.getElementById('gatewayAmountDisplay').textContent = `$${amt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                 document.getElementById('btnPayText').textContent = `Authorize & Pay $${amt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -325,7 +326,8 @@
         };
 
         try {
-            const res = await fetch('/api/checkout', {
+            const checkoutUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/checkout') : '/api/checkout';
+            const res = await fetch(checkoutUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout | GRAN & TECH</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <link rel="stylesheet" href="assets/css/grantech.css">
+    <link rel="stylesheet" href="assets/css/grantech.css?v=2.2">
     <style>
         body { background: #fdfdfd; }
         .checkout-layout {
@@ -298,7 +298,7 @@
     </div>
 </div>
 
-<script src="assets/js/grantech.js"></script>
+<script src="assets/js/grantech.js?v=2.2"></script>
 <script>
     let checkoutCart = [];
     let checkoutSubtotal = 0.0;
@@ -306,7 +306,8 @@
     async function initCheckout() {
         // Check session to autofill customer details
         try {
-            const authRes = await fetch('/api/auth');
+            const authUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/auth') : '/api/auth';
+            const authRes = await fetch(authUrl);
             const authData = await authRes.json();
             if (authData.loggedIn && authData.user) {
                 const u = authData.user;
@@ -324,7 +325,8 @@
 
         // Fetch cart
         try {
-            const cartRes = await fetch('/api/cart');
+            const cartUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/cart') : '/api/cart';
+            const cartRes = await fetch(cartUrl);
             const cartData = await cartRes.json();
             checkoutCart = cartData.items || [];
             checkoutSubtotal = cartData.subtotal || 0.0;
