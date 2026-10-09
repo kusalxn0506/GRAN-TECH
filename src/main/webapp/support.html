@@ -442,6 +442,12 @@
                     <textarea id="ticketMessage" class="form-control" rows="4" placeholder="Please describe your hardware issue or inquiry in detail..." required></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-label">Attach File / Diagnostics / Invoice (Optional)</label>
+                    <input type="file" id="ticketAttachment" class="form-control" accept="image/*,.pdf,.doc,.docx,.txt" onchange="uploadTicketAttachment(this)">
+                    <small id="uploadFeedback" style="color: #64748b; font-size: 11px; margin-top: 5px; display: block;">Supported: Images, PDF, Diagnostics (Max 10MB)</small>
+                </div>
+
                 <button type="submit" class="btn-submit" id="ticketSubmitBtn">
                     <i class="fas fa-paper-plane"></i> Submit Support Ticket
                 </button>
@@ -572,6 +578,40 @@
         document.getElementById('ticketMessage').focus();
     }
 
+    let uploadedAttachmentUrl = '';
+
+    async function uploadTicketAttachment(input) {
+        if (!input.files || input.files.length === 0) return;
+        const file = input.files[0];
+        const feedback = document.getElementById('uploadFeedback');
+        feedback.textContent = `Uploading "${file.name}"...`;
+        feedback.style.color = '#2563eb';
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const uploadUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/upload') : '/api/upload';
+            const res = await fetch(uploadUrl, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                uploadedAttachmentUrl = data.filePath;
+                feedback.innerHTML = `<span style="color: #10b981;"><i class="fas fa-check-circle"></i> Uploaded: ${file.name}</span>`;
+                if (window.GT && GT.showToast) GT.showToast('Attachment uploaded successfully.', 'success');
+            } else {
+                feedback.textContent = `Upload failed: ${data.message || 'Error'}`;
+                feedback.style.color = '#ef4444';
+            }
+        } catch (e) {
+            console.error('File upload error:', e);
+            feedback.textContent = 'Upload network error.';
+            feedback.style.color = '#ef4444';
+        }
+    }
+
     async function handleTicketSubmit(e) {
         e.preventDefault();
         const btn = document.getElementById('ticketSubmitBtn');
@@ -586,6 +626,9 @@
 
         if (orderNo) {
             message = `[Order Reference: ${orderNo}] ${message}`;
+        }
+        if (uploadedAttachmentUrl) {
+            message = `${message} \n[Attached Document: ${uploadedAttachmentUrl}]`;
         }
 
         try {

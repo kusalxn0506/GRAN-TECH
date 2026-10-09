@@ -617,7 +617,8 @@
         if (!grid) return;
 
         try {
-            const res = await fetch('/api/products?trending=true');
+            const trendUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/products?trending=true') : '/api/products?trending=true';
+            const res = await fetch(trendUrl);
             const data = await res.json();
 
             if (data.success && data.products && data.products.length > 0) {
@@ -633,6 +634,9 @@
                                 <div class="card-action-bar">
                                     <button class="btn-card-add" onclick="GT.addToCart(${p.id}, 1, '', ${p.price})">
                                         <i class="fal fa-shopping-bag"></i> Add to Bag
+                                    </button>
+                                    <button class="btn-card-view" data-wishlist-id="${p.id}" onclick="GT.toggleWishlist(${p.id}, this)" title="Save to Wishlist">
+                                        <i class="${(GT.state.wishlistIds && GT.state.wishlistIds.has(p.id)) ? 'fas fa-heart text-danger' : 'fal fa-heart'}"></i>
                                     </button>
                                     <a href="product.html?id=${p.id}" class="btn-card-view" title="Quick View">
                                         <i class="fal fa-eye"></i>

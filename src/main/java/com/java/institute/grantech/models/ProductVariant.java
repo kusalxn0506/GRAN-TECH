@@ -1,11 +1,28 @@
 package com.java.institute.grantech.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "product_variants")
 public class ProductVariant {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "product_id", nullable = false)
     private int productId;
+
+    @Column(name = "variant_type", nullable = false)
     private String variantType; // 'RAM', 'STORAGE'
+
+    @Column(name = "variant_value", nullable = false)
     private String variantValue; // '16GB RAM', '32GB RAM'
+
+    @Column(name = "price_delta")
     private double priceDelta;
+
+    @Column(name = "is_default")
     private boolean isDefault;
 
     public ProductVariant() {}

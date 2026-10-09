@@ -8,12 +8,15 @@ const GT = {
         cart: [],
         cartCount: 0,
         cartSubtotal: 0.0,
-        user: null
+        user: null,
+        wishlist: [],
+        wishlistIds: new Set()
     },
 
     init: async function() {
         await this.checkSession();
         await this.fetchCart();
+        await this.fetchWishlist();
         this.setupHeaderSearch();
         this.renderDrawer();
     },
@@ -198,6 +201,78 @@ const GT = {
         if (typeof renderCartPage === 'function') {
             renderCartPage(data);
         }
+    },
+
+    // --- WISHLIST MANAGEMENT (HIBERNATE ORM BACKED) ---
+    fetchWishlist: async function() {
+        try {
+            const res = await fetch(this.apiUrl('/api/wishlist'));
+            const data = await res.json();
+            if (data.success && Array.isArray(data.wishlist)) {
+                this.state.wishlist = data.wishlist;
+                this.state.wishlistIds = new Set(data.productIds || []);
+                this.updateWishlistBadges();
+                this.syncWishlistIcons();
+            }
+        } catch (e) {
+            console.warn('Wishlist fetch error:', e);
+        }
+    },
+
+    toggleWishlist: async function(productId, btnElement) {
+        if (!this.state.user) {
+            this.showToast('Please sign in to save hardware to your wishlist.', 'info');
+            setTimeout(() => { window.location.href = 'sign-in.html'; }, 900);
+            return;
+        }
+        try {
+            const res = await fetch(this.apiUrl('/api/wishlist'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId: productId })
+            });
+            const data = await res.json();
+            if (data.success) {
+                if (data.wishlisted) {
+                    this.state.wishlistIds.add(productId);
+                    this.showToast(data.message || 'Saved to your Wishlist.', 'success');
+                } else {
+                    this.state.wishlistIds.delete(productId);
+                    this.showToast(data.message || 'Removed from your Wishlist.', 'info');
+                }
+                this.syncWishlistIcons();
+                this.updateWishlistBadges();
+                this.fetchWishlist();
+            } else {
+                this.showToast(data.message || 'Error updating wishlist.', 'error');
+            }
+        } catch (e) {
+            console.error('Wishlist error:', e);
+            this.showToast('Network error updating wishlist.', 'error');
+        }
+    },
+
+    syncWishlistIcons: function() {
+        document.querySelectorAll('[data-wishlist-id]').forEach(btn => {
+            const pid = parseInt(btn.getAttribute('data-wishlist-id'));
+            const icon = btn.querySelector('i');
+            if (icon && this.state.wishlistIds) {
+                if (this.state.wishlistIds.has(pid)) {
+                    icon.className = 'fas fa-heart text-danger';
+                    btn.classList.add('wishlisted');
+                } else {
+                    icon.className = 'fal fa-heart';
+                    btn.classList.remove('wishlisted');
+                }
+            }
+        });
+    },
+
+    updateWishlistBadges: function() {
+        const count = this.state.wishlistIds ? this.state.wishlistIds.size : 0;
+        document.querySelectorAll('.wishlist-count-badge').forEach(el => {
+            el.textContent = `WISHLIST (${count})`;
+        });
     },
 
     // --- SLIDE-OVER BAG DRAWER ---

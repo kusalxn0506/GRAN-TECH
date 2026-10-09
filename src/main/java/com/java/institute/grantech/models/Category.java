@@ -1,11 +1,28 @@
 package com.java.institute.grantech.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "categories")
 public class Category {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "slug", nullable = false, unique = true)
     private String slug;
+
+    @Column(name = "icon_class")
     private String iconClass;
+
+    @Column(name = "display_order")
     private int displayOrder;
+
+    @Transient
     private int productCount;
 
     public Category() {}

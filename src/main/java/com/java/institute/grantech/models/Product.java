@@ -1,28 +1,72 @@
 package com.java.institute.grantech.models;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "products")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "category_id")
     private int categoryId;
+
+    @Transient
     private String categoryName;
+
+    @Transient
     private String categorySlug;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "slug", nullable = false, unique = true)
     private String slug;
+
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "price", nullable = false)
     private double price;
+
+    @Column(name = "original_price")
     private double originalPrice;
+
+    @Column(name = "sku")
     private String sku;
+
+    @Column(name = "stock_quantity")
     private int stockQuantity;
+
+    @Column(name = "rating")
     private double rating;
+
+    @Column(name = "reviews_count")
     private int reviewsCount;
+
+    @Column(name = "main_image")
     private String mainImage;
+
+    @Column(name = "badge")
     private String badge;
+
+    @Column(name = "tech_specs", columnDefinition = "TEXT")
     private String techSpecs;
+
+    @Column(name = "shipping_info")
     private String shippingInfo;
+
+    @Column(name = "warranty_info")
     private String warrantyInfo;
+
+    @Transient
     private List<String> galleryImages = new ArrayList<>();
+
+    @Transient
     private List<ProductVariant> variants = new ArrayList<>();
 
     public Product() {}

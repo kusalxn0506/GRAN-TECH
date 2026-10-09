@@ -347,6 +347,50 @@
     </div>
 </main>
 
+<!-- Multimedia Experience Section (HTML5 Video & Audio) -->
+<section class="product-multimedia-showcase" style="max-width: 1400px; margin: 40px auto 70px; padding: 0 40px;">
+    <div style="border-top: 1px solid var(--slate-200); padding-top: 50px;">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto 35px;">
+            <span style="font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #2563eb;">Multimedia Experience &amp; Engineering</span>
+            <h2 style="font-size: 30px; font-weight: 900; letter-spacing: -1px; color: var(--navy); margin: 8px 0 10px;">Precision Engineering &amp; Acoustics Reel</h2>
+            <p style="color: var(--slate-600); font-size: 14px; line-height: 1.6;">Experience CNC-machined aerospace alloy structures, advanced vapor chambers, and studio acoustic response.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; align-items: start;">
+            <!-- HTML5 Video Element -->
+            <div style="background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.12);">
+                <video controls preload="metadata" poster="assets/images/1.jpg" style="width: 100%; display: block; border-radius: 16px 16px 0 0;">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                    Your browser does not support the HTML5 video element.
+                </video>
+                <div style="padding: 16px 20px; background: #0a1128; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-size: 13px; font-weight: 700;"><i class="fas fa-play-circle" style="color: #38bdf8; margin-right: 8px;"></i> 4K Ultra-HD Hardware Architecture Reel</div>
+                    <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Stereo Sound</span>
+                </div>
+            </div>
+
+            <!-- HTML5 Audio Element & Acoustic Showcase -->
+            <div style="background: #ffffff; border: 1px solid var(--slate-200); border-radius: 16px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 16px;">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                <h3 style="font-size: 18px; font-weight: 900; color: var(--navy); margin-bottom: 8px;">Spatial Acoustic Signature</h3>
+                <p style="font-size: 13px; color: var(--slate-600); line-height: 1.6; margin-bottom: 20px;">
+                    Audition our studio-tuned micro-transducers and spatial acoustic chamber response recorded in our anechoic laboratory.
+                </p>
+                <audio controls style="width: 100%; margin-bottom: 15px;">
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div style="background: #f8fafc; border-radius: 8px; padding: 12px; font-size: 11px; color: #64748b; line-height: 1.5;">
+                    <strong style="color: var(--navy); display: block; margin-bottom: 4px;">Hardware Sound Profile:</strong>
+                    96kHz / 24-bit Lossless Studio Transducers &bull; Active Acoustic Phase Tuning
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Newsletter & Universal Footer -->
 <div class="newsletter-bar">
     <div class="news-content">
@@ -572,6 +616,9 @@
                     <button class="btn-add-main" onclick="onAddToBagClick()">
                         <i class="fal fa-shopping-bag"></i>
                         <span>Add to Bag</span>
+                    </button>
+                    <button class="btn-wishlist-toggle" data-wishlist-id="${p.id}" onclick="GT.toggleWishlist(${p.id}, this)" title="Save to Wishlist" style="background: #f1f5f9; border: 2px solid #e2e8f0; border-radius: var(--radius-sm); padding: 0 18px; font-size: 18px; cursor: pointer; color: #64748b; transition: all 0.2s;">
+                        <i class="${(GT.state.wishlistIds && GT.state.wishlistIds.has(p.id)) ? 'fas fa-heart text-danger' : 'fal fa-heart'}"></i>
                     </button>
                 </div>
 

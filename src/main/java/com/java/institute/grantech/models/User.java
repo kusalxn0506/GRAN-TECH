@@ -1,17 +1,44 @@
 package com.java.institute.grantech.models;
 
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "full_name", nullable = false)
     private String fullName;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "password_hash", nullable = false)
     private transient String passwordHash; // do not serialize to JSON
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "postal_code")
     private String postalCode;
+
+    @Column(name = "role")
     private String role; // 'CUSTOMER' or 'ADMIN'
+
+    @Column(name = "remember_token")
+    private String rememberToken;
+
+    @Column(name = "created_at", insertable = false, updatable = false)
     private Timestamp createdAt;
 
     public User() {}
@@ -53,6 +80,9 @@ public class User {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public String getRememberToken() { return rememberToken; }
+    public void setRememberToken(String rememberToken) { this.rememberToken = rememberToken; }
 
     public Timestamp getCreatedAt() { return createdAt; }
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }

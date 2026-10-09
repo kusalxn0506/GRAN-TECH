@@ -1,15 +1,35 @@
 package com.java.institute.grantech.models;
 
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "support_tickets")
 public class SupportTicket {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "ticket_no", nullable = false, unique = true)
     private String ticketNo;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "subject", nullable = false)
     private String subject;
+
+    @Column(name = "message", columnDefinition = "TEXT", nullable = false)
     private String message;
+
+    @Column(name = "status")
     private String status;
+
+    @Column(name = "created_at", insertable = false, updatable = false)
     private Timestamp createdAt;
 
     public SupportTicket() {}

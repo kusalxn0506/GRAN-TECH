@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://127.0.0.1:8889/grantech_db?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+
+        <!-- JDBC connection pool settings (C3P0 or built-in) -->
+        <property name="connection.pool_size">10</property>
+
+        <!-- SQL Dialect for MySQL 8 -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">false</property>
+        <property name="format_sql">true</property>
+
+        <!-- Automatic schema validation/update -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Annotated Entity Classes -->
+        <mapping class="com.java.institute.grantech.models.User"/>
+        <mapping class="com.java.institute.grantech.models.Category"/>
+        <mapping class="com.java.institute.grantech.models.Product"/>
+        <mapping class="com.java.institute.grantech.models.ProductVariant"/>
+        <mapping class="com.java.institute.grantech.models.Order"/>
+        <mapping class="com.java.institute.grantech.models.OrderItem"/>
+        <mapping class="com.java.institute.grantech.models.SupportTicket"/>
+        <mapping class="com.java.institute.grantech.models.WishlistItem"/>
+    </session-factory>
+</hibernate-configuration>

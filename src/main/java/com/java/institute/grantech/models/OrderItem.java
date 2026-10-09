@@ -1,14 +1,37 @@
 package com.java.institute.grantech.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "order_items")
 public class OrderItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "order_id", nullable = false)
     private int orderId;
+
+    @Column(name = "product_id", nullable = false)
     private int productId;
+
+    @Column(name = "product_name", nullable = false)
     private String productName;
+
+    @Column(name = "product_image")
     private String productImage;
+
+    @Column(name = "variant_summary")
     private String variantSummary;
+
+    @Column(name = "unit_price", nullable = false)
     private double unitPrice;
+
+    @Column(name = "quantity", nullable = false)
     private int quantity;
+
+    @Column(name = "subtotal", nullable = false)
     private double subtotal;
 
     public OrderItem() {}

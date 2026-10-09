@@ -57,6 +57,31 @@ public class AdminServlet extends HttpServlet {
             responseData.put("success", true);
             responseData.put("tickets", SupportDAO.getAllTickets());
 
+        } else if ("exportReport".equalsIgnoreCase(action)) {
+            // Generate and stream downloadable Business Intelligence (BI) CSV Sales Report
+            resp.setContentType("text/csv");
+            resp.setHeader("Content-Disposition", "attachment; filename=\"GRAN-TECH_Sales_BI_Report.csv\"");
+            List<Order> allOrders = OrderDAO.getAllOrders(500, 0);
+            try (PrintWriter out = resp.getWriter()) {
+                out.println("Order No,Customer Name,Customer Email,City,Postal Code,Payment Method,Payment Status,Order Status,Total Amount,Date");
+                for (Order o : allOrders) {
+                    out.printf("%s,\"%s\",%s,%s,%s,%s,%s,%s,%.2f,%s\n",
+                        o.getOrderNo(),
+                        o.getCustomerName().replace("\"", "\"\""),
+                        o.getCustomerEmail(),
+                        o.getShippingCity(),
+                        o.getShippingPostalCode(),
+                        o.getPaymentMethod(),
+                        o.getPaymentStatus(),
+                        o.getOrderStatus(),
+                        o.getTotalAmount(),
+                        o.getCreatedAt()
+                    );
+                }
+                out.flush();
+            }
+            return;
+
         } else {
             responseData.put("success", false);
             responseData.put("message", "Unknown admin action.");
@@ -144,6 +169,7 @@ public class AdminServlet extends HttpServlet {
 
             Order order = OrderDAO.createOrder(null, customerName, customerEmail, shippingAddress, city, postalCode, items, paymentMethod);
             if (order != null) {
+                com.java.institute.grantech.services.EmailService.sendOrderConfirmationAsync(order, order.getItems());
                 responseData.put("success", true);
                 responseData.put("order", order);
                 responseData.put("message", "Manual order #" + order.getOrderNo() + " created successfully.");

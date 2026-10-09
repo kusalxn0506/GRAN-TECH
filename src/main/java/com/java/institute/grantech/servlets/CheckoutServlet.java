@@ -126,6 +126,9 @@ public class CheckoutServlet extends HttpServlet {
                 cart.clear();
                 session.setAttribute("shoppingCart", cart);
 
+                // Trigger asynchronous SMTP email notification
+                com.java.institute.grantech.services.EmailService.sendOrderConfirmationAsync(order, order.getItems());
+
                 responseData.put("success", true);
                 responseData.put("orderId", order.getId());
                 responseData.put("orderNo", order.getOrderNo());

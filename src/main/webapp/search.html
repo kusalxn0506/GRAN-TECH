@@ -639,6 +639,9 @@
                                         <button class="btn-card-add" onclick="GT.addToCart(${p.id}, 1, '', ${p.price})">
                                             <i class="fal fa-shopping-bag"></i> Add to Bag
                                         </button>
+                                        <button class="btn-card-view" data-wishlist-id="${p.id}" onclick="GT.toggleWishlist(${p.id}, this)" title="Save to Wishlist">
+                                            <i class="${(GT.state.wishlistIds && GT.state.wishlistIds.has(p.id)) ? 'fas fa-heart text-danger' : 'fal fa-heart'}"></i>
+                                        </button>
                                         <a href="product.html?id=${p.id}" class="btn-card-view" title="View Details">
                                             <i class="fal fa-eye"></i>
                                         </a>

@@ -148,6 +148,36 @@ public class UserDAO {
         return 0;
     }
 
+    public static boolean saveRememberToken(int userId, String token) {
+        String sql = "UPDATE users SET remember_token = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Save remember token error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static User getUserByRememberToken(String token) {
+        if (token == null || token.isBlank()) return null;
+        String sql = "SELECT * FROM users WHERE remember_token = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, token.trim());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Get user by remember token error: " + e.getMessage());
+        }
+        return null;
+    }
+
     private static User mapUser(ResultSet rs) throws SQLException {
         User u = new User();
         u.setId(rs.getInt("id"));

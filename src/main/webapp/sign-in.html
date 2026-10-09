@@ -317,7 +317,7 @@
 
             <div class="form-options-row">
                 <label>
-                    <input type="checkbox" style="accent-color: #0a1128;"> Keep me signed in
+                    <input type="checkbox" id="rememberMeCheckbox" checked style="accent-color: #0a1128;"> Keep me signed in (Remember Me)
                 </label>
                 <a href="support.html" style="color: #64748b; text-decoration: none;">Forgot password?</a>
             </div>
@@ -333,7 +333,7 @@
     </div>
 </div>
 
-<script src="assets/js/grantech.js"></script>
+<script src="assets/js/grantech.js?v=1.3"></script>
 <script>
     function autofillDemo(type) {
         if (type === 'admin') {
@@ -354,12 +354,14 @@
 
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
+        const rememberMe = document.getElementById('rememberMeCheckbox').checked;
 
         try {
-            const res = await fetch('/api/auth', {
+            const authUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/auth') : '/api/auth';
+            const res = await fetch(authUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'login', email, password })
+                body: JSON.stringify({ action: 'login', email, password, rememberMe })
             });
 
             const data = await res.json();

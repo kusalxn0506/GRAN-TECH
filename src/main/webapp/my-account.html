@@ -416,6 +416,11 @@
                 </a>
             </li>
             <li class="account-nav-item">
+                <a onclick="switchTab('wishlist', this)" id="navWishlistLink">
+                    <i class="fal fa-heart"></i> Saved Wishlist
+                </a>
+            </li>
+            <li class="account-nav-item">
                 <a onclick="switchTab('security', this)">
                     <i class="fal fa-shield-check"></i> Security & Admin
                 </a>
@@ -604,6 +609,23 @@
                 <a href="admin.html" class="btn-save" style="background: #991b1b; text-decoration: none; display: inline-block;">
                     Launch Admin Console &rarr;
                 </a>
+            </div>
+        </section>
+        <!-- Tab 5: Wishlist -->
+        <section id="tabWishlist" class="tab-section">
+            <div class="content-card">
+                <div class="card-header-clean">
+                    <div>
+                        <h3 class="card-title">Saved Wishlist &amp; Hardware Watchlist</h3>
+                        <p class="card-subtitle">Components and workstations earmarked for upcoming procurement cycles.</p>
+                    </div>
+                    <button class="btn-refresh" onclick="loadAccountWishlist()" style="background: none; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px 12px; cursor: pointer;">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div id="accountWishlistGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <p style="color: #64748b; font-size: 14px;">Loading saved items...</p>
+                </div>
             </div>
         </section>
     </main>
@@ -819,6 +841,54 @@
         document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
         const target = document.getElementById('tab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
         if (target) target.classList.add('active');
+
+        if (tabId === 'wishlist') {
+            loadAccountWishlist();
+        }
+    }
+
+    async function loadAccountWishlist() {
+        const grid = document.getElementById('accountWishlistGrid');
+        if (!grid) return;
+        grid.innerHTML = '<p style="color: #64748b; font-size: 13px;">Synchronizing saved hardware...</p>';
+        try {
+            const wishUrl = window.GT && GT.apiUrl ? GT.apiUrl('/api/wishlist') : '/api/wishlist';
+            const res = await fetch(wishUrl);
+            const data = await res.json();
+            if (data.success && data.wishlist && data.wishlist.length > 0) {
+                grid.innerHTML = data.wishlist.map(p => `
+                    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="height: 180px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 8px; margin-bottom: 15px; overflow: hidden;">
+                                <img src="${p.mainImage || 'assets/images/1.jpg'}" alt="${GT.escapeHtml(p.name)}" style="max-height: 140px; max-width: 100%; object-fit: contain;">
+                            </div>
+                            <span style="font-size: 11px; font-weight: 800; color: #2563eb; text-transform: uppercase; letter-spacing: 1px;">${GT.escapeHtml(p.categoryName || 'HARDWARE')}</span>
+                            <h4 style="font-size: 15px; font-weight: 800; margin: 4px 0 8px; color: #0a1128;">${GT.escapeHtml(p.name)}</h4>
+                            <div style="font-size: 18px; font-weight: 900; color: #0a1128;">$${Number(p.price).toFixed(2)}</div>
+                        </div>
+                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                            <button onclick="GT.addToCart(${p.id}, 1, '', ${p.price})" style="flex: 1; background: #0a1128; color: #fff; border: none; border-radius: 6px; padding: 10px; font-weight: 700; font-size: 12px; cursor: pointer;">
+                                <i class="fas fa-shopping-bag"></i> Move to Bag
+                            </button>
+                            <button onclick="GT.toggleWishlist(${p.id}); setTimeout(loadAccountWishlist, 300);" title="Remove from Wishlist" style="background: #fee2e2; color: #ef4444; border: none; border-radius: 6px; padding: 10px 14px; cursor: pointer;">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1;">
+                        <i class="fal fa-heart" style="font-size: 40px; color: #94a3b8; margin-bottom: 15px; display: block;"></i>
+                        <h4 style="font-size: 16px; font-weight: 800; color: #0a1128; margin-bottom: 6px;">Your Wishlist is Empty</h4>
+                        <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">Save products you are interested in while browsing our hardware collection.</p>
+                        <a href="search.html" style="background: #0a1128; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 800; display: inline-block;">Explore Hardware Archive</a>
+                    </div>
+                `;
+            }
+        } catch (e) {
+            grid.innerHTML = '<p style="color: #ef4444;">Failed to load wishlist items.</p>';
+        }
     }
 
     async function handleUpdateProfile(e) {

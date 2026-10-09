@@ -578,6 +578,9 @@
                     <button class="btn-refresh" onclick="loadDashboardData()" title="Refresh Transactions">
                         <i class="fas fa-sync-alt"></i>
                     </button>
+                    <button class="btn-create-order" onclick="exportBIReport()" style="background: #2563eb;" title="Export Business Intelligence CSV Report">
+                        <i class="fas fa-file-csv"></i> Export BI Report
+                    </button>
                     <a href="admin-create-order.html" class="btn-create-order">
                         <i class="fas fa-plus"></i> Create Order
                     </a>
@@ -832,6 +835,11 @@
             console.error('Update status error:', e);
             if (window.GT && GT.showToast) GT.showToast('Network error while updating status.', 'error');
         }
+    }
+
+    function exportBIReport() {
+        if (window.GT && GT.showToast) GT.showToast('Generating and downloading BI Sales Report (CSV)...', 'info');
+        window.location.href = getApi('/api/admin?action=exportReport');
     }
 
     function switchAdminTab(tab) {
