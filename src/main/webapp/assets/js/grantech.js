@@ -392,6 +392,11 @@ const GT = {
         }, 3200);
     },
 
+    formatCurrency: function(amount) {
+        const val = parseFloat(amount) || 0.0;
+        return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    },
+
     escapeHtml: function(str) {
         if (!str) return '';
         return String(str).replace(/[&<>"']/g, m => ({

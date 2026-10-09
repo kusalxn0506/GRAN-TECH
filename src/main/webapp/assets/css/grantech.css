@@ -44,7 +44,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-body:not(.auth-body) {
+body:not(.auth-body):not(.admin-body) {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
