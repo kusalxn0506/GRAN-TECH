@@ -408,10 +408,83 @@
     </main>
 </div>
 
-<!-- Footer -->
+<!-- Newsletter & Universal Footer -->
+<div class="newsletter-bar">
+    <div class="news-content">
+        <i class="far fa-envelope news-icon"></i>
+        <div>
+            <h3>Receive Priority Drops & Hardware Briefs</h3>
+            <p>Subscribe for exclusive releases, engineering whitepapers, and member allocations.</p>
+        </div>
+    </div>
+    <div class="news-form">
+        <input type="email" placeholder="Enter your corporate email..." id="news-email">
+        <button type="button" class="btn-subscribe" onclick="GT.showToast('Subscribed to GRAN & TECH hardware briefings.', 'success')">Subscribe</button>
+    </div>
+</div>
+
 <footer class="gt-footer">
-    <div style="text-align: center; font-size: 12px; color: var(--slate-400); padding: 40px 0;">
-        &copy; 2026 GRAN & TECH Inc. Precision High-Performance Computing.
+    <div class="footer-grid">
+        <div class="footer-col brand-col">
+            <h2 class="footer-logo" style="color: var(--white); font-size: 22px; font-weight: 900; letter-spacing: -0.8px;">GRAN & TECH</h2>
+            <p>Pioneering ultra-clean, minimalist performance hardware. Engineered for creators, developers, and discerning specialists seeking uncompromised computational luxury.</p>
+            <div class="social-links">
+                <i class="fab fa-apple"></i>
+                <i class="fab fa-github"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-linkedin-in"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Concierge</h4>
+            <ul>
+                <li><a href="search.html">Hardware Archive</a></li>
+                <li><a href="support.html">Frequently Asked Questions</a></li>
+                <li><a href="support.html">Warranty & Diagnostics</a></li>
+                <li><a href="support.html">Contact Concierge</a></li>
+                <li><a href="my-account.html">Client Account</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Hardware Systems</h4>
+            <ul>
+                <li><a href="search.html?categoryId=1">Laptops & Workstations</a></li>
+                <li><a href="search.html?categoryId=2">Mobile Devices</a></li>
+                <li><a href="search.html?categoryId=4">Acoustic Audio</a></li>
+                <li><a href="search.html?categoryId=3">Wearables & Health</a></li>
+                <li><a href="search.html">All Flagship Hardware</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Company & Legal</h4>
+            <ul>
+                <li><a href="support.html">Colombo Technology Labs</a></li>
+                <li><a href="support.html">30-Day Risk-Free Returns</a></li>
+                <li><a href="support.html">1-Year Hardware Warranty</a></li>
+                <li><a href="support.html">Privacy Governance</a></li>
+                <li><a href="admin.html">Internal Staff Portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="payment-methods">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+            <i class="fab fa-cc-apple-pay"></i>
+            <i class="fab fa-cc-stripe"></i>
+        </div>
+        <div class="copyright">
+            Copyright &copy; 2026 <strong>GRAN & TECH E-Commerce Platform</strong> &bull; Version 1.0 by Kusal Nirmala
+        </div>
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Return to Top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
     </div>
 </footer>
 

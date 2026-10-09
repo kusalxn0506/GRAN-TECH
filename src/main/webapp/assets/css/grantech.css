@@ -42,6 +42,13 @@ body {
     color: var(--slate-900);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main, .main-content, .shop-container, .checkout-arena, .receipt-container, .dashboard-container, .support-arena, .error-container, .product-arena {
+    flex: 1 0 auto;
 }
 
 /* --- TOP ANNOUNCEMENT BAR --- */
@@ -661,3 +668,218 @@ header.gt-header {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ==========================================================================
+   UNIVERSAL NORDIC LUXURY FOOTER & STICKY STYLING
+   ========================================================================== */
+.newsletter-bar {
+    background: var(--navy);
+    color: var(--white);
+    padding: 36px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: auto;
+}
+.newsletter-bar .news-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.newsletter-bar .news-icon {
+    font-size: 32px;
+    color: var(--accent);
+}
+.newsletter-bar h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+    color: var(--white);
+}
+.newsletter-bar p {
+    font-size: 13px;
+    color: var(--slate-400);
+}
+.newsletter-bar .news-form {
+    display: flex;
+    gap: 10px;
+    max-width: 440px;
+    width: 100%;
+}
+.newsletter-bar input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
+    padding: 12px 18px;
+    font-size: 13px;
+    color: var(--white);
+    outline: none;
+    transition: var(--transition);
+}
+.newsletter-bar input:focus {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--white);
+}
+.newsletter-bar .btn-subscribe {
+    background: var(--white);
+    color: var(--navy);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.newsletter-bar .btn-subscribe:hover {
+    background: var(--accent);
+    color: var(--white);
+}
+
+footer.gt-footer {
+    background: var(--navy-dark);
+    color: var(--white);
+    padding: 70px 5% 30px;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    z-index: 10;
+}
+.gt-footer .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 50px;
+    max-width: 1400px;
+    margin: 0 auto 50px;
+}
+.gt-footer .footer-col.brand-col p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--slate-400);
+    max-width: 340px;
+    margin-top: 15px;
+}
+.gt-footer .social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+.gt-footer .social-links a,
+.gt-footer .social-links i {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-300);
+    font-size: 14px;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+}
+.gt-footer .social-links a:hover,
+.gt-footer .social-links i:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+.gt-footer .footer-col h4 {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--white);
+    margin-bottom: 22px;
+}
+.gt-footer .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.gt-footer .footer-col ul li {
+    margin-bottom: 12px;
+}
+.gt-footer .footer-col ul a {
+    color: var(--slate-400);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+.gt-footer .footer-col ul a:hover {
+    color: var(--white);
+    padding-left: 4px;
+}
+.gt-footer .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--slate-400);
+    gap: 20px;
+}
+.gt-footer .payment-methods {
+    display: flex;
+    gap: 16px;
+    font-size: 20px;
+    color: var(--slate-400);
+}
+.gt-footer .back-to-top {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.gt-footer .back-to-top:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+@media (max-width: 992px) {
+    .gt-footer .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    .newsletter-bar {
+        flex-direction: column;
+        text-align: center;
+    }
+    .newsletter-bar .news-content {
+        flex-direction: column;
+    }
+    .newsletter-bar .news-form {
+        max-width: 100%;
+    }
+}
+@media (max-width: 640px) {
+    .gt-footer .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    .gt-footer .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
