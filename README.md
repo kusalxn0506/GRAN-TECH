@@ -92,19 +92,35 @@ flowchart TD
         MySQL[("grantech_db (3NF Relational Database)")]
     end
 
-    ClientLayer -->|Async JSON REST Requests (Fetch API)| ControllerLayer
-    ControllerLayer -->|Object Serialization & Deserialization (Gson)| ServiceLayer
-    
-    HibernateDAO -->|HQL Queries & ORM Mapping| SessionFactory
-    OrderDAO -->|PreparedStatements & ACID Batch Commit| JDBCPool
-    ProductDAO -->|Dynamic SQL Queries| JDBCPool
-    UserDAO -->|Cryptographic SQL Queries| JDBCPool
-    WishlistDAO -->|SQL Queries| JDBCPool
-    SupportDAO -->|SQL Queries| JDBCPool
+    StoreUI -->|Fetch API / JSON| ProductSrv
+    CartWishUI -->|Fetch API / JSON| CartSrv
+    CartWishUI -->|Fetch API / JSON| WishlistSrv
+    GatewayUI -->|Fetch API / JSON| CheckoutSrv
+    UI -->|Fetch API / JSON| AuthSrv
+    UI -->|Multipart Upload| UploadSrv
+    AdminDashboard -->|Fetch API / JSON| AdminSrv
+    StoreUI -->|Fetch API / JSON| SupportSrv
+
+    ProductSrv -->|HQL Query Dispatch| HibernateDAO
+    ProductSrv -->|Multi-Filter SQL| ProductDAO
+    CartSrv -->|Inventory Lookup| ProductDAO
+    CheckoutSrv -->|Atomic Placement| OrderDAO
     CheckoutSrv -.->|Async Invoice Notification| EmailService
+    WishlistSrv -->|Collection Query| WishlistDAO
+    AuthSrv -->|Auth & Token Check| UserDAO
+    AdminSrv -->|Order Fulfillment| OrderDAO
+    AdminSrv -->|Ticket Resolution| SupportDAO
+    SupportSrv -->|Inquiry Creation| SupportDAO
     SupportSrv -.->|Async Receipt Notification| EmailService
-    
-    SessionFactory -->|JPA Entity Mapping / Session Queries| MySQL
+
+    HibernateDAO -->|HQL Mapping & Session Queries| SessionFactory
+    OrderDAO -->|PreparedStatements & ACID Batch Commit| JDBCPool
+    ProductDAO -->|Dynamic PreparedStatements| JDBCPool
+    UserDAO -->|Cryptographic PreparedStatements| JDBCPool
+    WishlistDAO -->|PreparedStatements| JDBCPool
+    SupportDAO -->|PreparedStatements| JDBCPool
+
+    SessionFactory -->|JPA Entity Mapping| MySQL
     JDBCPool -->|Raw InnoDB ACID Transactions| MySQL
 ```
 
