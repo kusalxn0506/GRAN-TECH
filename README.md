@@ -53,51 +53,83 @@ The application covers 100% of all required module benchmarks:
 
 ## 🏛️ System Architecture
 
+GRAN-TECH is architected following the **Enterprise 4-Tier Web Application Model** (Presentation &rarr; Controller &rarr; Business & Data Access &rarr; Relational Persistence) designed for high concurrency, ACID transaction integrity, and separation of concerns.
+
 ```mermaid
-graph TD
-    subgraph Client ["Client Presentation Layer (Browser)"]
-        UI["Modern Vanilla JS (ES6+) + CSS3 Glassmorphism Engine"]
-        Search["Live Autocomplete & 6-Column Hardware Archive"]
-        BagDrawer["Slide-Over Bag Drawer (#gtBagDrawer) & Wishlist"]
-        Gateway["256-Bit SSL Payment Gateway Simulator"]
-        AdminUI["Executive Operations & BI Dashboard"]
+flowchart TD
+    subgraph ClientLayer["1. Client Presentation Layer (Browser)"]
+        UI["Vanilla JS Engine (grantech.js) & CSS3"]
+        StoreUI["Storefront, Archive & Product Configurator"]
+        CartWishUI["Slide-Over Bag Drawer & Wishlist Component"]
+        GatewayUI["256-Bit SSL Payment Gateway Simulator"]
+        AdminDashboard["Executive Operations & BI Dashboard"]
     end
 
-    subgraph Controller ["Jakarta EE 10 Servlet Controller Layer"]
-        ProductServlet["ProductServlet (/api/products)"]
-        CartServlet["CartServlet (/api/cart)"]
-        CheckoutServlet["CheckoutServlet (/api/checkout)"]
-        AdminServlet["AdminServlet (/api/admin)"]
-        SupportServlet["SupportServlet (/api/support)"]
-        AuthServlet["AuthServlet (/api/auth)"]
-        WishlistServlet["WishlistServlet (/api/wishlist)"]
-        FileUploadServlet["FileUploadServlet (/api/upload)"]
+    subgraph ControllerLayer["2. Jakarta EE 10 Servlet Controller Layer"]
+        ProductSrv["ProductServlet (/api/products)"]
+        CartSrv["CartServlet (/api/cart)"]
+        CheckoutSrv["CheckoutServlet (/api/checkout)"]
+        WishlistSrv["WishlistServlet (/api/wishlist)"]
+        AuthSrv["AuthServlet (/api/auth)"]
+        AdminSrv["AdminServlet (/api/admin)"]
+        SupportSrv["SupportServlet (/api/support)"]
+        UploadSrv["FileUploadServlet (/api/upload)"]
     end
 
-    subgraph Service ["Business Logic & Data Access Layer"]
-        HibernateDAO["HibernateDAO (Hibernate 6 ORM + HQL Engine)"]
+    subgraph ServiceLayer["3. Business Logic & Data Access Layer"]
+        HibernateDAO["HibernateDAO (Hibernate 6 ORM + HQL)"]
         OrderDAO["OrderDAO (Atomic ACID Transaction Engine)"]
-        ProductDAO["ProductDAO (Dynamic Multi-Filter SQL)"]
-        UserDAO["UserDAO (SHA-256 Cryptography & Cookies)"]
-        WishlistDAO["WishlistDAO (User Saved Collections)"]
+        ProductDAO["ProductDAO (Multi-Filter SQL & Variants)"]
+        UserDAO["UserDAO (SHA-256 Hashing & Cookies)"]
+        WishlistDAO["WishlistDAO (User Collections)"]
         SupportDAO["SupportDAO (Inquiry Ticket Queue)"]
         EmailService["EmailService (Jakarta Mail SMTP Dispatcher)"]
     end
 
-    subgraph Persistence ["Data Persistence Layer (MySQL 8.0)"]
-        HibernateUtil["Hibernate SessionFactory (hibernate.cfg.xml)"]
-        DBConnection["JDBC Connection Pool (InnoDB Engine)"]
-        DB[(grantech_db 3NF Database)]
+    subgraph PersistenceLayer["4. Relational Persistence Layer (MySQL 8.0)"]
+        SessionFactory["Hibernate SessionFactory (hibernate.cfg.xml)"]
+        JDBCPool["JDBC Connection Pool (DBConnection)"]
+        MySQL[("grantech_db (3NF Relational Database)")]
     end
 
-    UI -->|Async JSON REST (Fetch API)| Controller
-    Controller -->|Gson Serialization| Service
-    Service -->|HQL Entity Queries| HibernateUtil
-    Service -->|Atomic PreparedStatements| DBConnection
-    Service -->|Async Notifications| EmailService
-    HibernateUtil --> DB
-    DBConnection --> DB
+    ClientLayer -->|Async JSON REST Requests (Fetch API)| ControllerLayer
+    ControllerLayer -->|Object Serialization & Deserialization (Gson)| ServiceLayer
+    
+    HibernateDAO -->|HQL Queries & ORM Mapping| SessionFactory
+    OrderDAO -->|PreparedStatements & ACID Batch Commit| JDBCPool
+    ProductDAO -->|Dynamic SQL Queries| JDBCPool
+    UserDAO -->|Cryptographic SQL Queries| JDBCPool
+    WishlistDAO -->|SQL Queries| JDBCPool
+    SupportDAO -->|SQL Queries| JDBCPool
+    CheckoutSrv -.->|Async Invoice Notification| EmailService
+    SupportSrv -.->|Async Receipt Notification| EmailService
+    
+    SessionFactory -->|JPA Entity Mapping / Session Queries| MySQL
+    JDBCPool -->|Raw InnoDB ACID Transactions| MySQL
 ```
+
+### 🏢 Architectural Layer Breakdown
+
+#### Tier 1: Client Presentation Layer (Browser)
+* **Zero-Framework Vanilla JS Engine (`grantech.js`):** Lightweight, performant client engine managing application state (`cart`, `wishlist`, `user`), toast notifications, slide-over bag drawer, and live instant search autocomplete.
+* **Context-Aware Dynamic API Routing (`GT.apiUrl`):** Intelligently routes API requests dynamically whether hosted under Root Context (`/api/...`) or Tomcat Application Context (`/GRAN-TECH/api/...`).
+* **High-Density Responsive Views:** Hand-crafted CSS3 glassmorphism layout, responsive 6-column hardware archive, interactive RAM/SSD hardware configurator, and administrative analytics dashboards.
+
+#### Tier 2: Jakarta EE 10 Servlet Controller Layer
+* **Standard Web Servlets (`@WebServlet`):** Non-blocking HTTP GET/POST controllers strictly parsing inputs and routing requests.
+* **RESTful JSON Serialization:** Google `Gson` parses incoming JSON request payloads and serializes backend domain objects into standardized JSON envelopes (`{"success": true, ...}`).
+* **State & Cookie Management:** Manages stateful client interactions via standard `HttpSession` and long-lived persistent security via `HttpOnly` token cookies (`GT_REMEMBER`).
+* **Multipart Media Ingestion:** `FileUploadServlet` leverages `@MultipartConfig` to validate file headers, content length, and MIME types before streaming images to permanent storage.
+
+#### Tier 3: Business Logic & Data Access Layer (DAO / Service)
+* **Hibernate 6 ORM Layer (`HibernateDAO`):** Employs JPA entity annotations (`@Entity`, `@Table`, `@ManyToOne`, `@OneToMany`) and Hibernate Query Language (`HQL`) for safe, object-oriented database access, abstraction, and dynamic querying.
+* **High-Performance Atomic JDBC Engine (`OrderDAO`):** Handles mission-critical multi-step transactions using manual transaction demarcation (`conn.setAutoCommit(false)`), batch updates (`ps.addBatch()`), stock verification, and automatic rollback on failure (`conn.rollback()`).
+* **Asynchronous Notification Daemon (`EmailService`):** Background thread pool executing Jakarta Mail SMTP operations to dispatch HTML invoices and support confirmations without blocking servlet response threads.
+* **Cryptographic Security Layer (`UserDAO`):** Enforces SHA-256 password hashing with salt prior to persistent storage.
+
+#### Tier 4: Relational Persistence Layer (MySQL 8.0)
+* **Strict Third Normal Form (3NF):** 9 relational tables designed to completely eliminate insertion, update, and deletion anomalies while maintaining referential integrity via foreign key cascades (`ON DELETE CASCADE`, `ON DELETE SET NULL`).
+* **Dual Persistence Access:** Supports both Hibernate 6 connection pooling and raw JDBC connection pooling (`DBConnection`) on MySQL InnoDB engine.
 
 ---
 
